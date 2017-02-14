@@ -9,18 +9,29 @@ local kUserDefaultKey           = "gamestate"
 local kCurrentUser              = "__CURRENT_USER"
 local kCurrentUserDefault       = "user_default"
 
+local secretKey = "7siyZY$q!Zt7s@h*qN!vFHyebPxA5PZI"
+
 function DataUtil:ctor()
-    self._userDefault = cc.UserDefault:getInstance()
-    self._gameState = json.decode(self._userDefault:getStringForKey(kUserDefaultKey, "{}"))
+    local userDefault = cc.UserDefault:getInstance()
+    local dataStr = userDefault:getStringForKey(kUserDefaultKey)
+    if dataStr ~= nil and #dataStr > 0 then
+        self._gameState = json.decode(dataStr)
+        if self._gameState == nil then
+            self._gameState = json.decode(crypto.decryptAES256(crypto.decodeBase64(dataStr), secretKey))
+        end
+    end
     self._gameState = self._gameState or {}
+    
     scheduler.scheduleGlobal(function()
         self:flush()
     end, 5)
 end
 
 function DataUtil:flush()
-    self._userDefault:setStringForKey(kUserDefaultKey, json.encode(self._gameState))
-    self._userDefault:flush()
+    local dataStr = crypto.encodeBase64(crypto.encryptAES256(json.encode(self._gameState), secretKey))
+    local userDefault = cc.UserDefault:getInstance()
+    userDefault:setStringForKey(kUserDefaultKey, dataStr)
+    userDefault:flush()
 end
 
 -- 清空本地数据
