@@ -41,7 +41,6 @@ public:
     void gcShowChallenge();
     void gcReset();
     std::string uuidForDevice();
-    void kochavaEvent(int eventId, cocos2d::ValueMap map);
 };
 
 #endif /* defined(GamePlugin_GamePlugin_h) */

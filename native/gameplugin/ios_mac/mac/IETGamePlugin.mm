@@ -112,8 +112,3 @@ std::string IETGamePlugin::uuidForDevice()
 {
     return "123";
 }
-
-void IETGamePlugin::kochavaEvent(int eventId, cocos2d::ValueMap map)
-{
-    
-}

@@ -2191,50 +2191,6 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportException(lua_State* t
 
     return 0;
 }
-int lua_cocos2dx_gameplugin_auto_IETGamePlugin_kochavaEvent(lua_State* tolua_S)
-{
-    int argc = 0;
-    IETGamePlugin* cobj = nullptr;
-    bool ok  = true;
-
-    tolua_Error tolua_err;
-
-
-    if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-
-    cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
-
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_kochavaEvent'", nullptr);
-        return 0;
-    }
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        int arg0;
-        cocos2d::ValueMap arg1;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "IETGamePlugin:kochavaEvent");
-
-        ok &= luaval_to_ccvaluemap(tolua_S, 3, &arg1, "IETGamePlugin:kochavaEvent");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_kochavaEvent'", nullptr);
-            return 0;
-        }
-        cobj->kochavaEvent(arg0, arg1);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:kochavaEvent",argc, 2);
-    return 0;
-
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_kochavaEvent'.",&tolua_err);
-
-    return 0;
-}
 int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetPlayerInfo(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2407,7 +2363,6 @@ int lua_register_cocos2dx_gameplugin_auto_IETGamePlugin(lua_State* tolua_S)
         tolua_function(tolua_S,"gcIsAvailable",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcIsAvailable);
         tolua_function(tolua_S,"gcGetAchievement",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetAchievement);
         tolua_function(tolua_S,"crashReportException",lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportException);
-        tolua_function(tolua_S,"kochavaEvent",lua_cocos2dx_gameplugin_auto_IETGamePlugin_kochavaEvent);
         tolua_function(tolua_S,"gcGetPlayerInfo",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetPlayerInfo);
         tolua_function(tolua_S,"gcReportAchievement",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportAchievement);
         tolua_function(tolua_S,"gcShowLeaderBoard",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowLeaderBoard);

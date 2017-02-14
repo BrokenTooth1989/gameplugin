@@ -9,7 +9,6 @@
 #include "IETGamePlugin.h"
 #import "IOSGamePlugin.h"
 #import "IETUtility.h"
-#import "AppController.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -177,24 +176,4 @@ void IETGamePlugin::gcReset()
 std::string IETGamePlugin::uuidForDevice()
 {
     return [[[IOSGamePlugin getInstance] uuidForDevice] UTF8String];
-}
-
-void IETGamePlugin::kochavaEvent(int eventId, cocos2d::ValueMap map)
-{
-    EventStandardParametersEnum eventType;
-    if (eventId == 1) {
-        eventType = EventStandardParametersEnumPurchase;
-    } else if (eventId == 2) {
-        eventType = EventStandardParametersEnumLevelComplete;
-    } else {
-        return;
-    }
-    EventStandardParameters *eventStandardParameters = [EventStandardParameters eventStandardParametersWithEventStandardParametersEnum:eventType];
-    NSDictionary *info = [IETUtility valueMap2NsDict:map];
-    eventStandardParameters.userIdString = [info objectForKey:@"userIdString"];
-    eventStandardParameters.priceDoubleNumber = [info objectForKey:@"priceDoubleNumber"];
-    eventStandardParameters.levelString = [info objectForKey:@"levelString"];
-    AppController *controller = (AppController*)[UIApplication sharedApplication].delegate;
-    [controller.kochavaTracker trackEventWithEventStandardParameters:eventStandardParameters];
-
 }

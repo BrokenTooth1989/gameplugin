@@ -73,13 +73,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETGamePlugin] kochavaEvent 
--- @param self
--- @param #int eventId
--- @param #map_table map
-        
---------------------------------
--- 
 -- @function [parent=#IETGamePlugin] gcGetPlayerInfo 
 -- @param self
 -- @return map_table#map_table ret (return value: map_table)

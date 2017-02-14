@@ -99,7 +99,7 @@ def main():
     
     # by gy
     # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'cocos2d-x'))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'frameworks','cocos2d-x'))
     cocos_root = os.path.abspath(os.path.join(project_root, ''))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'tools/bindings-generator'))
 
@@ -135,8 +135,8 @@ def main():
         # by gy
         # tolua_root = '%s/tools/tolua' % project_root
         # output_dir = '%s/cocos/scripting/lua-bindings/auto' % project_root
-        tolua_root = '%s/../gameplugin/tolua' % project_root
-        output_dir = '%s/../gameplugin/scripting/lua-bindings/auto' % project_root
+        tolua_root = '%s/../../gameplugin/native/gameplugin/tolua' % project_root
+        output_dir = '%s/../../gameplugin/native/gameplugin/scripting/lua-bindings/auto' % project_root
 
         cmd_args = {
         'cocos2dx_gameplugin_auto.ini' : ('cocos2dx_gameplugin', 'lua_cocos2dx_gameplugin_auto'), \
