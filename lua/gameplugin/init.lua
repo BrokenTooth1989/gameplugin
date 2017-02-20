@@ -30,6 +30,7 @@ url 				= require("libs.url.url")
 deferred 			= require("libs.deferred.deferred")
 inspect 			= require("libs.inspect.inspect")
 lume 				= require("libs.lume.lume")
+MessagePack 		= require("libs.msgpack.MessagePack")
 
 -- utils export from cpp
 GamePlugin 			= ccg.IETGamePlugin:getInstance()
