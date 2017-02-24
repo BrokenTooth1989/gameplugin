@@ -45,3 +45,9 @@ bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc,
     log("showVedioAd");
     return true;
 }
+void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
+{}
+void IETAdvertiseHelper::setBannerAdName(std::string name)
+{}
+void IETAdvertiseHelper::setSpotAdNames(cocos2d::ValueVector names)
+{}

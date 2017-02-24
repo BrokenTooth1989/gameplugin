@@ -19,9 +19,9 @@ void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVecto
 {
 }
 
-void IETGamePlugin::setGenVerifyUrlHandler(const std::function<std::string (cocos2d::ValueMap)> &func)
-{
-}
+//void IETGamePlugin::setGenVerifyUrlHandler(const std::function<std::string (cocos2d::ValueMap)> &func)
+//{
+//}
 
 void IETGamePlugin::setRestoreHandler(const std::function<void (bool, std::string, std::string)> &func)
 {
@@ -99,6 +99,12 @@ void IETGamePlugin::gcShowChallenge()
 void IETGamePlugin::gcReset()
 {
 }
+void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func)
+{}
+void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
+{}
+std::string IETGamePlugin::uuidForDevice()
+{}
 
 
 

@@ -33,8 +33,8 @@ void IETAmazonAWSHelper::connectFb(std::string token)
     log("%s", token.c_str());
 }
 
-void IETAmazonAWSHelper::setRemoteNotifyFunc(std::function<void (cocos2d::ValueMap)> &func)
-{
-    log("setRemoteNotifyFunc");
-}
+//void IETAmazonAWSHelper::setRemoteNotifyFunc(std::function<void (cocos2d::ValueMap)> &func)
+//{
+//    log("setRemoteNotifyFunc");
+//}
 

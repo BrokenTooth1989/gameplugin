@@ -58,19 +58,19 @@ std::string IETFacebookHelper::getAccessToken()
     return "token";
 }
 
-void IETFacebookHelper::getUserProfile(std::function<void (cocos2d::ValueMap)> &func)
+void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)
 {
     log("getUserProfile");
     func(ValueMapNull);
 }
 
-void IETFacebookHelper::getInvitableFriends(cocos2d::ValueVector inviteTokens, std::function<void (cocos2d::ValueMap)> &func)
+void IETFacebookHelper::getInvitableFriends(cocos2d::ValueVector inviteTokens, int picSize, std::function<void(cocos2d::ValueMap)>& func)
 {
     log("getInvitableFriends");
     func(ValueMapNull);
 }
 
-void IETFacebookHelper::getFriends(std::function<void (cocos2d::ValueMap)> &func)
+void IETFacebookHelper::getFriends(int picSize, std::function<void(cocos2d::ValueMap)>& func)
 {
     log("getFriends");
     func(ValueMapNull);
