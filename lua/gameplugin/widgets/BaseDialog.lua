@@ -9,28 +9,22 @@ end)
 
 function BaseDialog:ctor()
     -- background layer
-    local bgLayer = cc.LayerColor:create(cc.c4b(0, 0, 0, 150))
+    local bgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 150))
         :zorder(-1)
         :addTo(self)
+    bgLayer:setCascadeOpacityEnabled(true)
+    bgLayer:setCascadeColorEnabled(true)
     self.bgLayer = bgLayer
-    local bgListener = cc.EventListenerTouchOneByOne:create()
-    bgListener:setSwallowTouches(true)
-    bgListener:registerScriptHandler(function() return true end, cc.Handler.EVENT_TOUCH_BEGAN)
-    bgLayer:getEventDispatcher():addEventListenerWithSceneGraphPriority(bgListener, bgLayer)
     -- create root node
     local root = display.newNode()
         :addTo(self)
     self.root = root
     -- foreground layer
-    local fgLayer = cc.LayerColor:create(cc.c4b(0, 0, 0, 0))
+    local fgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 0))
         :zorder(1)
         :addTo(self)
     self.fgLayer = fgLayer
-    local fgListener = cc.EventListenerTouchOneByOne:create()
-    self.fgListener = fgListener
-    fgListener:setSwallowTouches(true)
-    fgListener:registerScriptHandler(function() return true end, cc.Handler.EVENT_TOUCH_BEGAN)
-    fgLayer:getEventDispatcher():addEventListenerWithSceneGraphPriority(fgListener, fgLayer)
+    fgLayer:hide()
     
     self:setNodeEventEnabled(true)
 end
@@ -48,12 +42,12 @@ function BaseDialog:setBgOpacity(opacity)
 end
 
 function BaseDialog:animStart()
-    self.fgListener:setSwallowTouches(true)
+    self.fgLayer:show()
     self.root:stopAllActions()
 end
 
 function BaseDialog:animEnded()
-    self.fgListener:setSwallowTouches(false)
+    self.fgLayer:hide()
 end
 
 function BaseDialog:showEaseScale(cb)
