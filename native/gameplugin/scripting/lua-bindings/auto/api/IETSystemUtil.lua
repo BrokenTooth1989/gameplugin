@@ -94,6 +94,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#IETSystemUtil] keychainGet 
+-- @param self
+-- @param #string key
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
 -- @function [parent=#IETSystemUtil] getAppVersion 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -109,6 +116,13 @@
 -- 
 -- @function [parent=#IETSystemUtil] exitGame 
 -- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] keychainSet 
+-- @param self
+-- @param #string key
+-- @param #string value
         
 --------------------------------
 -- 
