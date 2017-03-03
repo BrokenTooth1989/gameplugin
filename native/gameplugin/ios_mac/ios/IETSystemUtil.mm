@@ -128,6 +128,18 @@ void IETSystemUtil::share(cocos2d::ValueVector items)
 {
     
 }
+void IETSystemUtil::keychainSet(std::string key, std::string value)
+{
+    [[IOSSystemUtil getInstance] keychainSet:NSStringFromString(key) withValue:NSStringFromString(value)];
+}
+std::string IETSystemUtil::keychainGet(std::string key)
+{
+    NSString* value = [[IOSSystemUtil getInstance] keychainGetValueForKey:NSStringFromString(key)];
+    if (value == nil) {
+        return "";
+    }
+    return [value UTF8String];
+}
 void IETSystemUtil::copyToPasteboard(std::string str)
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];

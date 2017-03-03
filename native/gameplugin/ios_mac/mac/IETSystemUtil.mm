@@ -88,6 +88,10 @@ void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {}
 void IETSystemUtil::share(cocos2d::ValueVector items)
 {}
+void IETSystemUtil::keychainSet(std::string key, std::string value)
+{}
+std::string IETSystemUtil::keychainGet(std::string key)
+{}
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 

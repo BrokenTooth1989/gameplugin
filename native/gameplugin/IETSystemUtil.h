@@ -98,6 +98,8 @@ public:
     void setNotificationState(bool enable);
     void postNotification(cocos2d::ValueMap map);
     void share(cocos2d::ValueVector items);
+    void keychainSet(std::string key, std::string value);
+    std::string keychainGet(std::string key);
     void copyToPasteboard(std::string str);
 private:
     IETSystemUtil();
