@@ -9,7 +9,34 @@
 #include "IETGamePlugin.h"
 
 using namespace std;
-using namespace cocos2d;
+#include "cocos2d.h"
+// #include "cocos-ext.h"
+USING_NS_CC;
+// USING_NS_CC_EXT;
+#include "jni.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "platform/android/jni/JniHelper.h"
+#else
+
+#endif
+ 
+#define CLASS_NAME_NATIVE_HELPER "com/fatalsignal/game/NativeHelper"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+   
+#ifdef __cplusplus
+}
+#endif
+jobject mNativeHelper;
+void IETGamePlugin::init()
+{
+	JniMethodInfo jMthGetInstance;
+    JniHelper::getStaticMethodInfo(jMthGetInstance, CLASS_NAME_NATIVE_HELPER, "getInstance", CCString::createWithFormat("()L%s;",CLASS_NAME_NATIVE_HELPER)->getCString());
+    mNativeHelper =
+    jMthGetInstance.env->NewGlobalRef(jMthGetInstance.env->CallStaticObjectMethod(jMthGetInstance.classID, jMthGetInstance.methodID));
+}
 
 void IETGamePlugin::crashReportLogs(std::string message)
 {
@@ -104,7 +131,16 @@ void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)
 void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
 {}
 std::string IETGamePlugin::uuidForDevice()
-{}
+{
+	JniMethodInfo jmth;
+    JniHelper::getMethodInfo(jmth, CLASS_NAME_NATIVE_HELPER, "uuidForDevice", "()Ljava/lang/String;");
+    jobject jcid = jmth.env->CallObjectMethod(mNativeHelper, jmth.methodID);
+    const char* clientId = jmth.env->GetStringUTFChars((jstring)jcid, JNI_FALSE);
+    string ret =string(clientId);
+    jmth.env->ReleaseStringUTFChars((jstring)jcid, clientId);
+
+    return ret;
+}
 
 
 
