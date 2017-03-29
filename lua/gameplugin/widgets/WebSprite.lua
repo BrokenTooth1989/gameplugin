@@ -75,7 +75,13 @@ function WebSprite:loadFromUrl(url, cb)
 end
 
 function WebSprite:loadFromDisk(path)
+	if not cc.FileUtils:getInstance():isFileExist(path) then
+		print(path.."    not exist")
+	end
 	local sprite = display.newSprite(path)
+	if not sprite then
+		return;
+	end
 	local frame = sprite:getSpriteFrame()
 	self.sprite:setSpriteFrame(frame)
 	local size = self.sprite:getContentSize()
