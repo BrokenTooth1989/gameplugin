@@ -76,3 +76,10 @@ void IETSystemUtil::share(cocos2d::ValueVector items)
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 
+void IETSystemUtil::keychainSet(std::string key, std::string value)
+{
+}
+std::string IETSystemUtil::keychainGet(std::string key)
+{
+    
+}

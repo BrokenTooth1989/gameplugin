@@ -55,7 +55,10 @@ end
 local function fire(deferred)
 	local next
 	if type(deferred.value) == 'table' then
-		next = deferred.value.next
+		-- exclude pbc obj
+		if deferred.value._CObj == nil then
+			next = deferred.value.next
+		end
 	end
 	promise(deferred, next, function()
 		deferred.state = RESOLVING
