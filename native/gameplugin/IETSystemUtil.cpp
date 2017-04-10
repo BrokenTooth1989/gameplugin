@@ -232,7 +232,8 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         std::string bufffff(buffer->begin(),buffer->end());
         func(true, bufffff);
     });
-    HttpClient::getInstance()->sendImmediate(request);
+    HttpClient::getInstance()->send(request);
+    request->release();
 }
 
 void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<void ()> &func)
