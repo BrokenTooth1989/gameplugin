@@ -83,8 +83,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] hideLoading 
+-- @function [parent=#IETSystemUtil] getAppVersionName 
 -- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -116,6 +117,12 @@
 -- 
 -- @function [parent=#IETSystemUtil] exitGame 
 -- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getAppBuildNum 
+-- @param self
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
@@ -157,6 +164,11 @@
 -- @function [parent=#IETSystemUtil] getCountryCode 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] hideLoading 
+-- @param self
         
 --------------------------------
 -- 

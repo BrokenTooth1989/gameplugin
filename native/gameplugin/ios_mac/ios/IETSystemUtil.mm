@@ -37,6 +37,14 @@ std::string IETSystemUtil::getAppName()
 {
     return [[[IOSSystemUtil getInstance] getAppName] UTF8String];
 }
+std::string IETSystemUtil::getAppVersionName() {
+    NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    return [version UTF8String];
+}
+int IETSystemUtil::getAppBuildNum() {
+    NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    return [build intValue];
+}
 int IETSystemUtil::getAppVersion()
 {
     return [[[IOSSystemUtil getInstance] getAppVersion] intValue];

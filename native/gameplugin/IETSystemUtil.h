@@ -80,6 +80,8 @@ public:
     std::string getConfigValue(std::string key);
     std::string getBundleId();
     std::string getAppName();
+    std::string getAppVersionName();
+    int getAppBuildNum();
     int getAppVersion();
     std::string getCountryCode();
     std::string getLanguageCode();
