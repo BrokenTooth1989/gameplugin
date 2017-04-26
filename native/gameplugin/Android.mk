@@ -10,8 +10,8 @@ LOCAL_SRC_FILES := 	android/IETAdvertiseHelper.cpp \
 					android/IETAnalyticHelper.cpp \
 					android/IETFacebookHelper.cpp \
 					android/IETGamePlugin.cpp \
+					android/IETSystemUtil.cpp \
 					IETSystemUtil.cpp \
-					android/IETSystemUtil2.cpp \
 					scripting/lua-bindings/manual/lua_cocos2dx_gameplugin_manual.cpp \
 					scripting/lua-bindings/auto/lua_cocos2dx_gameplugin_auto.cpp 
 
