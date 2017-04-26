@@ -36,6 +36,12 @@ std::string IETSystemUtil::getAppName()
 {
     return "";
 }
+std::string IETSystemUtil::getAppVersionName() {
+    return "1.0.0";
+}
+int IETSystemUtil::getAppBuildNum() {
+    return 1;
+}
 int IETSystemUtil::getAppVersion()
 {
     return 1;
