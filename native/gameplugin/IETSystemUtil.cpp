@@ -232,7 +232,7 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         std::string bufffff(buffer->begin(),buffer->end());
         func(true, bufffff);
     });
-    HttpClient::getInstance()->send(request);
+    HttpClient::getInstance()->sendImmediate(request);
     request->release();
 }
 

@@ -22,6 +22,7 @@ opts.disk 图片路径
 ]]
 function WebSprite:ctor(opts)
 	assert(opts.default)
+	self.opts = opts
 
 	local clipNode
 	if opts.stencil ~= nil then
@@ -86,6 +87,12 @@ function WebSprite:loadFromDisk(path)
 	self.sprite:setSpriteFrame(frame)
 	local size = self.sprite:getContentSize()
 	self.sprite:setScale(self.size.width/size.width, self.size.height/size.height)
+end
+
+function WebSprite:reset()
+	self.sprite:setSpriteFrame(display.newSprite(self.opts.default):getSpriteFrame())
+	self.sprite:setScale(1)
+	self.url = nil
 end
 
 return WebSprite
