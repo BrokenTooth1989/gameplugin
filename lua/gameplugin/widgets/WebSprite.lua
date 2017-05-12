@@ -17,8 +17,10 @@ end)
 --[[
 opts.stencil 裁切
 opts.default 默认图
+opts.percent 进度图
 opts.url 图片链接
 opts.disk 图片路径
+opts.retry 下载失败重试次数
 ]]
 function WebSprite:ctor(opts)
 	assert(opts.default)
@@ -34,10 +36,16 @@ function WebSprite:ctor(opts)
 		clipNode = display.newNode()
 			:addTo(self)
 	end
-
 	self.sprite = display.newSprite(opts.default)
 		:addTo(clipNode)
 	self.size = self.sprite:getContentSize()
+	if self.opts.percent ~= nil then
+		self.progressBar = display.newProgressTimer(self.opts.percent, display.PROGRESS_TIMER_RADIAL)
+			:opacity(0)
+			:addTo(clipNode)
+		self.progressBar:setScaleX(-1)
+		self.progressBar:setPercentage(100)
+	end
 	if opts.url then
 		self:loadFromUrl(opts.url)
 	elseif opts.disk then
@@ -45,43 +53,85 @@ function WebSprite:ctor(opts)
 	end
 end
 
-function WebSprite:loadFromUrl(url, cb)
-	if url == nil then return end
+function WebSprite:loadFromUrl(url)
+	if url == nil then 
+		return
+	end
+
 	self.url = url
-	cb = cb or function() end
 
 	local function bind(path)
+		if self.progressBar ~= nil then
+			self.progressBar:setPercentage(0)
+			self.progressBar:stopAllActions()
+			self.progressBar:runAction(cc.FadeOut:create(0.3))
+		end
 		self:loadFromDisk(path)
-		cb(true)
 	end
+
 	local path = imagePath..crypto.md5(url)
 	if fileutils:isFileExist(path) then
 		return bind(path)
 	end
-	self:retain()
-	SystemUtil:downloadFile(url, path, function(param1, param2)
-		if param1 == 0 then
-			-- show download percent
-		else
-			if param1 == -1 then
-				cb(false)
+	
+	local function download(url, path, retryNum, cb)
+		if self.progressBar ~= nil then
+			self.progressBar:setPercentage(100)
+			self.progressBar:stopAllActions()
+			self.progressBar:runAction(cc.FadeIn:create(0.3))
+		end
+		SystemUtil:downloadFile(url, path, function(param1, param2)
+			if param1 == 0 then
+				if self.url ~= url then 
+					return
+				end
+				if self.progressBar ~= nil then
+					self.progressBar:setPercentage(100-param2)
+				end
+			elseif param1 == -1 then
+				if self.url ~= url then
+					return cb()
+				end
+				if retryNum <= 0 then
+					if self.progressBar ~= nil then
+						self.progressBar:setPercentage(0)
+						self.progressBar:stopAllActions()
+						self.progressBar:runAction(cc.FadeOut:create(0.3))
+					end
+					return cb()
+				end
+				scheduler.performWithDelayGlobal(function()
+					download(url, path, retryNum-1, cb)
+				end, 0)
 			elseif param1 == 1 then
-				if self.url == url then
-                	bind(path)
+				if self.url ~= url then
+                	return cb()
             	end
+            	bind(path)
+            	cb()
         	end
-        	self:release()
-        end
+		end)
+	end
+	self.url = url
+	self:retain()
+	download(url, path, self.opts.retry, function(success)
+		self:release()
 	end)
 end
 
 function WebSprite:loadFromDisk(path)
+	if path == nil then 
+		print(path.."    is nil")
+		return
+	end
 	if not cc.FileUtils:getInstance():isFileExist(path) then
 		print(path.."    not exist")
+		return
 	end
 	local sprite = display.newSprite(path)
 	if not sprite then
-		return;
+		print(path.."    new sprite failed")
+		return
 	end
 	local frame = sprite:getSpriteFrame()
 	self.sprite:setSpriteFrame(frame)
