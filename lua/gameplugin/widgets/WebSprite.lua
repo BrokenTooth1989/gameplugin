@@ -132,9 +132,11 @@ function WebSprite:loadFromDisk(path)
 		print(path.."    not exist")
 		return
 	end
-	local sprite = display.newSprite(path)
+	local sprite = cc.Sprite:create(path)
 	if not sprite then
 		print(path.."    new sprite failed")
+		cc.FileUtils:getInstance():removeFile(path)
+		self:loadFromUrl(self.url)
 		return
 	end
 	local frame = sprite:getSpriteFrame()
