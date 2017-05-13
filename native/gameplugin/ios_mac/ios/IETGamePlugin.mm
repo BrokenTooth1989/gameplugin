@@ -16,7 +16,9 @@ void IETGamePlugin::init()
 {}
 void IETGamePlugin::crashReportLogs(std::string message)
 {
-    [[IOSGamePlugin getInstance] crashReportLog:NSStringFromString(message)];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[IOSGamePlugin getInstance] crashReportLog:NSStringFromString(message)];
+    });
 }
 
 void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVector traceback)
