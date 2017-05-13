@@ -58,6 +58,10 @@ function WebSprite:loadFromUrl(url)
 		return
 	end
 
+	if not string.match(url, "http") then
+		return
+	end
+
 	self.url = url
 
 	local function bind(path)
