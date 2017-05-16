@@ -24,6 +24,9 @@ opts.retry 下载失败重试次数
 ]]
 function WebSprite:ctor(opts)
 	assert(opts.default)
+	
+	opts.retry = opts.retry or 5
+
 	self.opts = opts
 
 	local clipNode
