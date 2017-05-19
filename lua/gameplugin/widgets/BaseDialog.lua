@@ -7,7 +7,8 @@ local BaseDialog = class("BaseDialog", function()
 	return display.newNode()
 end)
 
-function BaseDialog:ctor()
+function BaseDialog:ctor(rootPos)
+    rootPos = rootPos or cc.p(0, 0)
     -- background layer
     local bgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 150))
         :zorder(-1)
@@ -17,6 +18,7 @@ function BaseDialog:ctor()
     self.bgLayer = bgLayer
     -- create root node
     local root = display.newNode()
+        :pos(rootPos.x, rootPos.y)
         :addTo(self)
     self.root = root
     -- foreground layer
