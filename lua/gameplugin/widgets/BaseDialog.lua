@@ -115,4 +115,46 @@ function BaseDialog:dismissToRight(cb)
     }))
 end
 
+function BaseDialog:showFromTop(cb)
+    cb = cb or function() end
+    self:animStart()
+    self.root:pos(0, display.height)
+    self.root:runAction(cc.Sequence:create({
+        cc.EaseSineOut:create(cc.MoveTo:create(0.2, cc.p(0, 0))),
+        cc.CallFunc:create(handler(self, self.animEnded)),
+        cc.CallFunc:create(cb),
+    }))
+end
+
+function BaseDialog:dismissToTop(cb)
+    cb = cb or function() end
+    self:animStart()
+    self.root:runAction(cc.Sequence:create({
+        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(0, display.height))),
+        cc.CallFunc:create(handler(self, self.animEnded)),
+        cc.CallFunc:create(cb),
+    }))
+end
+
+function BaseDialog:showFromLeft(cb)
+    cb = cb or function() end
+    self:animStart()
+    self.root:pos(-display.width, 0)
+    self.root:runAction(cc.Sequence:create({
+        cc.EaseSineOut:create(cc.MoveTo:create(0.2, cc.p(0, 0))),
+        cc.CallFunc:create(handler(self, self.animEnded)),
+        cc.CallFunc:create(cb),
+    }))
+end
+
+function BaseDialog:dismissToLeft(cb)
+    cb = cb or function() end
+    self:animStart()
+    self.root:runAction(cc.Sequence:create({
+        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(-display.width, 0))),
+        cc.CallFunc:create(handler(self, self.animEnded)),
+        cc.CallFunc:create(cb),
+    }))
+end
+
 return BaseDialog
