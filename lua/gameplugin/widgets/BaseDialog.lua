@@ -157,4 +157,25 @@ function BaseDialog:dismissToLeft(cb)
     }))
 end
 
+function BaseDialog:fadeIn(cb)
+    cb = cb or function() end
+    self:animStart()
+    self.root:opacity(0)
+    self.root:runAction(cc.Sequence:create({
+        cc.FadeIn:create(0.2),
+        cc.CallFunc:create(handler(self, self.animEnded)),
+        cc.CallFunc:create(cb),
+    }))
+end
+
+function BaseDialog:fadeOut(cb)
+    cb = cb or function() end
+    self:animStart()
+    self.root:runAction(cc.Sequence:create({
+        cc.FadeOut:create(0.2),
+        cc.CallFunc:create(handler(self, self.animEnded)),
+        cc.CallFunc:create(cb),
+    }))
+end
+
 return BaseDialog

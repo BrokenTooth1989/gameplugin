@@ -11,7 +11,7 @@ end)
 bg: 进度条底衬
 bar: 进度条
 percent: 默认进度
-type: 
+btype: 
 	1、bar
 	2、stencil
 particle: 进度条粒子
@@ -32,6 +32,7 @@ function LoadingBar:ctor(params)
 
 	self.barNode = display.newNode()
 		:addTo(self)
+	self.barNode:setCascadeOpacityEnabled(true)
 	local stencil = display.newSprite(params.bar)
 	local clipNode = cc.ClippingNode:create(stencil)
     	:addTo(self.barNode)
