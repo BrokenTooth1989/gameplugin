@@ -75,6 +75,8 @@ public:
     void openUrl(std::string url);
     // 退出
     void exitGame();
+    unsigned char* aesDecrypt(unsigned char* buffer,ssize_t oriSize,ssize_t *size);
+    static void setAesSign(unsigned char* sign,size_t len);
 #pragma mark 平台单独实现
     long getCpuTime();
     std::string getConfigValue(std::string key);
@@ -120,6 +122,8 @@ private:
     cocos2d::ValueMap _localValueMap;           //本地配置
     cocos2d::ValueMap _onlineValueMap;          //线上配置
     std::string _mainLuaFile;
+    static unsigned  char* _xxAesSign;
+    static ssize_t _xxAesSignLen;
 };
 
 #endif
