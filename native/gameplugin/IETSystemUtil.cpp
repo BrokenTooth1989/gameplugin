@@ -9,7 +9,6 @@
 #include "IETSystemUtil.h"
 #include <stdio.h>
 #include "unzip/unzip.h"
-#include "network/HttpClient.h"
 #include "xxtea/xxtea.h"
 #include "IETGamePlugin.h"
 #include "IETAnalyticHelper.h"
@@ -20,7 +19,6 @@
 
 using namespace std;
 using namespace cocos2d;
-using namespace cocos2d::network;
 using namespace cocos2d::extension;
 
 std::string IETSystemUtil::_localConfigFile = "";
@@ -204,36 +202,6 @@ std::string IETSystemUtil::getFileServerRoot()
 #else
     return this->getValue("FileServerRoot").asString();
 #endif
-}
-
-void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func)
-{
-    HttpClient::getInstance()->setTimeoutForConnect(10);
-    HttpClient::getInstance()->setTimeoutForRead(10);
-    HttpRequest* request = new HttpRequest();
-    request->setUrl(url.c_str());
-    if (strcmp(requestType.c_str(), "get") == 0) {
-        request->setRequestType(HttpRequest::Type::GET);
-    } else if (strcmp(requestType.c_str(), "post") == 0) {
-        request->setRequestType(HttpRequest::Type::POST);
-    } else {
-        assert(false);
-    }
-    if (data.size() > 0) {
-        request->setRequestData(data.c_str(), strlen(data.c_str()));
-    }
-    request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
-        if (response == nullptr || !response->isSucceed())
-        {
-            func(false, "");
-            return;
-        }
-        std::vector<char> *buffer = response->getResponseData();
-        std::string bufffff(buffer->begin(),buffer->end());
-        func(true, bufffff);
-    });
-    HttpClient::getInstance()->sendImmediate(request);
-    request->release();
 }
 
 void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<void ()> &func)

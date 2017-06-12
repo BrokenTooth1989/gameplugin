@@ -10,6 +10,7 @@
 #import "IOSSystemUtil.h"
 #import "IETUtility.h"
 #include <sys/sysctl.h>
+#import "AFNetworking.h"
 
 long IETSystemUtil::getCpuTime()
 {
@@ -154,4 +155,35 @@ void IETSystemUtil::copyToPasteboard(std::string str)
     pasteboard.string = [NSString stringWithUTF8String:str.c_str()];
 }
 
-
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func)
+{
+    CCLOG("%s, %s, %s", requestType.c_str(), url.c_str(), data.c_str());
+    NSString* nsUrl = @"https://www.baidu.com";
+    NSDictionary *params = @{@"foo": @"bar"};
+    void(^success)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+    };
+    void(^failure)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    if (!strcmp(requestType.c_str(), "get")) {
+        [manager GET:nsUrl parameters:params success:success failure:failure];
+    } else {
+        [manager POST:nsUrl parameters:params success:success failure:failure];
+    }
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager GET:@"http://example.com/resources.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"JSON: %@", responseObject);
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Error: %@", error);
+//    }];
+//    
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    NSDictionary *parameters = @{@"foo": @"bar"};
+//    [manager POST:@"http://example.com/resources.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+//    }];
+}

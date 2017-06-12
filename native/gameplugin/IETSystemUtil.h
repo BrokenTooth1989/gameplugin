@@ -53,8 +53,6 @@ public:
     std::string getFileServerRoot();
     // 获取web服务器地址
     std::string getWebServerRoot();
-    // get url
-    void requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func);
     // 同步服务器配置
     void syncGameConfig(std::string configUrl, const std::function<void ()> &func);
     // 获取参数，优先获取在线，没有在获取本地
@@ -103,6 +101,7 @@ public:
     void keychainSet(std::string key, std::string value);
     std::string keychainGet(std::string key);
     void copyToPasteboard(std::string str);
+    void requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func);
 private:
     IETSystemUtil();
     ~IETSystemUtil();

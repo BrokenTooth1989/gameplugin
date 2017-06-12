@@ -9,6 +9,9 @@
 #include "IETSystemUtil.h"
 #import "IETUtility.h"
 #include <sys/sysctl.h>
+#include "network/HttpClient.h"
+
+using namespace cocos2d::network;
 
 long IETSystemUtil::getCpuTime()
 {
@@ -103,3 +106,32 @@ std::string IETSystemUtil::keychainGet(std::string key)
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func)
+{
+    HttpClient::getInstance()->setTimeoutForConnect(10);
+    HttpClient::getInstance()->setTimeoutForRead(10);
+    HttpRequest* request = new HttpRequest();
+    request->setUrl(url.c_str());
+    if (strcmp(requestType.c_str(), "get") == 0) {
+        request->setRequestType(HttpRequest::Type::GET);
+    } else if (strcmp(requestType.c_str(), "post") == 0) {
+        request->setRequestType(HttpRequest::Type::POST);
+    } else {
+        assert(false);
+    }
+    if (data.size() > 0) {
+        request->setRequestData(data.c_str(), strlen(data.c_str()));
+    }
+    request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
+        if (response == nullptr || !response->isSucceed())
+        {
+            func(false, "");
+            return;
+        }
+        std::vector<char> *buffer = response->getResponseData();
+        std::string bufffff(buffer->begin(),buffer->end());
+        func(true, bufffff);
+    });
+    HttpClient::getInstance()->sendImmediate(request);
+    request->release();
+}
