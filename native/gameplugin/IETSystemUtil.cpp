@@ -13,23 +13,27 @@
 #include "IETGamePlugin.h"
 #include "IETAnalyticHelper.h"
 
-#if CC_LUA_ENGINE_ENABLED>0
-    #include "CCLuaEngine.h"
+#if CC_LUA_ENGINE_ENABLED > 0
+
+#include "CCLuaEngine.h"
+
 #endif
+extern "C" {
+#include "aes.h"
+}
 
 using namespace std;
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
 std::string IETSystemUtil::_localConfigFile = "";
-
-void IETSystemUtil::setLocalConfig(std::string file)
-{
+unsigned char* IETSystemUtil::_xxAesSign=NULL;
+ssize_t IETSystemUtil::_xxAesSignLen=0;
+void IETSystemUtil::setLocalConfig(std::string file) {
     _localConfigFile = file;
 }
 
-bool IETSystemUtil::getDebugMode()
-{
+bool IETSystemUtil::getDebugMode() {
 #if DEBUG
     return true;
 #else
@@ -37,12 +41,11 @@ bool IETSystemUtil::getDebugMode()
 #endif
 }
 
-std::string IETSystemUtil::getPlatformType()
-{
+std::string IETSystemUtil::getPlatformType() {
     string type = "mac";
     Application::Platform platform = Application::getInstance()->getTargetPlatform();
     if (platform == Application::Platform::OS_IPAD
-        || platform == Application::Platform::OS_IPHONE) {
+            || platform == Application::Platform::OS_IPHONE) {
         type = "ios";
     } else if (platform == Application::Platform::OS_ANDROID) {
         type = "android";
@@ -52,21 +55,18 @@ std::string IETSystemUtil::getPlatformType()
     return type;
 }
 
-long IETSystemUtil::getCurrentTimeMills()
-{
+long IETSystemUtil::getCurrentTimeMills() {
     struct timeval tv;
-    gettimeofday(&tv,NULL);
+    gettimeofday(&tv, NULL);
     time_t timep = tv.tv_sec;
     return timep;
 }
 
-unsigned char ToHex(unsigned char x)
-{
-    return  x > 9 ? x + 55 : x + 48;
+unsigned char ToHex(unsigned char x) {
+    return x > 9 ? x + 55 : x + 48;
 }
 
-unsigned char FromHex(unsigned char x)
-{
+unsigned char FromHex(unsigned char x) {
     unsigned char y = 0;
     if (x >= 'A' && x <= 'Z') y = x - 'A' + 10;
     else if (x >= 'a' && x <= 'z') y = x - 'a' + 10;
@@ -74,93 +74,77 @@ unsigned char FromHex(unsigned char x)
     return y;
 }
 
-std::string IETSystemUtil::urlEncode(std::string url)
-{
+std::string IETSystemUtil::urlEncode(std::string url) {
     std::string strTemp = "";
     size_t length = url.length();
-    for (size_t i = 0; i < length; i++)
-    {
-        if (isalnum((unsigned char)url[i]) ||
-            (url[i] == '-') ||
-            (url[i] == '_') ||
-            (url[i] == '.') ||
-            (url[i] == '~'))
+    for (size_t i = 0; i < length; i++) {
+        if (isalnum((unsigned char) url[i]) ||
+                (url[i] == '-') ||
+                (url[i] == '_') ||
+                (url[i] == '.') ||
+                (url[i] == '~'))
             strTemp += url[i];
         else if (url[i] == ' ')
             strTemp += "+";
-        else
-        {
+        else {
             strTemp += '%';
-            strTemp += ToHex((unsigned char)url[i] >> 4);
-            strTemp += ToHex((unsigned char)url[i] % 16);
+            strTemp += ToHex((unsigned char) url[i] >> 4);
+            strTemp += ToHex((unsigned char) url[i] % 16);
         }
     }
     return strTemp;
 }
 
-std::string IETSystemUtil::urlDecode(std::string url)
-{
+std::string IETSystemUtil::urlDecode(std::string url) {
     std::string strTemp = "";
     size_t length = url.length();
-    for (size_t i = 0; i < length; i++)
-    {
+    for (size_t i = 0; i < length; i++) {
         if (url[i] == '+') strTemp += ' ';
-        else if (url[i] == '%')
-        {
-            unsigned char high = FromHex((unsigned char)url[++i]);
-            unsigned char low = FromHex((unsigned char)url[++i]);
-            strTemp += high*16 + low;
-        }
-        else strTemp += url[i];
+        else if (url[i] == '%') {
+            unsigned char high = FromHex((unsigned char) url[++i]);
+            unsigned char low = FromHex((unsigned char) url[++i]);
+            strTemp += high * 16 + low;
+        } else strTemp += url[i];
     }
     return strTemp;
 }
 
-std::string IETSystemUtil::xxteaEncrypt(std::string input, std::string key)
-{
-    unsigned char* uc_input = (unsigned char*)input.c_str();
-    xxtea_long uc_inputLen = (xxtea_long)strlen(input.c_str());
-    unsigned char* uc_key = (unsigned char*)key.c_str();
-    xxtea_long uc_keyLen = (xxtea_long)strlen(key.c_str());
+std::string IETSystemUtil::xxteaEncrypt(std::string input, std::string key) {
+    unsigned char *uc_input = (unsigned char *) input.c_str();
+    xxtea_long uc_inputLen = (xxtea_long) strlen(input.c_str());
+    unsigned char *uc_key = (unsigned char *) key.c_str();
+    xxtea_long uc_keyLen = (xxtea_long) strlen(key.c_str());
     xxtea_long len;
-    unsigned char* result = xxtea_encrypt(uc_input, uc_inputLen, uc_key, uc_keyLen, &len);
-    if (len <= 0)
-    {
+    unsigned char *result = xxtea_encrypt(uc_input, uc_inputLen, uc_key, uc_keyLen, &len);
+    if (len <= 0) {
         return "";
-    }
-    else
-    {
-        string s((const char *)result, len);
+    } else {
+        string s((const char *) result, len);
         free(result);
         return s;
     }
 }
 
-std::string IETSystemUtil::xxteaDecrypt(std::string input, std::string key)
-{
-    unsigned char* uc_input = (unsigned char*)input.c_str();
-    xxtea_long uc_inputLen = (xxtea_long)strlen(input.c_str());
-    unsigned char* uc_key = (unsigned char*)key.c_str();
-    xxtea_long uc_keyLen = (xxtea_long)strlen(key.c_str());
+std::string IETSystemUtil::xxteaDecrypt(std::string input, std::string key) {
+    unsigned char *uc_input = (unsigned char *) input.c_str();
+    xxtea_long uc_inputLen = (xxtea_long) strlen(input.c_str());
+    unsigned char *uc_key = (unsigned char *) key.c_str();
+    xxtea_long uc_keyLen = (xxtea_long) strlen(key.c_str());
     xxtea_long len;
-    unsigned char* result = xxtea_decrypt(uc_input, uc_inputLen, uc_key, uc_keyLen, &len);
-    if (len <= 0)
-    {
+    unsigned char *result = xxtea_decrypt(uc_input, uc_inputLen, uc_key, uc_keyLen, &len);
+    if (len <= 0) {
         return "";
-    }
-    else
-    {
-        string s((const char *)result, len);
+    } else {
+        string s((const char *) result, len);
         free(result);
         return s;
     }
 }
 
-std::string IETSystemUtil::base64Encode(std::string input)
-{
-    unsigned char* uc_input = (unsigned char*)input.c_str();
-    unsigned int uc_inputLen = (unsigned int)strlen(input.c_str());
-    char* result = nullptr;
+std::string IETSystemUtil::base64Encode(std::string input) {
+    unsigned char *uc_input = (unsigned char *) input.c_str();
+    unsigned int uc_inputLen = (unsigned int) strlen(input.c_str());
+    char *result = nullptr;
     int len = cocos2d::base64Encode(uc_input, uc_inputLen, &result);
     if (len <= 0) {
         return "";
@@ -171,23 +155,21 @@ std::string IETSystemUtil::base64Encode(std::string input)
     }
 }
 
-std::string IETSystemUtil::base64Decode(std::string input)
-{
-    unsigned char* uc_input = (unsigned char*)input.c_str();
-    unsigned int uc_inputLen = (unsigned int)strlen(input.c_str());
-    unsigned char* result = nullptr;
+std::string IETSystemUtil::base64Decode(std::string input) {
+    unsigned char *uc_input = (unsigned char *) input.c_str();
+    unsigned int uc_inputLen = (unsigned int) strlen(input.c_str());
+    unsigned char *result = nullptr;
     int len = cocos2d::base64Decode(uc_input, uc_inputLen, &result);
     if (len <= 0) {
         return "";
     } else {
-        string s((const char*)result, len);
+        string s((const char *) result, len);
         free(result);
         return s;
     }
 }
 
-std::string IETSystemUtil::getWebServerRoot()
-{
+std::string IETSystemUtil::getWebServerRoot() {
 #if DEBUG
     return this->getValue("WebServerRootDev").asString();
 #else
@@ -195,8 +177,7 @@ std::string IETSystemUtil::getWebServerRoot()
 #endif
 }
 
-std::string IETSystemUtil::getFileServerRoot()
-{
+std::string IETSystemUtil::getFileServerRoot() {
 #if DEBUG
     return this->getValue("FileServerRootDev").asString();
 #else
@@ -204,24 +185,22 @@ std::string IETSystemUtil::getFileServerRoot()
 #endif
 }
 
-void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<void ()> &func)
-{
-    IETSystemUtil::requestUrl("get", configUrl, "", [=](bool success, std::string data){
-        if (success && data.length()>0) {
+void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<void()> &func) {
+    IETSystemUtil::requestUrl("get", configUrl, "", [=](bool success, std::string data) {
+        if (success && data.length() > 0) {
             UserDefault::getInstance()->setStringForKey("online_config", data);
             UserDefault::getInstance()->flush();
         } else {
             data = UserDefault::getInstance()->getStringForKey("online_config", "");
         }
         if (data.length() > 0) {
-            _onlineValueMap = FileUtils::getInstance()->getValueMapFromData(data.c_str(), (int)data.length());
+            _onlineValueMap = FileUtils::getInstance()->getValueMapFromData(data.c_str(), (int) data.length());
         }
         func();
     });
 }
 
-cocos2d::Value IETSystemUtil::getValue(std::string key)
-{
+cocos2d::Value IETSystemUtil::getValue(std::string key) {
     Value v = getOnLineValue(key);
     if (v != Value::Null) {
         return v;
@@ -229,19 +208,16 @@ cocos2d::Value IETSystemUtil::getValue(std::string key)
     return getLocalValue(key);
 }
 
-cocos2d::Value IETSystemUtil::getLocalValue(std::string key)
-{
+cocos2d::Value IETSystemUtil::getLocalValue(std::string key) {
     return _localValueMap[key];
 }
 
-cocos2d::Value IETSystemUtil::getOnLineValue(std::string key)
-{
+cocos2d::Value IETSystemUtil::getOnLineValue(std::string key) {
     return _onlineValueMap[key];
 }
 
-void IETSystemUtil::downloadFile(std::string url, std::string path, const std::function<void (int, int)> &callback)
-{
-    string key = url+"_"+path;
+void IETSystemUtil::downloadFile(std::string url, std::string path, const std::function<void(int, int)> &callback) {
+    string key = url + "_" + path;
     vector<DownloadItem> v;
     bool isExist = false;
     if (_downloadItems.find(key) != _downloadItems.end()) {
@@ -249,8 +225,8 @@ void IETSystemUtil::downloadFile(std::string url, std::string path, const std::f
         isExist = true;
     }
     DownloadItem item;
-    item.url      = url;
-    item.path     = path;
+    item.url = url;
+    item.path = path;
     item.callback = callback;
     v.push_back(item);
     _downloadItems[key] = v;
@@ -260,138 +236,119 @@ void IETSystemUtil::downloadFile(std::string url, std::string path, const std::f
     _downloader->downloadAsync(url, path, key);
 }
 
-bool IETSystemUtil::uncompressZip(std::string file, std::string path)
-{
+bool IETSystemUtil::uncompressZip(std::string file, std::string path) {
     unzFile zipfile = unzOpen(file.c_str());
-    
-    
-    if ( zipfile == NULL )
-    {
+
+
+    if (zipfile == NULL) {
         // printf( "%s: not found" ,file.c_str());
         return false;
     }
-    
+
     // Get info about the zip file
     unz_global_info global_info;
-    if ( unzGetGlobalInfo( zipfile, &global_info ) != UNZ_OK )
-    {
+    if (unzGetGlobalInfo(zipfile, &global_info) != UNZ_OK) {
         // printf( "could not read file global info" );
-        unzClose( zipfile );
+        unzClose(zipfile);
         return false;
     }
-    
+
     // Loop to extract all files
     uLong i;
-    for ( i = 0; i < global_info.number_entry; ++i )
-    {
+    for (i = 0; i < global_info.number_entry; ++i) {
         // Get info about current file.
         unz_file_info file_info;
-        char filename[ 100 ];
-        if ( unzGetCurrentFileInfo(
-                                   zipfile,
-                                   &file_info,
-                                   filename,
-                                   100,
-                                   NULL, 0, NULL, 0 ) != UNZ_OK )
-        {
+        char filename[100];
+        if (unzGetCurrentFileInfo(
+                zipfile,
+                &file_info,
+                filename,
+                100,
+                NULL, 0, NULL, 0) != UNZ_OK) {
             // log( "could not read file info" );
-            unzClose( zipfile );
+            unzClose(zipfile);
             return false;
         }
 
         // Buffer to hold data read from the zip file.
-        char read_buffer[ 8192 ];
-        
+        char read_buffer[8192];
+
         std::string str(filename);
-        
+
         //if(str.find(".png") != string::npos || str.find(".gif") != string::npos){
-        
+
         // log("debug extracting file %s",filename );
         // Check if this entry is a directory or file.
-        const size_t filename_length = strlen( filename );
-        if ( filename[ filename_length-1 ] == '/' )
-        {
+        const size_t filename_length = strlen(filename);
+        if (filename[filename_length - 1] == '/') {
             // Entry is a directory, so create it.
-            std::string dirPath = path+filename;
+            std::string dirPath = path + filename;
             // log( "dir:%s",  dirPath.c_str());
             if (!FileUtils::getInstance()->isDirectoryExist(dirPath)) {
                 FileUtils::getInstance()->createDirectory(dirPath);
             }
-        }
-        else
-        {
+        } else {
             // Entry is a file, so extract it.
             // log( "file:%s", filename );
-            if ( unzOpenCurrentFile( zipfile ) != UNZ_OK )
-            {
+            if (unzOpenCurrentFile(zipfile) != UNZ_OK) {
                 // log( "could not open file" );
-                unzClose( zipfile );
+                unzClose(zipfile);
                 return false;
             }
-            
+
             // Open a file to write out the data.
             std::string filepath = path + filename;
             // log("%s",filepath.c_str());
-            FILE *out = fopen( filepath.c_str(), "wb" );
-            if ( out == NULL )
-            {
+            FILE *out = fopen(filepath.c_str(), "wb");
+            if (out == NULL) {
                 // log( "could not open destination file" );
-            }
-            else
-            {
+            } else {
                 int error = UNZ_OK;
-                do
-                {
-                    error = unzReadCurrentFile( zipfile, read_buffer, 8192 );
-                    if ( error < 0 )
-                    {
+                do {
+                    error = unzReadCurrentFile(zipfile, read_buffer, 8192);
+                    if (error < 0) {
                         // printf( "error %d", error );
-                        unzCloseCurrentFile( zipfile );
-                        unzClose( zipfile );
+                        unzCloseCurrentFile(zipfile);
+                        unzClose(zipfile);
                         return false;
                     }
-                    
+
                     // Write data to file.
-                    if ( error > 0 )
-                    {
-                        int dbuf = fwrite( read_buffer, error, 1, out ); // You should check return of fwrite...
+                    if (error > 0) {
+                        int dbuf = fwrite(read_buffer, error, 1, out); // You should check return of fwrite...
                         CC_UNUSED_PARAM(dbuf);
                         // log("debug bytes written %d %s",dbuf,filename);
                     }
-                } while ( error > 0 );
-                
-                fclose( out );
+                } while (error > 0);
+
+                fclose(out);
             }
         }
-        
-        unzCloseCurrentFile( zipfile );
-        
-        
+
+        unzCloseCurrentFile(zipfile);
+
+
         // Go the the next entry listed in the zip file.
-        if ( ( i+1 ) < global_info.number_entry )
-        {
-            if ( unzGoToNextFile( zipfile ) != UNZ_OK )
-            {
+        if ((i + 1) < global_info.number_entry) {
+            if (unzGoToNextFile(zipfile) != UNZ_OK) {
                 // printf( "cound not read next file" );
-                unzClose( zipfile );
+                unzClose(zipfile);
                 return false;
             }
         }
-        
+
     }
 
-    unzClose( zipfile );
+    unzClose(zipfile);
     return true;
 }
 
-void IETSystemUtil::setMainLuaFile(std::string file)
-{
+void IETSystemUtil::setMainLuaFile(std::string file) {
     _mainLuaFile = file;
 }
 
-void IETSystemUtil::checkVersionBuild(std::string configUrl, int currentBuild, const std::function<void ()> &func)
-{
-    this->syncGameConfig(configUrl, [=](){
+void IETSystemUtil::checkVersionBuild(std::string configUrl, int currentBuild, const std::function<void()> &func) {
+    this->syncGameConfig(configUrl, [=]() {
         // 提示用户升级客户端
         this->showNewVersionDialog([=](int result) {
             if (result == 1) {// 升级
@@ -417,13 +374,11 @@ void IETSystemUtil::checkVersionBuild(std::string configUrl, int currentBuild, c
     });
 }
 
-void IETSystemUtil::openUrl(std::string url)
-{
+void IETSystemUtil::openUrl(std::string url) {
     Application::getInstance()->openURL(url);
 }
 
-void IETSystemUtil::exitGame()
-{
+void IETSystemUtil::exitGame() {
     Director::getInstance()->end();
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     exit(0);
@@ -433,32 +388,31 @@ void IETSystemUtil::exitGame()
 #pragma mark private
 
 IETSystemUtil::IETSystemUtil()
-:_downloader(nullptr)
-{
+        : _downloader(nullptr) {
     _downloadItems.clear();
     _downloader = std::make_shared<Downloader>();
-    _downloader->setProgressCallback([&](double total, double current, string url, string id){
+    _downloader->setProgressCallback([&](double total, double current, string url, string id) {
         // CCLOG("setProgressCallback: %f,%f,%s,%s", total, current, url.c_str(), id.c_str());
         if (_downloadItems.find(id) != _downloadItems.end()) {
             vector<DownloadItem> items = _downloadItems[id];
-            for (int i=0; i<items.size(); i++) {
+            for (int i = 0; i < items.size(); i++) {
                 DownloadItem item = items.at(i);
-                item.callback(0, current/total*100);
+                item.callback(0, current / total * 100);
             }
         }
     });
-    _downloader->setSuccessCallback([&](string url, string path, string id){
+    _downloader->setSuccessCallback([&](string url, string path, string id) {
         // CCLOG("setSuccessCallback: %s,%s,%s", url.c_str(), path.c_str(), id.c_str());
         if (_downloadItems.find(id) != _downloadItems.end()) {
             vector<DownloadItem> items = _downloadItems[id];
-            for (int i=0; i<items.size(); i++) {
+            for (int i = 0; i < items.size(); i++) {
                 DownloadItem item = items.at(i);
                 item.callback(1, 0);
             }
             _downloadItems.erase(id);
         }
     });
-    _downloader->setErrorCallback([&](Downloader::Error error){
+    _downloader->setErrorCallback([&](Downloader::Error error) {
         Downloader::ErrorCode code = error.code;
         int curle_code = error.curle_code;
         int curlm_code = error.curlm_code;
@@ -468,28 +422,26 @@ IETSystemUtil::IETSystemUtil()
         CCLOG("setErrorCallback: %d, %d, %d, %s, %s, %s", code, curle_code, curlm_code, message.c_str(), customId.c_str(), url.c_str());
         if (_downloadItems.find(customId) != _downloadItems.end()) {
             vector<DownloadItem> items = _downloadItems[customId];
-            for (int i=0; i<items.size(); i++) {
+            for (int i = 0; i < items.size(); i++) {
                 DownloadItem item = items.at(i);
                 item.callback(-1, 0);
             }
             _downloadItems.erase(customId);
         }
     });
-    assert(_localConfigFile.size()>0);
+    assert(_localConfigFile.size() > 0);
 }
 
-IETSystemUtil::~IETSystemUtil()
-{
-    
+IETSystemUtil::~IETSystemUtil() {
+
 }
 
-void IETSystemUtil::init()
-{
+void IETSystemUtil::init() {
     string writablePath = FileUtils::getInstance()->getWritablePath();
-    
+
     // 读取本地配置文件
     _localValueMap = FileUtils::getInstance()->getValueMapFromFile(_localConfigFile);
-    
+
     // 创建热更资源搜索路径并增加到searchPath
     int build = this->getAppVersion();
     _buildPath = StringUtils::format("%snewbuild_%d/", writablePath.c_str(), build);
@@ -499,21 +451,21 @@ void IETSystemUtil::init()
     FileUtils::getInstance()->addSearchPath(_buildPath + "src/", true);
     FileUtils::getInstance()->addSearchPath(_buildPath + "res/", true);
     FileUtils::getInstance()->addSearchPath(_buildPath + "res/ccs_res/", true);
-    
+
     // 创建缓存文件路径
     _cachePath = StringUtils::format("%sgameplugincache/", writablePath.c_str());
     if (!FileUtils::getInstance()->isDirectoryExist(_cachePath)) {
         FileUtils::getInstance()->createDirectory(_cachePath);
     }
-    
+
     // Lua脚本搜索路径
-#if CC_LUA_ENGINE_ENABLED>0
-    LuaEngine* engine = LuaEngine::getInstance();
-    LuaStack* stack = engine->getLuaStack();
-    lua_State* state = stack->getLuaState();
+#if CC_LUA_ENGINE_ENABLED > 0
+    LuaEngine *engine = LuaEngine::getInstance();
+    LuaStack *stack = engine->getLuaStack();
+    lua_State *state = stack->getLuaState();
     lua_getglobal(state, "package");
     lua_getfield(state, -1, "path");
-    const char* cur_path = lua_tostring(state, -1);
+    const char *cur_path = lua_tostring(state, -1);
     string path = _buildPath + "src/?.lua";
     lua_pushfstring(state, "%s;%s", path.c_str(), cur_path);
     lua_setfield(state, -3, "path");
@@ -521,8 +473,7 @@ void IETSystemUtil::init()
 #endif
 }
 
-bool IETSystemUtil::isNewVersionValid()
-{
+bool IETSystemUtil::isNewVersionValid() {
     Value newVersionValue = this->getValue("new_version");
     if (newVersionValue.isNull()) {
         return false;
@@ -539,8 +490,7 @@ bool IETSystemUtil::isNewVersionValid()
     return true;
 }
 
-void IETSystemUtil::showNewVersionDialog(const std::function<void (int)> &func)
-{
+void IETSystemUtil::showNewVersionDialog(const std::function<void(int)> &func) {
     if (!isNewVersionValid()) {
         func(-1);
         return;
@@ -563,8 +513,7 @@ void IETSystemUtil::showNewVersionDialog(const std::function<void (int)> &func)
     });
 }
 
-bool IETSystemUtil::isNewBuildValid(int currentBuild)
-{
+bool IETSystemUtil::isNewBuildValid(int currentBuild) {
     Value newBuildValue = this->getValue("new_build");
     if (newBuildValue.isNull()) {
         return false;
@@ -580,8 +529,7 @@ bool IETSystemUtil::isNewBuildValid(int currentBuild)
     return true;
 }
 
-void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<void (int)> &func)
-{
+void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<void(int)> &func) {
     if (!isNewBuildValid(currentBuild)) {
         func(-1);
         return;
@@ -595,7 +543,7 @@ void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<voi
     string fileName = this->urlEncode(url);
     string localPath = StringUtils::format("%s%s", _cachePath.c_str(), fileName.c_str());
     this->showProgressDialog("Connecting", 0);
-    this->downloadFile(url, localPath, [=](int first, int second){
+    this->downloadFile(url, localPath, [=](int first, int second) {
         if (first == 0) {
             this->showProgressDialog("Loading...", second);
         } else if (first == 1) {
@@ -609,14 +557,14 @@ void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<voi
                 if (this->_mainLuaFile.size() > 0) {
                     func(1);
                 } else {
-                    this->showAlertDialog("Update Success", "Please Relaunch The Game.", "Relaunch", ValueVectorNull, [=](int buttonIdx){
+                    this->showAlertDialog("Update Success", "Please Relaunch The Game.", "Relaunch", ValueVectorNull, [=](int buttonIdx) {
                         IETSystemUtil::exitGame();
                     });
                 }
             } else {
                 IETAnalyticHelper::getInstance()->onEvent("update_failed", "Uncompress Failed");// 统计更新更新失败的比例
-                this->showAlertDialog("Update Failed", "Please Try Again.[Uncompress Failed]", "Ok", ValueVectorNull, [=](int buttonIdx){
-                    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+                this->showAlertDialog("Update Failed", "Please Try Again.[Uncompress Failed]", "Ok", ValueVectorNull, [=](int buttonIdx) {
+                    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=] {
                         this->showNewBuildDialog(currentBuild, func);
                     });
                 });
@@ -624,11 +572,74 @@ void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<voi
         } else if (first == -1) {
             IETAnalyticHelper::getInstance()->onEvent("update_failed", "Download Failed");// 统计更新更新失败的比例
             this->hideProgressDialog();
-            this->showAlertDialog("Update Failed", "Please Try Again.[Download Failed]", "Ok", ValueVectorNull, [=](bool ok){
-                Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            this->showAlertDialog("Update Failed", "Please Try Again.[Download Failed]", "Ok", ValueVectorNull, [=](bool ok) {
+                Director::getInstance()->getScheduler()->performFunctionInCocosThread([=] {
                     this->showNewBuildDialog(currentBuild, func);
                 });
             });
         }
     });
+}
+
+void IETSystemUtil::setAesSign(unsigned char *sign, size_t len) {
+    CC_SAFE_FREE(_xxAesSign);
+    _xxAesSign = (unsigned char *) malloc(len);
+    memcpy(_xxAesSign, sign, len);
+    _xxAesSignLen = len;
+}
+
+unsigned char* IETSystemUtil::aesDecrypt(unsigned char* buffer,ssize_t oriSize,ssize_t *size){
+    int signLen = _xxAesSignLen;
+    *size = oriSize;
+    if (*size > 16 + 32 + signLen) {
+        bool isEncrypt = true;
+        for (int i = 0; isEncrypt && i < signLen && i < *size; ++i) {
+            isEncrypt &= (buffer[i] == _xxAesSign[i]);
+        }
+        if (isEncrypt) {
+            //解密
+            ssize_t newSize = *size - signLen - 32;
+            unsigned char *newbuffer = (unsigned char *) malloc(newSize);
+            memcpy(newbuffer, buffer + signLen, newSize);
+
+            //头上16个key和iv，最后16个key 16个sign
+            unsigned char *headBytes = (unsigned char *) malloc(16);
+            unsigned char *keyBytes = (unsigned char *) malloc(16);
+            unsigned char *ivBytes = (unsigned char *) malloc(16);
+            memcpy(headBytes, newbuffer, 16);
+            unsigned char *tailBytes = buffer + *size - 32;
+            memcpy(keyBytes, tailBytes, 16);
+            memcpy(ivBytes, tailBytes + 16, 16);
+
+            free(buffer);
+            buffer = NULL;
+
+            unsigned char *decryptKeyBytes = (unsigned char *) malloc(16);
+            unsigned char *decryptIvBytes = (unsigned char *) malloc(16);
+            AES128_CBC_decrypt_buffer(decryptKeyBytes, keyBytes, 16, (uint8_t *) headBytes, (uint8_t *) headBytes);
+            AES128_CBC_decrypt_buffer(decryptIvBytes, ivBytes, 16, (uint8_t *) headBytes, (uint8_t *) headBytes);
+
+            free(headBytes);
+            free(keyBytes);
+            free(ivBytes);
+
+            int blockSize = MIN((newSize / 16) * 16, 512 * 1024);
+            int blockCount = newSize / blockSize;
+            unsigned char out[blockSize];
+            int tryCount = 0;
+            for (int i = 0; i < blockCount; i++) {
+                tryCount++;
+                //单数片段需要解密
+                if (i % 2 == 0) {
+                    AES128_CBC_decrypt_buffer(out, newbuffer + blockSize * i, blockSize, decryptKeyBytes, decryptIvBytes);
+                    memcpy(newbuffer + blockSize * i, out, blockSize);
+                }
+            }
+            free(decryptKeyBytes);
+            free(decryptIvBytes);
+            buffer = newbuffer;
+            *size = newSize;
+        }
+    }
+    return buffer;
 }
