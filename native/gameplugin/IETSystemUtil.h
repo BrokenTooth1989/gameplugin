@@ -103,7 +103,7 @@ public:
     void keychainSet(std::string key, std::string value);
     std::string keychainGet(std::string key);
     void copyToPasteboard(std::string str);
-    void requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func);
+    void requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func);
 private:
     IETSystemUtil();
     ~IETSystemUtil();
