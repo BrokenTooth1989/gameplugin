@@ -53,11 +53,7 @@ bool IETAdvertiseHelper::showSpotAd(const std::function<void (bool)> &func)
 
 bool IETAdvertiseHelper::isVedioReady()
 {
-    if (CCRANDOM_0_1() <= 0.5) {
-        return true;
-    } else {
-        return false;
-    }
+    return true;
 }
 
 bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc, const std::function<void (bool)> &clickFunc)
