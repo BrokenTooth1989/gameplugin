@@ -106,7 +106,7 @@ std::string IETSystemUtil::keychainGet(std::string key)
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 
-void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> &func)
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
 {
     HttpClient::getInstance()->setTimeoutForConnect(10);
     HttpClient::getInstance()->setTimeoutForRead(10);
