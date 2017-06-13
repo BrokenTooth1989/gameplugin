@@ -161,9 +161,8 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
    
     NSString* nsUrl =  [NSString stringWithCString:url.c_str()
                                           encoding:[NSString defaultCStringEncoding]];
-
     
-    void(^success)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *operation, id responseObject) {
+    void(^success)(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) = ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"JSON: %@", responseObject);
         
         NSError *parseError = nil;
@@ -176,16 +175,16 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         
     };
     
-    void(^failure)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    void(^failure)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) = ^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"Error: %@", error);
         func(false, "");
     };
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     if (!strcmp(requestType.c_str(), "get")) {
-        [manager GET:nsUrl parameters:nil success:success failure:failure];
+        [manager GET:nsUrl parameters:nil progress:nil success:success failure:failure];
     } else {
-        [manager POST:nsUrl parameters:nil success:success failure:failure];
+        [manager POST:nsUrl parameters:nil progress:nil success:success failure:failure];
     }
 
 }
