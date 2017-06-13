@@ -112,6 +112,8 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
     HttpClient::getInstance()->setTimeoutForRead(10);
     HttpRequest* request = new HttpRequest();
     request->setUrl(url.c_str());
+    
+    CCLOG("http data %s",data.c_str());
     if (strcmp(requestType.c_str(), "get") == 0) {
         request->setRequestType(HttpRequest::Type::GET);
     } else if (strcmp(requestType.c_str(), "post") == 0) {
