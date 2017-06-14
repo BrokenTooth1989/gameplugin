@@ -10,6 +10,8 @@
 #import "IETUtility.h"
 #include <sys/sysctl.h>
 #include "network/HttpClient.h"
+#include "SBJSON.h"
+
 
 using namespace cocos2d::network;
 
@@ -122,6 +124,20 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         assert(false);
     }
     if (data.size() > 0) {
+        CCLOG("Post data:%s",data.c_str());
+        NSString* jData =  [NSString stringWithCString:data.c_str()
+                                              encoding:[NSString defaultCStringEncoding]];
+        
+        NSData* jD = [jData dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSDictionary *jdic = [NSJSONSerialization JSONObjectWithData:jD options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",jdic);
+
+        for (NSString *key in jdic) {
+            NSLog(@"key: %@ value: %@", key, jdic[key]);
+        }
+        
         request->setRequestData(data.c_str(), strlen(data.c_str()));
     }
     request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
@@ -136,4 +152,8 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
     });
     HttpClient::getInstance()->sendImmediate(request);
     request->release();
+    
+    
+    
+
 }
