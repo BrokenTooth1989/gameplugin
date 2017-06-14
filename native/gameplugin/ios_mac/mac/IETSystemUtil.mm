@@ -10,7 +10,7 @@
 #import "IETUtility.h"
 #include <sys/sysctl.h>
 #include "network/HttpClient.h"
-#include "SBJSON.h"
+
 
 
 using namespace cocos2d::network;
@@ -115,7 +115,7 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
     HttpRequest* request = new HttpRequest();
     request->setUrl(url.c_str());
     
-    CCLOG("http data %s",data.c_str());
+    CCLOG("http data %s %s",url.c_str(),data.c_str());
     if (strcmp(requestType.c_str(), "get") == 0) {
         request->setRequestType(HttpRequest::Type::GET);
     } else if (strcmp(requestType.c_str(), "post") == 0) {
@@ -132,13 +132,18 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         
         NSDictionary *jdic = [NSJSONSerialization JSONObjectWithData:jD options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers error:nil];
         
-        NSLog(@"%@",jdic);
-
+        NSString *str = @"";
+        
         for (NSString *key in jdic) {
-            NSLog(@"key: %@ value: %@", key, jdic[key]);
+            
+           str =  [str stringByAppendingFormat:@"%@=%@&",key, jdic[key]];
         }
         
-        request->setRequestData(data.c_str(), strlen(data.c_str()));
+         NSLog(@"str :%@",str);
+        
+        std::string *params = new std::string([str UTF8String]);
+        
+        request->setRequestData(params->c_str(), strlen(params->c_str()));
     }
     request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
         if (response == nullptr || !response->isSucceed())
@@ -146,9 +151,13 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
             func(false, "");
             return;
         }
+        
+        
         std::vector<char> *buffer = response->getResponseData();
         std::string bufffff(buffer->begin(),buffer->end());
         func(true, bufffff);
+        
+        CCLOG("response:%s",bufffff.c_str());
     });
     HttpClient::getInstance()->sendImmediate(request);
     request->release();
