@@ -37,4 +37,8 @@ function TimerUtil:setTime(time)
 	self.offset = time/1000-os.time()
 end
 
+function TimerUtil:getSystemTime()
+	return os.time()
+end
+
 return TimerUtil
