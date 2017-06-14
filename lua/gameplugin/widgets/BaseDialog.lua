@@ -9,6 +9,7 @@ end)
 
 function BaseDialog:ctor(rootPos)
     rootPos = rootPos or cc.p(0, 0)
+    self.rootPos = rootPos
     -- background layer
     local bgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 150))
         :zorder(-1)
@@ -76,9 +77,9 @@ end
 function BaseDialog:showFromBottom(cb)
     cb = cb or function() end
     self:animStart()
-    self.root:pos(0, -display.height)
+    self.root:pos(self.rootPos.x, self.rootPos.y-display.height)
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineOut:create(cc.MoveTo:create(0.3, cc.p(0, 0))),
+        cc.EaseSineOut:create(cc.MoveTo:create(0.3, self.rootPos)),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -88,7 +89,7 @@ function BaseDialog:dismissToBottom(cb)
     cb = cb or function() end
     self:animStart()
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineIn:create(cc.MoveTo:create(0.3, cc.p(0, -display.height))),
+        cc.EaseSineIn:create(cc.MoveTo:create(0.3, cc.p(self.rootPos.x, self.rootPos.y-display.height))),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -97,9 +98,9 @@ end
 function BaseDialog:showFromRight(cb)
     cb = cb or function() end
     self:animStart()
-    self.root:pos(display.width, 0)
+    self.root:pos(self.rootPos.x+display.width, self.rootPos.y)
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineOut:create(cc.MoveTo:create(0.2, cc.p(0, 0))),
+        cc.EaseSineOut:create(cc.MoveTo:create(0.2, self.rootPos)),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -109,7 +110,7 @@ function BaseDialog:dismissToRight(cb)
     cb = cb or function() end
     self:animStart()
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(display.width, 0))),
+        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(self.rootPos.x+display.width, self.rootPos.y))),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -118,9 +119,9 @@ end
 function BaseDialog:showFromTop(cb)
     cb = cb or function() end
     self:animStart()
-    self.root:pos(0, display.height)
+    self.root:pos(self.rootPos.x, self.rootPos.y+display.height)
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineOut:create(cc.MoveTo:create(0.2, cc.p(0, 0))),
+        cc.EaseSineOut:create(cc.MoveTo:create(0.2, self.rootPos)),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -130,7 +131,7 @@ function BaseDialog:dismissToTop(cb)
     cb = cb or function() end
     self:animStart()
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(0, display.height))),
+        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(self.rootPos.x, self.rootPos.y+display.height))),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -139,9 +140,9 @@ end
 function BaseDialog:showFromLeft(cb)
     cb = cb or function() end
     self:animStart()
-    self.root:pos(-display.width, 0)
+    self.root:pos(self.rootPos.x-display.width, self.rootPos.y)
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineOut:create(cc.MoveTo:create(0.2, cc.p(0, 0))),
+        cc.EaseSineOut:create(cc.MoveTo:create(0.2, self.rootPos)),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -151,7 +152,7 @@ function BaseDialog:dismissToLeft(cb)
     cb = cb or function() end
     self:animStart()
     self.root:runAction(cc.Sequence:create({
-        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(-display.width, 0))),
+        cc.EaseSineIn:create(cc.MoveTo:create(0.2, cc.p(self.rootPos.x-display.width, self.rootPos.y))),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
