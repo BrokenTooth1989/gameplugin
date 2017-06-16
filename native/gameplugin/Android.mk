@@ -5,7 +5,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := gameplugin_static
 LOCAL_MODULE_FILENAME := libgameplugin
 
-LOCAL_SRC_FILES := 	android/IETAdvertiseHelper.cpp \
+LOCAL_SRC_FILES :=  aes.c \
+					android/IETAdvertiseHelper.cpp \
 					android/IETAmazonAWSHelper.cpp \
 					android/IETAnalyticHelper.cpp \
 					android/IETFacebookHelper.cpp \
@@ -28,5 +29,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(COCOS2DX_ROOT)/external \
                     $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(COCOS2DX_ROOT)/external/lua/luajit/include
+
 $(warning $(COCOS2DX_ROOT))
 include $(BUILD_STATIC_LIBRARY)

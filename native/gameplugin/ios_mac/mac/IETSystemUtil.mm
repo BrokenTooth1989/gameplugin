@@ -152,8 +152,8 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
             return;
         }
         
-        
         std::vector<char> *buffer = response->getResponseData();
+        
         std::string bufffff(buffer->begin(),buffer->end());
         func(true, bufffff);
         
