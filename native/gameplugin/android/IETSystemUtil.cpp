@@ -83,3 +83,23 @@ std::string IETSystemUtil::keychainGet(std::string key)
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 
+
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
+{
+    
+    
+}
+
+
+std::string IETSystemUtil::getAppVersionName()
+{
+    
+    return "";
+}
+
+
+int IETSystemUtil::getAppBuildNum()
+{
+    return 0;
+}
+

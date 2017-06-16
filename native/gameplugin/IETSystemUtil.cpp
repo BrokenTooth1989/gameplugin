@@ -186,25 +186,6 @@ std::string IETSystemUtil::getFileServerRoot() {
 }
 
 
-void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
-{
-
-
-}
-
-
-std::string IETSystemUtil::getAppVersionName()
-  {
-
-    return "";
-  }
-
-
-int IETSystemUtil::getAppBuildNum()
-{
-    return 0;
-}
-
 void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<void()> &func) {
     IETSystemUtil::requestUrl("get", configUrl, "", [=](bool success, std::string data) {
         if (success && data.length() > 0) {
