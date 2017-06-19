@@ -20,7 +20,7 @@ USING_NS_CC;
 
 #endif
  
-#define CLASS_NAME_NATIVE_HELPER "com/fatalsignal/game/NativeHelper"
+// #define CLASS_NAME_NATIVE_HELPER "com/fatalsignal/game/NativeHelper"
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,13 +29,13 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-jobject mNativeHelper;
+// jobject mNativeHelper;
 void IETGamePlugin::init()
 {
-	JniMethodInfo jMthGetInstance;
-    JniHelper::getStaticMethodInfo(jMthGetInstance, CLASS_NAME_NATIVE_HELPER, "getInstance", CCString::createWithFormat("()L%s;",CLASS_NAME_NATIVE_HELPER)->getCString());
-    mNativeHelper =
-    jMthGetInstance.env->NewGlobalRef(jMthGetInstance.env->CallStaticObjectMethod(jMthGetInstance.classID, jMthGetInstance.methodID));
+	// JniMethodInfo jMthGetInstance;
+ //    JniHelper::getStaticMethodInfo(jMthGetInstance, CLASS_NAME_NATIVE_HELPER, "getInstance", CCString::createWithFormat("()L%s;",CLASS_NAME_NATIVE_HELPER)->getCString());
+ //    mNativeHelper =
+ //    jMthGetInstance.env->NewGlobalRef(jMthGetInstance.env->CallStaticObjectMethod(jMthGetInstance.classID, jMthGetInstance.methodID));
 }
 
 void IETGamePlugin::crashReportLogs(std::string message)
@@ -130,16 +130,48 @@ void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)
 {}
 void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
 {}
+
 std::string IETGamePlugin::uuidForDevice()
 {
-	JniMethodInfo jmth;
-    JniHelper::getMethodInfo(jmth, CLASS_NAME_NATIVE_HELPER, "uuidForDevice", "()Ljava/lang/String;");
-    jobject jcid = jmth.env->CallObjectMethod(mNativeHelper, jmth.methodID);
-    const char* clientId = jmth.env->GetStringUTFChars((jstring)jcid, JNI_FALSE);
-    string ret =string(clientId);
-    jmth.env->ReleaseStringUTFChars((jstring)jcid, clientId);
+    HttpClient::getInstance()->setTimeoutForConnect(10);
+    HttpClient::getInstance()->setTimeoutForRead(10);
+    HttpRequest* request = new HttpRequest();
+    request->setUrl(url.c_str());
+    
+    CCLOG("http data %s %s",url.c_str(),data.c_str());
+    if (strcmp(requestType.c_str(), "get") == 0) {
+        request->setRequestType(HttpRequest::Type::GET);
+    } else if (strcmp(requestType.c_str(), "post") == 0) {
+        request->setRequestType(HttpRequest::Type::POST);
+    } else {
+        assert(false);
+    }
+    if (data.size() > 0) {
+        CCLOG("Post data:%s",data.c_str());
+       
+        
+        std::string *params = new std::string([str UTF8String]);
+        
+        request->setRequestData(params->c_str(), strlen(params->c_str()));
+    }
+    request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
+        if (response == nullptr || !response->isSucceed())
+        {
+            func(false, "");
+            return;
+        }
+        
+        std::vector<char> *buffer = response->getResponseData();
+        
+        std::string bufffff(buffer->begin(),buffer->end());
+        func(true, bufffff);
+        
+        CCLOG("response:%s",bufffff.c_str());
+    });
+    HttpClient::getInstance()->sendImmediate(request);
+    request->release();
 
-    return ret;
+    return "";
 }
 
 
