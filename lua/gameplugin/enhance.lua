@@ -103,7 +103,7 @@ function string.formatNumHMS(num)
     num = math.round(num)
     local second = num%60
     local minute = num/60%60
-    local hour = num/60/60%60
+    local hour = num/60/60
     return string.format("%02d:%02d:%02d",hour, minute, second)
 end
 
