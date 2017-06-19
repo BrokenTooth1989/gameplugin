@@ -52,36 +52,36 @@ void IETFacebookHelper::login()
 
 
 
-     //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 "com/omega/MyApp",
-                                                 "getJavaActivity",
-                                                 "()Ljava/lang/Object;");
-    jobject activityObj;
-    if (isHave)
-    {
-        //调用静态函数getJavaActivity，获取java类对象。
-        activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
-    }
+    //  //1. 获取activity静态对象
+    // JniMethodInfo minfo;
+    // bool isHave = JniHelper::getStaticMethodInfo(minfo,
+    //                                              "com/omega/MyApp",
+    //                                              "getJavaActivity",
+    //                                              "()Ljava/lang/Object;");
+    // jobject activityObj;
+    // if (isHave)
+    // {
+    //     //调用静态函数getJavaActivity，获取java类对象。
+    //     activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
+    // }
 
-    //2. 查找displayWebView接口，获取其函数信息，并用jobj调用
-    isHave = JniHelper::getMethodInfo(minfo,"com/omega/MyApp","displayWebView", "(IIII)V"); 
+    // //2. 查找displayWebView接口，获取其函数信息，并用jobj调用
+    // isHave = JniHelper::getMethodInfo(minfo,"com/omega/MyApp","displayWebView", "(IIII)V"); 
 
-    if (!isHave)
-    {
-        CCLog("jni:displayWebView 函数不存在");
-    }
-    else
-    {
-        //调用此函数
-        jint jX = (int)tlX;
-        jint jY = (int)tlY;
-        jint jWidth = (int)webWidth;
-        jint jHeight = (int)webHeight;
-        //调用displayWebView函数，并传入参数
-        minfo.env->CallVoidMethod(activityObj, minfo.methodID, jX, jY, jWidth, jHeight);
-    }
+    // if (!isHave)
+    // {
+    //     CCLog("jni:displayWebView 函数不存在");
+    // }
+    // else
+    // {
+    //     //调用此函数
+    //     jint jX = (int)tlX;
+    //     jint jY = (int)tlY;
+    //     jint jWidth = (int)webWidth;
+    //     jint jHeight = (int)webHeight;
+    //     //调用displayWebView函数，并传入参数
+    //     minfo.env->CallVoidMethod(activityObj, minfo.methodID, jX, jY, jWidth, jHeight);
+    // }
 
 }
 
