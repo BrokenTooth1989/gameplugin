@@ -17,7 +17,13 @@ function DataUtil:ctor()
     if dataStr ~= nil and #dataStr > 0 then
         self._gameState = json.decode(dataStr)
         if self._gameState == nil then
-            self._gameState = json.decode(crypto.decryptAES256(crypto.decodeBase64(dataStr), secretKey))
+
+          if device.platform == "ios" then
+             self._gameState = json.decode(crypto.decryptAES256(crypto.decodeBase64(dataStr), secretKey))
+          elseif device.platform == "android" then
+             self._gameState = json.decode(crypto.decryptXXTEA(crypto.decodeBase64(dataStr), secretKey))
+          end
+
         end
     end
     self._gameState = self._gameState or {}
@@ -28,7 +34,14 @@ function DataUtil:ctor()
 end
 
 function DataUtil:flush()
-    local dataStr = crypto.encodeBase64(crypto.encryptAES256(json.encode(self._gameState), secretKey))
+    
+    local dataStr 
+    if device.platform == "ios" then
+        dataStr = crypto.encodeBase64(crypto.encryptAES256(json.encode(self._gameState), secretKey))
+    elseif device.platform == "android" then
+        dataStr = crypto.encodeBase64(crypto.encryptXXTEA(json.encode(self._gameState), secretKey))
+    end
+
     local userDefault = cc.UserDefault:getInstance()
     userDefault:setStringForKey(kUserDefaultKey, dataStr)
     userDefault:flush()
