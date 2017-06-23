@@ -18,17 +18,13 @@
 #include "CCLuaEngine.h"
 
 #endif
-extern "C" {
-#include "aes.h"
-}
 
 using namespace std;
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
 std::string IETSystemUtil::_localConfigFile = "";
-unsigned char* IETSystemUtil::_xxAesSign=NULL;
-ssize_t IETSystemUtil::_xxAesSignLen=0;
+
 void IETSystemUtil::setLocalConfig(std::string file) {
     _localConfigFile = file;
 }
@@ -582,65 +578,3 @@ void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<voi
     });
 }
 
-void IETSystemUtil::setAesSign(unsigned char *sign, size_t len) {
-    CC_SAFE_FREE(_xxAesSign);
-    _xxAesSign = (unsigned char *) malloc(len);
-    memcpy(_xxAesSign, sign, len);
-    _xxAesSignLen = len;
-}
-
-unsigned char* IETSystemUtil::aesDecrypt(unsigned char* buffer,ssize_t oriSize,ssize_t *size){
-    int signLen = _xxAesSignLen;
-    *size = oriSize;
-    if (*size > 16 + 32 + signLen) {
-        bool isEncrypt = true;
-        for (int i = 0; isEncrypt && i < signLen && i < *size; ++i) {
-            isEncrypt &= (buffer[i] == _xxAesSign[i]);
-        }
-        if (isEncrypt) {
-            //解密
-            ssize_t newSize = *size - signLen - 32;
-            unsigned char *newbuffer = (unsigned char *) malloc(newSize);
-            memcpy(newbuffer, buffer + signLen, newSize);
-
-            //头上16个key和iv，最后16个key 16个sign
-            unsigned char *headBytes = (unsigned char *) malloc(16);
-            unsigned char *keyBytes = (unsigned char *) malloc(16);
-            unsigned char *ivBytes = (unsigned char *) malloc(16);
-            memcpy(headBytes, newbuffer, 16);
-            unsigned char *tailBytes = buffer + *size - 32;
-            memcpy(keyBytes, tailBytes, 16);
-            memcpy(ivBytes, tailBytes + 16, 16);
-
-            free(buffer);
-            buffer = NULL;
-
-            unsigned char *decryptKeyBytes = (unsigned char *) malloc(16);
-            unsigned char *decryptIvBytes = (unsigned char *) malloc(16);
-            AES128_CBC_decrypt_buffer(decryptKeyBytes, keyBytes, 16, (uint8_t *) headBytes, (uint8_t *) headBytes);
-            AES128_CBC_decrypt_buffer(decryptIvBytes, ivBytes, 16, (uint8_t *) headBytes, (uint8_t *) headBytes);
-
-            free(headBytes);
-            free(keyBytes);
-            free(ivBytes);
-
-            int blockSize = MIN((newSize / 16) * 16, 512 * 1024);
-            int blockCount = newSize / blockSize;
-            unsigned char out[blockSize];
-            int tryCount = 0;
-            for (int i = 0; i < blockCount; i++) {
-                tryCount++;
-                //单数片段需要解密
-                if (i % 2 == 0) {
-                    AES128_CBC_decrypt_buffer(out, newbuffer + blockSize * i, blockSize, decryptKeyBytes, decryptIvBytes);
-                    memcpy(newbuffer + blockSize * i, out, blockSize);
-                }
-            }
-            free(decryptKeyBytes);
-            free(decryptIvBytes);
-            buffer = newbuffer;
-            *size = newSize;
-        }
-    }
-    return buffer;
-}
