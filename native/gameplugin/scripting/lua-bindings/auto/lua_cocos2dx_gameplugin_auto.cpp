@@ -11,24 +11,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_showLoading(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_showLoading'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -47,10 +41,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_showLoading(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:showLoading",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_showLoading'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -60,24 +52,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_postNotification(lua_State* tolua
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_postNotification'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -96,10 +82,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_postNotification(lua_State* tolua
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:postNotification",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_postNotification'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -109,24 +93,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_openUrl(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_openUrl'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -145,10 +123,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_openUrl(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:openUrl",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_openUrl'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -158,24 +134,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBuildPath(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBuildPath'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -192,10 +162,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBuildPath(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getBuildPath",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBuildPath'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -205,24 +173,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideProgressDialog(lua_State* tol
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideProgressDialog'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -238,10 +200,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideProgressDialog(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:hideProgressDialog",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideProgressDialog'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -251,24 +211,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlDecode(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlDecode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -288,10 +242,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlDecode(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:urlDecode",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlDecode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -301,24 +253,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Decode(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Decode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -338,10 +284,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Decode(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:base64Decode",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Decode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -351,24 +295,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_share(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_share'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -387,10 +325,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_share(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:share",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_share'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -400,24 +336,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBundleId(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBundleId'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -434,10 +364,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBundleId(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getBundleId",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getBundleId'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -447,24 +375,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDeviceName(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDeviceName'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -481,10 +403,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDeviceName(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getDeviceName",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDeviceName'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -494,24 +414,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_setNotificationState(lua_State* t
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_setNotificationState'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -530,10 +444,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_setNotificationState(lua_State* t
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:setNotificationState",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_setNotificationState'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -543,24 +455,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_vibrate(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_vibrate'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -576,10 +482,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_vibrate(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:vibrate",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_vibrate'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -589,24 +493,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLanguageCode(lua_State* tolua_
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLanguageCode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -623,10 +521,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLanguageCode(lua_State* tolua_
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getLanguageCode",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLanguageCode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -636,24 +532,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersionName(lua_State* tolu
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersionName'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -670,10 +560,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersionName(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getAppVersionName",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersionName'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -683,24 +571,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getWebServerRoot(lua_State* tolua
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getWebServerRoot'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -717,10 +599,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getWebServerRoot(lua_State* tolua
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getWebServerRoot",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getWebServerRoot'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -730,24 +610,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainGet(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainGet'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -767,10 +641,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainGet(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:keychainGet",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainGet'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -780,24 +652,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersion(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersion'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -814,10 +680,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersion(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getAppVersion",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppVersion'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -827,24 +691,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getOnLineValue(lua_State* tolua_S
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getOnLineValue'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -864,10 +722,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getOnLineValue(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getOnLineValue",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getOnLineValue'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -877,24 +733,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_exitGame(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_exitGame'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -910,10 +760,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_exitGame(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:exitGame",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_exitGame'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -923,24 +771,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppBuildNum(lua_State* tolua_S
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppBuildNum'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -957,10 +799,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppBuildNum(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getAppBuildNum",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppBuildNum'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -970,24 +810,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainSet(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainSet'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -1009,10 +843,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainSet(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:keychainSet",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_keychainSet'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1022,24 +854,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getNetworkState(lua_State* tolua_
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getNetworkState'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1056,10 +882,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getNetworkState(lua_State* tolua_
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getNetworkState",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getNetworkState'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1069,24 +893,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_showProgressDialog(lua_State* tol
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_showProgressDialog'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -1108,10 +926,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_showProgressDialog(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:showProgressDialog",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_showProgressDialog'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1121,24 +937,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaDecrypt(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaDecrypt'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -1161,10 +971,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaDecrypt(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:xxteaDecrypt",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaDecrypt'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1174,24 +982,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getConfigValue(lua_State* tolua_S
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getConfigValue'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -1211,10 +1013,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getConfigValue(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getConfigValue",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getConfigValue'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1224,24 +1024,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCountryCode(lua_State* tolua_S
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCountryCode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1258,10 +1052,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCountryCode(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getCountryCode",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCountryCode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1271,24 +1063,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideLoading(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideLoading'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1304,10 +1090,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideLoading(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:hideLoading",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_hideLoading'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1317,24 +1101,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCachePath(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCachePath'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1351,10 +1129,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCachePath(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getCachePath",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCachePath'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1364,24 +1140,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaEncrypt(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaEncrypt'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -1404,10 +1174,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaEncrypt(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:xxteaEncrypt",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_xxteaEncrypt'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1417,24 +1185,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLocalValue(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLocalValue'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -1454,10 +1216,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLocalValue(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getLocalValue",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getLocalValue'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1467,24 +1227,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getFileServerRoot(lua_State* tolu
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getFileServerRoot'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1501,10 +1255,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getFileServerRoot(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getFileServerRoot",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getFileServerRoot'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1514,24 +1266,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCpuTime(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCpuTime'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1548,10 +1294,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCpuTime(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getCpuTime",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCpuTime'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1561,24 +1305,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlEncode(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlEncode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -1598,10 +1336,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlEncode(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:urlEncode",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_urlEncode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1611,24 +1347,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_showMessage(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_showMessage'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -1647,10 +1377,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_showMessage(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:showMessage",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_showMessage'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1660,24 +1388,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_uncompressZip(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_uncompressZip'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -1700,10 +1422,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_uncompressZip(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:uncompressZip",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_uncompressZip'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1713,24 +1433,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getSystemVersion(lua_State* tolua
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getSystemVersion'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1747,10 +1461,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getSystemVersion(lua_State* tolua
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getSystemVersion",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getSystemVersion'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1760,24 +1472,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getValue(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getValue'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -1797,10 +1503,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getValue(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getValue",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getValue'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1810,24 +1514,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDebugMode(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDebugMode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1844,10 +1542,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDebugMode(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getDebugMode",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDebugMode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1857,24 +1553,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getPlatformType(lua_State* tolua_
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getPlatformType'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1891,10 +1581,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getPlatformType(lua_State* tolua_
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getPlatformType",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getPlatformType'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1904,24 +1592,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Encode(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Encode'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -1941,10 +1623,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Encode(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:base64Encode",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_base64Encode'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -1954,24 +1634,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCurrentTimeMills(lua_State* to
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCurrentTimeMills'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -1988,10 +1662,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCurrentTimeMills(lua_State* to
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getCurrentTimeMills",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCurrentTimeMills'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2001,24 +1673,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_setMainLuaFile(lua_State* tolua_S
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_setMainLuaFile'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -2037,10 +1703,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_setMainLuaFile(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:setMainLuaFile",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_setMainLuaFile'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2050,24 +1714,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppName(lua_State* tolua_S)
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppName'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2084,10 +1742,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppName(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getAppName",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getAppName'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2097,24 +1753,18 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_copyToPasteboard(lua_State* tolua
     IETSystemUtil* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_copyToPasteboard'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -2133,10 +1783,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_copyToPasteboard(lua_State* tolua
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:copyToPasteboard",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_copyToPasteboard'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2145,13 +1793,9 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_setLocalConfig(lua_State* tolua_S
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -2169,10 +1813,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_setLocalConfig(lua_State* tolua_S
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETSystemUtil:setLocalConfig",argc, 1);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_setLocalConfig'.",&tolua_err);
-#endif
     return 0;
 }
 int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getInstance(lua_State* tolua_S)
@@ -2180,13 +1822,9 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getInstance(lua_State* tolua_S)
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -2203,10 +1841,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getInstance(lua_State* tolua_S)
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETSystemUtil:getInstance",argc, 0);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getInstance'.",&tolua_err);
-#endif
     return 0;
 }
 static int lua_cocos2dx_gameplugin_auto_IETSystemUtil_finalize(lua_State* tolua_S)
@@ -2280,24 +1916,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportLogs(lua_State* tolua_
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportLogs'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -2316,10 +1946,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportLogs(lua_State* tolua_
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:crashReportLogs",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportLogs'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2329,24 +1957,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowArchievement(lua_State* tol
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowArchievement'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2362,10 +1984,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowArchievement(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcShowArchievement",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowArchievement'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2375,24 +1995,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_rate(lua_State* tolua_S)
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_rate'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -2411,10 +2025,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_rate(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:rate",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_rate'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2424,24 +2036,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportScore(lua_State* tolua_S)
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportScore'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
@@ -2466,10 +2072,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportScore(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcReportScore",argc, 3);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportScore'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2479,24 +2083,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowChallenge(lua_State* tolua_
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowChallenge'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2512,10 +2110,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowChallenge(lua_State* tolua_
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcShowChallenge",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowChallenge'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2525,24 +2121,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_uuidForDevice(lua_State* tolua_S)
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_uuidForDevice'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2559,10 +2149,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_uuidForDevice(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:uuidForDevice",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_uuidForDevice'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2572,24 +2160,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReset(lua_State* tolua_S)
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReset'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2605,10 +2187,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReset(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcReset",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReset'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2618,24 +2198,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetScore(lua_State* tolua_S)
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetScore'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -2655,10 +2229,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetScore(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcGetScore",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetScore'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2668,24 +2240,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcIsAvailable(lua_State* tolua_S)
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcIsAvailable'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2702,10 +2268,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcIsAvailable(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcIsAvailable",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcIsAvailable'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2715,24 +2279,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetAchievement(lua_State* tolua
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetAchievement'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -2752,10 +2310,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetAchievement(lua_State* tolua
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcGetAchievement",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetAchievement'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2765,24 +2321,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportException(lua_State* t
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportException'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -2804,10 +2354,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportException(lua_State* t
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:crashReportException",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_crashReportException'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2817,24 +2365,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetPlayerInfo(lua_State* tolua_
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetPlayerInfo'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2851,10 +2393,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetPlayerInfo(lua_State* tolua_
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcGetPlayerInfo",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetPlayerInfo'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2864,24 +2404,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportAchievement(lua_State* to
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportAchievement'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -2903,10 +2437,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportAchievement(lua_State* to
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcReportAchievement",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportAchievement'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2916,24 +2448,18 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowLeaderBoard(lua_State* tolu
     IETGamePlugin* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowLeaderBoard'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -2949,10 +2475,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowLeaderBoard(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:gcShowLeaderBoard",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowLeaderBoard'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -2961,13 +2485,9 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_getInstance(lua_State* tolua_S)
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -2984,10 +2504,8 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_getInstance(lua_State* tolua_S)
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETGamePlugin:getInstance",argc, 0);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_getInstance'.",&tolua_err);
-#endif
     return 0;
 }
 static int lua_cocos2dx_gameplugin_auto_IETGamePlugin_finalize(lua_State* tolua_S)
@@ -3030,24 +2548,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_hideBannerAd(lua_State* tolu
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_hideBannerAd'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -3063,10 +2575,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_hideBannerAd(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:hideBannerAd",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_hideBannerAd'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3076,24 +2586,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_showBannerAd(lua_State* tolu
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_showBannerAd'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -3116,10 +2620,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_showBannerAd(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:showBannerAd",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_showBannerAd'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3129,24 +2631,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setVideoAdNames(lua_State* t
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setVideoAdNames'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3165,10 +2661,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setVideoAdNames(lua_State* t
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:setVideoAdNames",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setVideoAdNames'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3178,24 +2672,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setBannerAdName(lua_State* t
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setBannerAdName'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3214,10 +2702,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setBannerAdName(lua_State* t
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:setBannerAdName",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setBannerAdName'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3227,24 +2713,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isSpotAdReady(lua_State* tol
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isSpotAdReady'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -3261,10 +2741,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isSpotAdReady(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:isSpotAdReady",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isSpotAdReady'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3274,24 +2752,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setSpotAdNames(lua_State* to
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setSpotAdNames'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3310,10 +2782,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setSpotAdNames(lua_State* to
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:setSpotAdNames",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_setSpotAdNames'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3323,24 +2793,18 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isVedioReady(lua_State* tolu
     IETAdvertiseHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAdvertiseHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isVedioReady'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -3357,10 +2821,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isVedioReady(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAdvertiseHelper:isVedioReady",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_isVedioReady'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3369,13 +2831,9 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_getInstance(lua_State* tolua
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETAdvertiseHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -3392,10 +2850,8 @@ int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_getInstance(lua_State* tolua
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETAdvertiseHelper:getInstance",argc, 0);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_getInstance'.",&tolua_err);
-#endif
     return 0;
 }
 static int lua_cocos2dx_gameplugin_auto_IETAdvertiseHelper_finalize(lua_State* tolua_S)
@@ -3431,24 +2887,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_purchase(lua_State* tolua_S)
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_purchase'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
@@ -3473,10 +2923,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_purchase(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:purchase",argc, 3);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_purchase'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3486,24 +2934,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_use(lua_State* tolua_S)
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_use'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 3) 
@@ -3528,10 +2970,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_use(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:use",argc, 3);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_use'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3541,24 +2981,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionStart(lua_State* tolua
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionStart'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3577,10 +3011,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionStart(lua_State* tolua
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:missionStart",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionStart'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3590,24 +3022,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionFailed(lua_State* tolu
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionFailed'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -3629,10 +3055,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionFailed(lua_State* tolu
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:missionFailed",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionFailed'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3642,24 +3066,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setLevel(lua_State* tolua_S)
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setLevel'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3678,10 +3096,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setLevel(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:setLevel",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setLevel'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3691,24 +3107,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_charge(lua_State* tolua_S)
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_charge'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 4) 
@@ -3736,10 +3146,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_charge(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:charge",argc, 4);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_charge'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3748,21 +3156,15 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_onEvent(lua_State* tolua_S)
     int argc = 0;
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_onEvent'", nullptr);
         return 0;
     }
-#endif
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 2) {
@@ -3808,10 +3210,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_onEvent(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "IETAnalyticHelper:onEvent",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_onEvent'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3821,24 +3221,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setAccountInfo(lua_State* tol
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setAccountInfo'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3857,10 +3251,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setAccountInfo(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:setAccountInfo",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_setAccountInfo'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3870,24 +3262,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_reward(lua_State* tolua_S)
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_reward'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -3909,10 +3295,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_reward(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:reward",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_reward'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3922,24 +3306,18 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionSuccess(lua_State* tol
     IETAnalyticHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAnalyticHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionSuccess'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -3958,10 +3336,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionSuccess(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAnalyticHelper:missionSuccess",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_missionSuccess'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -3970,13 +3346,9 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_getInstance(lua_State* tolua_
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETAnalyticHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -3993,10 +3365,8 @@ int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_getInstance(lua_State* tolua_
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETAnalyticHelper:getInstance",argc, 0);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_getInstance'.",&tolua_err);
-#endif
     return 0;
 }
 static int lua_cocos2dx_gameplugin_auto_IETAnalyticHelper_finalize(lua_State* tolua_S)
@@ -4035,24 +3405,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_setLevel(lua_State* tolua_S)
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_setLevel'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -4071,10 +3435,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_setLevel(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:setLevel",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_setLevel'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4084,24 +3446,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getUserID(lua_State* tolua_S)
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getUserID'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -4118,10 +3474,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getUserID(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:getUserID",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getUserID'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4131,24 +3485,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_isLogin(lua_State* tolua_S)
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_isLogin'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -4165,10 +3513,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_isLogin(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:isLogin",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_isLogin'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4178,24 +3524,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_logout(lua_State* tolua_S)
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_logout'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -4211,10 +3551,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_logout(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:logout",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_logout'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4224,24 +3562,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_login(lua_State* tolua_S)
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_login'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -4257,10 +3589,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_login(lua_State* tolua_S)
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:login",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_login'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4270,24 +3600,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_openFacebookPage(lua_State* t
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_openFacebookPage'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 2) 
@@ -4309,10 +3633,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_openFacebookPage(lua_State* t
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:openFacebookPage",argc, 2);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_openFacebookPage'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4322,24 +3644,18 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getAccessToken(lua_State* tol
     IETFacebookHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETFacebookHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getAccessToken'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -4356,10 +3672,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getAccessToken(lua_State* tol
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETFacebookHelper:getAccessToken",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getAccessToken'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4368,13 +3682,9 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getInstance(lua_State* tolua_
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETFacebookHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -4391,10 +3701,8 @@ int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getInstance(lua_State* tolua_
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETFacebookHelper:getInstance",argc, 0);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETFacebookHelper_getInstance'.",&tolua_err);
-#endif
     return 0;
 }
 static int lua_cocos2dx_gameplugin_auto_IETFacebookHelper_finalize(lua_State* tolua_S)
@@ -4430,24 +3738,18 @@ int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_connectFb(lua_State* tolua_S
     IETAmazonAWSHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAmazonAWSHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAmazonAWSHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_connectFb'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
@@ -4466,10 +3768,8 @@ int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_connectFb(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAmazonAWSHelper:connectFb",argc, 1);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_connectFb'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4479,24 +3779,18 @@ int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getUserId(lua_State* tolua_S
     IETAmazonAWSHelper* cobj = nullptr;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"IETAmazonAWSHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     cobj = (IETAmazonAWSHelper*)tolua_tousertype(tolua_S,1,0);
 
-#if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getUserId'", nullptr);
         return 0;
     }
-#endif
 
     argc = lua_gettop(tolua_S)-1;
     if (argc == 0) 
@@ -4513,10 +3807,8 @@ int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getUserId(lua_State* tolua_S
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETAmazonAWSHelper:getUserId",argc, 0);
     return 0;
 
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getUserId'.",&tolua_err);
-#endif
 
     return 0;
 }
@@ -4525,13 +3817,9 @@ int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getInstance(lua_State* tolua
     int argc = 0;
     bool ok  = true;
 
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
 
-#if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(tolua_S,1,"IETAmazonAWSHelper",0,&tolua_err)) goto tolua_lerror;
-#endif
 
     argc = lua_gettop(tolua_S) - 1;
 
@@ -4548,10 +3836,8 @@ int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getInstance(lua_State* tolua
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "IETAmazonAWSHelper:getInstance",argc, 0);
     return 0;
-#if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_getInstance'.",&tolua_err);
-#endif
     return 0;
 }
 static int lua_cocos2dx_gameplugin_auto_IETAmazonAWSHelper_finalize(lua_State* tolua_S)

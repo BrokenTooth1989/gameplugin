@@ -131,43 +131,6 @@ void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::Value
 
 std::string IETGamePlugin::uuidForDevice()
 {
-    // HttpClient::getInstance()->setTimeoutForConnect(10);
-    // HttpClient::getInstance()->setTimeoutForRead(10);
-    // HttpRequest* request = new HttpRequest();
-    // request->setUrl(url.c_str());
-    
-    // CCLOG("http data %s %s",url.c_str(),data.c_str());
-    // if (strcmp(requestType.c_str(), "get") == 0) {
-    //     request->setRequestType(HttpRequest::Type::GET);
-    // } else if (strcmp(requestType.c_str(), "post") == 0) {
-    //     request->setRequestType(HttpRequest::Type::POST);
-    // } else {
-    //     assert(false);
-    // }
-    // if (data.size() > 0) {
-    //     CCLOG("Post data:%s",data.c_str());
-       
-        
-    //     std::string *params = new std::string([str UTF8String]);
-        
-    //     request->setRequestData(params->c_str(), strlen(params->c_str()));
-    // }
-    // request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
-    //     if (response == nullptr || !response->isSucceed())
-    //     {
-    //         func(false, "");
-    //         return;
-    //     }
-        
-    //     std::vector<char> *buffer = response->getResponseData();
-        
-    //     std::string bufffff(buffer->begin(),buffer->end());
-    //     func(true, bufffff);
-        
-    //     CCLOG("response:%s",bufffff.c_str());
-    // });
-    // HttpClient::getInstance()->sendImmediate(request);
-    // request->release();
 
     return "";
 }

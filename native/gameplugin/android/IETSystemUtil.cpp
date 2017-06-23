@@ -8,10 +8,24 @@
 
 #include "IETSystemUtil.h"
 
+#include "cocos2d.h"
+#include "extensions/cocos-ext.h"
+#include "network/HttpClient.h"
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace network;
+
 long IETSystemUtil::getCpuTime()
 {
-    return 0;
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    
+    // log("CurrentTime MillSecond %f", (double)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000);
+
+    return (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
+
 }
+
 std::string IETSystemUtil::getConfigValue(std::string key)
 {
     return "";
@@ -87,39 +101,39 @@ void IETSystemUtil::copyToPasteboard(std::string str)
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
 {
     
-    // HttpClient::getInstance()->setTimeoutForConnect(10);
-    // HttpClient::getInstance()->setTimeoutForRead(10);
-    // HttpRequest* request = new HttpRequest();
-    // request->setUrl(url.c_str());
+    HttpClient::getInstance()->setTimeoutForConnect(10);
+    HttpClient::getInstance()->setTimeoutForRead(10);
+    HttpRequest* request = new HttpRequest();
+    request->setUrl(url.c_str());
     
-    // CCLOG("http data %s %s",url.c_str(),data.c_str());
-    // if (strcmp(requestType.c_str(), "get") == 0) {
-    //     request->setRequestType(HttpRequest::Type::GET);
-    // } else if (strcmp(requestType.c_str(), "post") == 0) {
-    //     request->setRequestType(HttpRequest::Type::POST);
-    // } else {
-    //     assert(false);
-    // }
-    // if (data.size() > 0) {
+    CCLOG("http data %s %s",url.c_str(),data.c_str());
+    if (strcmp(requestType.c_str(), "get") == 0) {
+        request->setRequestType(HttpRequest::Type::GET);
+    } else if (strcmp(requestType.c_str(), "post") == 0) {
+        request->setRequestType(HttpRequest::Type::POST);
+    } else {
+        assert(false);
+    }
+    if (data.size() > 0) {
 
-    //     request->setRequestData(data->c_str(), strlen(data->c_str()));
-    // }
-    // request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
-    //     if (response == nullptr || !response->isSucceed())
-    //     {
-    //         func(false, "");
-    //         return;
-    //     }
+        request->setRequestData(data.c_str(), strlen(data.c_str()));
+    }
+    request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
+        if (response == nullptr || !response->isSucceed())
+        {
+            func(false, "");
+            return;
+        }
         
-    //     std::vector<char> *buffer = response->getResponseData();
+        std::vector<char> *buffer = response->getResponseData();
         
-    //     std::string bufffff(buffer->begin(),buffer->end());
-    //     func(true, bufffff);
+        std::string bufffff(buffer->begin(),buffer->end());
+        func(true, bufffff);
         
-    //     CCLOG("response:%s",bufffff.c_str());
-    // });
-    // HttpClient::getInstance()->sendImmediate(request);
-    // request->release();
+        CCLOG("response:%s",bufffff.c_str());
+    });
+    HttpClient::getInstance()->sendImmediate(request);
+    request->release();
     
 
 }

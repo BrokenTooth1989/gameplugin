@@ -17,6 +17,9 @@
 
 #endif
 
+#define CALL_JAVA_PACKAGE "org/cocos2dx/lua/AppActivity"
+
+
 using namespace std;
 using namespace cocos2d;
 
@@ -41,6 +44,27 @@ void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url
 
 bool IETFacebookHelper::isLogin()
 {
+
+    //  //1. 获取activity静态对象
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isLoginFaceBook","()V");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        minfo.env->CallVoidMethod(jobj,minfo.methodID);
+    }
     return _isLogin;
 }
 
@@ -48,40 +72,29 @@ void IETFacebookHelper::login()
 {
     log("login");
     _isLogin = true;
-    _loginFunc("fid", "token");
-
+    // _loginFunc("fid", "token");
 
 
     //  //1. 获取activity静态对象
-    // JniMethodInfo minfo;
-    // bool isHave = JniHelper::getStaticMethodInfo(minfo,
-    //                                              "com/omega/MyApp",
-    //                                              "getJavaActivity",
-    //                                              "()Ljava/lang/Object;");
-    // jobject activityObj;
-    // if (isHave)
-    // {
-    //     //调用静态函数getJavaActivity，获取java类对象。
-    //     activityObj = minfo.env->CallStaticObjectMethod(minfo.classID, minfo.methodID);
-    // }
-
-    // //2. 查找displayWebView接口，获取其函数信息，并用jobj调用
-    // isHave = JniHelper::getMethodInfo(minfo,"com/omega/MyApp","displayWebView", "(IIII)V"); 
-
-    // if (!isHave)
-    // {
-    //     CCLog("jni:displayWebView 函数不存在");
-    // }
-    // else
-    // {
-    //     //调用此函数
-    //     jint jX = (int)tlX;
-    //     jint jY = (int)tlY;
-    //     jint jWidth = (int)webWidth;
-    //     jint jHeight = (int)webHeight;
-    //     //调用displayWebView函数，并传入参数
-    //     minfo.env->CallVoidMethod(activityObj, minfo.methodID, jX, jY, jWidth, jHeight);
-    // }
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"onLoginFaceBook","()V");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        minfo.env->CallVoidMethod(jobj,minfo.methodID);
+    }
 
 }
 
@@ -89,11 +102,61 @@ void IETFacebookHelper::logout()
 {
     log("logout");
     _isLogin = false;
+
+
+     //  //1. 获取activity静态对象
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"FBLogOut","()V");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        minfo.env->CallVoidMethod(jobj,minfo.methodID);
+    }
+
 }
 
 std::string IETFacebookHelper::getUserID()
 {
-    return "100007257579533";
+
+     //  //1. 获取activity静态对象
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    jstring jstr;
+    const char* str;
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getFBUserId","()Ljava/lang/String;");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        jstr = (jstring)minfo.env->CallObjectMethod(jobj,minfo.methodID);
+        str = minfo.env->GetStringUTFChars(jstr, NULL);    
+        std::string ret(str);
+        minfo.env->ReleaseStringUTFChars(jstr, str);//str 
+        minfo.env->DeleteLocalRef(jstr);//释放jstr 
+    }
+    return str;
 }
 
 std::string IETFacebookHelper::getAccessToken()
