@@ -13,8 +13,6 @@
 #include "jni.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/JniHelper.h"
-#else
-
 #endif
 
 #define CALL_JAVA_PACKAGE "org/cocos2dx/lua/AppActivity"
@@ -57,21 +55,24 @@ bool IETFacebookHelper::isLogin()
         log("call static method");
         jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
     }
+
+    jboolean ret;
     //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isLoginFaceBook","()V");
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isLoginFaceBook","()Z");
     if(re)
     {
         log("call no-static method");
         //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        minfo.env->CallVoidMethod(jobj,minfo.methodID);
+        ret = minfo.env->CallBooleanMethod(jobj,minfo.methodID);
+        log("facebook islogin:%d",ret);
     }
-    return _isLogin;
+    return ret;
 }
 
 void IETFacebookHelper::login()
 {
     log("login");
-    _isLogin = true;
+    
     // _loginFunc("fid", "token");
 
 
@@ -87,6 +88,8 @@ void IETFacebookHelper::login()
         log("call static method");
         jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
     }
+
+
     //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
     bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"onLoginFaceBook","()V");
     if(re)
@@ -96,6 +99,8 @@ void IETFacebookHelper::login()
         minfo.env->CallVoidMethod(jobj,minfo.methodID);
     }
 
+    _isLogin = true;
+    _loginFunc(this->getUserID(), this->getAccessToken());
 }
 
 void IETFacebookHelper::logout()
@@ -156,12 +161,43 @@ std::string IETFacebookHelper::getUserID()
         minfo.env->ReleaseStringUTFChars(jstr, str);//str 
         minfo.env->DeleteLocalRef(jstr);//释放jstr 
     }
+
+    log("facebook userId:%s",str);
     return str;
 }
 
 std::string IETFacebookHelper::getAccessToken()
 {
-    return "token";
+
+      //  //1. 获取activity静态对象
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    jstring jstr;
+    const char* str;
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getAccessToken","()Ljava/lang/String;");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        jstr = (jstring)minfo.env->CallObjectMethod(jobj,minfo.methodID);
+        str = minfo.env->GetStringUTFChars(jstr, NULL);    
+        std::string ret(str);
+        minfo.env->ReleaseStringUTFChars(jstr, str);//str 
+        minfo.env->DeleteLocalRef(jstr);//释放jstr 
+    }
+
+    log("facebook AccessToken:%s",str);
+    return str;
 }
 
 void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)

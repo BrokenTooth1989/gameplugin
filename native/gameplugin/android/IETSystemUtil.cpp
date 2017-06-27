@@ -11,6 +11,15 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "network/HttpClient.h"
+
+
+#include "jni.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "platform/android/jni/JniHelper.h"
+#endif
+
+#define CALL_JAVA_PACKAGE "org/cocos2dx/lua/AppActivity"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace network;
@@ -23,6 +32,32 @@ long IETSystemUtil::getCpuTime()
     // log("CurrentTime MillSecond %f", (double)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000);
 
     return (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
+
+
+    //  //1. 获取activity静态对象
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    jlong ctime;
+    const char* str;
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getCpuTime","()J;");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        ctime = (jlong)minfo.env->CallObjectMethod(jobj,minfo.methodID);
+      
+    }
+    return ctime;
 
 }
 
