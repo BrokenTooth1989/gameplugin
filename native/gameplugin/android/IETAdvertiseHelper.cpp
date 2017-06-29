@@ -21,6 +21,30 @@ using namespace cocos2d;
 int IETAdvertiseHelper::showBannerAd(bool isPortrait, bool isBottom)
 {
     log("showBannerAd");
+
+
+     JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+
+    
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"showBannerAd","()V");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        minfo.env->CallVoidMethod(jobj,minfo.methodID,NULL);
+    }
+
     return 40;
 }
 
