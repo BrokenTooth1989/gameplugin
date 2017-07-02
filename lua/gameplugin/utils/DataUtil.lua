@@ -18,7 +18,7 @@ function DataUtil:ctor()
         self._gameState = json.decode(dataStr)
         if self._gameState == nil then
 
-          if device.platform == "ios" then
+          if device.platform == "ios" or device.platform == "mac" then
              self._gameState = json.decode(crypto.decryptAES256(crypto.decodeBase64(dataStr), secretKey))
           elseif device.platform == "android" then
              self._gameState = json.decode(crypto.decryptXXTEA(crypto.decodeBase64(dataStr), secretKey))
@@ -36,7 +36,7 @@ end
 function DataUtil:flush()
     
     local dataStr 
-    if device.platform == "ios" then
+    if device.platform == "ios" or device.platform == "mac" then
         dataStr = crypto.encodeBase64(crypto.encryptAES256(json.encode(self._gameState), secretKey))
     elseif device.platform == "android" then
         dataStr = crypto.encodeBase64(crypto.encryptXXTEA(json.encode(self._gameState), secretKey))
