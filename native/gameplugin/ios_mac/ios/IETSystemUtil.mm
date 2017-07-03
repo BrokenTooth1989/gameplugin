@@ -24,6 +24,9 @@ long IETSystemUtil::getCpuTime()
     {
         uptime = now - boottime.tv_sec;
     }
+    
+    CCLOG("getCpu time: %d",uptime);
+    
     return uptime;
 }
 std::string IETSystemUtil::getConfigValue(std::string key)

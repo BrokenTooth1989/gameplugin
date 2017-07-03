@@ -56,14 +56,58 @@ void IETAdvertiseHelper::hideBannerAd()
 bool IETAdvertiseHelper::isSpotAdReady()
 {
     log("isSpotAdReady");
-    return true;
+
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+
+     jboolean ret;
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isSpotAd","()Z");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        ret = minfo.env->CallBooleanMethod(jobj,minfo.methodID,NULL);
+    }
+    return ret;
 }
 
 bool IETAdvertiseHelper::showSpotAd(const std::function<void (bool)> &func)
 {
     log("showSpotAd");
-    func(true);
-    return true;
+
+    JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+
+     jboolean ret;
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"showSpotAd","()Z");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        ret = minfo.env->CallBooleanMethod(jobj,minfo.methodID,NULL);
+    }
+
+    return ret;
 }
 
 bool IETAdvertiseHelper::isVedioReady()
@@ -83,7 +127,7 @@ bool IETAdvertiseHelper::isVedioReady()
 
      jboolean ret;
     //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isReadyAd","()Z");
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isReadyVideoAd","()Z");
     if(re)
     {
         log("call no-static method");
@@ -113,7 +157,7 @@ bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc,
 
      jboolean ret;
     //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"showAd","()Z");
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"showVideoAd","()Z");
     if(re)
     {
         log("call no-static method");

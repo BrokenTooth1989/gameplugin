@@ -54,6 +54,8 @@ void IETGamePlugin::setRestoreHandler(const std::function<void (bool, std::strin
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)
 {
+
+	
     func(true, "");
 }
 

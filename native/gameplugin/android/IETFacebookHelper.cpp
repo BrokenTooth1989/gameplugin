@@ -203,6 +203,36 @@ std::string IETFacebookHelper::getAccessToken()
 void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)
 {
     log("getUserProfile");
+
+
+
+     JniMethodInfo minfo;
+    bool isHave = JniHelper::getStaticMethodInfo(minfo,
+                                                 CALL_JAVA_PACKAGE,
+                                                 "getJavaObj",
+                                                 "()Ljava/lang/Object;");
+    jobject jobj;
+    if(isHave)
+    {
+        log("call static method");
+        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
+    }
+    jstring jstr;
+    const char* str;
+    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getAccessToken","()Ljava/lang/String;");
+    if(re)
+    {
+        log("call no-static method");
+        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
+        jstr = (jstring)minfo.env->CallObjectMethod(jobj,minfo.methodID);
+        str = minfo.env->GetStringUTFChars(jstr, NULL);    
+        std::string ret(str);
+        minfo.env->ReleaseStringUTFChars(jstr, str);//str 
+        minfo.env->DeleteLocalRef(jstr);//释放jstr 
+    }
+
+
     func(ValueMapNull);
 }
 

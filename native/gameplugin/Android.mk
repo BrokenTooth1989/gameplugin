@@ -12,6 +12,7 @@ LOCAL_SRC_FILES :=  aes.c \
 					android/IETFacebookHelper.cpp \
 					android/IETGamePlugin.cpp \
 					android/IETSystemUtil.cpp \
+					android/IETTool.cpp \
 					IETSystemUtil.cpp \
 					scripting/lua-bindings/manual/lua_cocos2dx_gameplugin_manual.cpp \
 					scripting/lua-bindings/auto/lua_cocos2dx_gameplugin_auto.cpp 

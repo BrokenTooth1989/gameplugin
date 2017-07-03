@@ -26,15 +26,6 @@ using namespace network;
 
 long IETSystemUtil::getCpuTime()
 {
-    struct timeval tv;
-    gettimeofday(&tv, nullptr);
-    
-    // log("CurrentTime MillSecond %f", (double)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000);
-
-    return (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
-
-
-    //  //1. 获取activity静态对象
     JniMethodInfo minfo;
     bool isHave = JniHelper::getStaticMethodInfo(minfo,
                                                  CALL_JAVA_PACKAGE,
@@ -43,18 +34,15 @@ long IETSystemUtil::getCpuTime()
     jobject jobj;
     if(isHave)
     {
-        log("call static method");
         jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
     }
+
     jlong ctime;
-    const char* str;
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getCpuTime","()J;");
+    
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getCpuTime","()J");
     if(re)
     {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        ctime = (jlong)minfo.env->CallObjectMethod(jobj,minfo.methodID);
+        ctime = (jlong)minfo.env->CallLongMethod(jobj,minfo.methodID);
       
     }
     return ctime;
