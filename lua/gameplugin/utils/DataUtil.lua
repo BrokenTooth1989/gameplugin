@@ -34,16 +34,21 @@ function DataUtil:ctor()
 end
 
 function DataUtil:flush()
-    
-    local dataStr 
+    local jsonStr, cryptStr, base64Str
+    jsonStr = json.encode(self._gameState)
+    assert(jsonStr)
     if device.platform == "ios" or device.platform == "mac" then
-        dataStr = crypto.encodeBase64(crypto.encryptAES256(json.encode(self._gameState), secretKey))
+        cryptStr = crypto.encryptAES256(jsonStr, secretKey)
+        assert(cryptStr)
     elseif device.platform == "android" then
-        dataStr = crypto.encodeBase64(crypto.encryptXXTEA(json.encode(self._gameState), secretKey))
+        cryptStr = crypto.encryptXXTEA(jsonStr, secretKey)
+        assert(cryptStr)
     end
+    base64Str = crypto.encodeBase64(cryptStr)
+    assert(base64Str) 
 
     local userDefault = cc.UserDefault:getInstance()
-    userDefault:setStringForKey(kUserDefaultKey, dataStr)
+    userDefault:setStringForKey(kUserDefaultKey, base64Str)
     userDefault:flush()
 end
 
