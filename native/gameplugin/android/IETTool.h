@@ -18,9 +18,13 @@ class IETTool{
 private:
 
 	static void addObjectToJson(const std::string& key, const cocos2d::Value& value, rapidjson::StringBuffer& oBuffer);
+
+	static void addObjectToValueMap();
 public:
 
 	static const char* valueMapToJson(cocos2d::ValueMap map);
+
+	static cocos2d::ValueMap jsonToValueMap(std::string json);
 
 };
 

@@ -10,6 +10,8 @@
 
 #include "cocos2d.h"
 
+#include "IETTool.h"
+
 #include "jni.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/JniHelper.h"
@@ -66,15 +68,15 @@ bool IETFacebookHelper::isLogin()
         ret = minfo.env->CallBooleanMethod(jobj,minfo.methodID);
         log("facebook islogin:%d",ret);
     }
+
+    _isLogin = ret;
+
     return ret;
 }
 
 void IETFacebookHelper::login()
 {
     log("login");
-    
-    // _loginFunc("fid", "token");
-
 
     //  //1. 获取activity静态对象
     JniMethodInfo minfo;
@@ -100,7 +102,9 @@ void IETFacebookHelper::login()
     }
 
     _isLogin = true;
-    _loginFunc(this->getUserID(), this->getAccessToken());
+
+    // log("onLoginFaceBook  --- userId : %s  AccessToken : %s",this->getUserID().c_str(),this->getAccessToken().c_str());
+    // _loginFunc(this->getUserID(), this->getAccessToken());
 }
 
 void IETFacebookHelper::logout()
@@ -163,6 +167,12 @@ std::string IETFacebookHelper::getUserID()
     }
 
     log("facebook userId:%s",str);
+    if(_loginFunc)
+    {
+        log("_loginFunc");
+        _loginFunc(str, this->getAccessToken());
+    }
+    
     return str;
 }
 
@@ -220,7 +230,7 @@ void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::functi
     jstring jstr;
     const char* str;
     //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getAccessToken","()Ljava/lang/String;");
+    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getFBProfile","()Ljava/lang/String;");
     if(re)
     {
         log("call no-static method");
@@ -231,9 +241,13 @@ void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::functi
         minfo.env->ReleaseStringUTFChars(jstr, str);//str 
         minfo.env->DeleteLocalRef(jstr);//释放jstr 
     }
+    log("userProfile: %s",str);
+    // cocos2d::ValueMap userData;
+    // userData["name"]="joye";
 
+    cocos2d::ValueMap userData = IETTool::jsonToValueMap(str);
 
-    func(ValueMapNull);
+    func(userData);
 }
 
 void IETFacebookHelper::getInvitableFriends(cocos2d::ValueVector inviteTokens, int picSize, std::function<void(cocos2d::ValueMap)>& func)

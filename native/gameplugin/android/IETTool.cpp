@@ -73,3 +73,26 @@ const char* IETTool::valueMapToJson(cocos2d::ValueMap map)
 	return oBuffer.GetString();
 }
 
+
+cocos2d::ValueMap IETTool::jsonToValueMap(std::string json)
+{
+
+    cocos2d::ValueMap vMap;
+
+    rapidjson::Document _doc;
+    _doc.Parse<0>(json.c_str());  
+
+    if (!_doc.HasParseError())
+    {
+        for (rapidjson::Value::ConstMemberIterator itr = _doc.MemberonBegin(); itr != _doc.MemberonEnd(); ++itr)
+        {
+
+                vMap[itr->name.GetString()] = itr->value.GetString();
+        } 
+    }
+
+
+
+    return vMap;
+}
+
