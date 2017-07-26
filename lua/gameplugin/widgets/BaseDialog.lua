@@ -8,27 +8,48 @@ local BaseDialog = class("BaseDialog", function()
 end)
 
 function BaseDialog:ctor(rootPos)
-    rootPos = rootPos or cc.p(0, 0)
-    self.rootPos = rootPos
+    self.rootPos = rootPos or cc.p(0, 0)
+    
     -- background layer
-    local bgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 150))
+    local bgLayer = cc.LayerColor:create(cc.c4b(0, 0, 0, 150))
         :zorder(-1)
         :addTo(self)
-    bgLayer:setCascadeOpacityEnabled(true)
-    bgLayer:setCascadeColorEnabled(true)
     self.bgLayer = bgLayer
+    
+    -- background layer touch event
+    local bgLayerListener = cc.EventListenerTouchOneByOne:create()
+    bgLayerListener:setSwallowTouches(true)
+    bgLayerListener:registerScriptHandler(function(touch, event)
+        return true
+    end, cc.Handler.EVENT_TOUCH_BEGAN)
+    bgLayer:getEventDispatcher():addEventListenerWithSceneGraphPriority(bgLayerListener, bgLayer)
+    self.bgLayerListener = bgLayerListener
+    
     -- create root node
     local root = display.newNode()
-        :pos(rootPos.x, rootPos.y)
+        :pos(self.rootPos.x, self.rootPos.y)
         :addTo(self)
     self.root = root
+    
     -- foreground layer
     local fgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 0))
         :zorder(1)
         :addTo(self)
     self.fgLayer = fgLayer
-    fgLayer:hide()
-    
+
+    -- foreground layer touch event
+    local fgLayerListener = cc.EventListenerTouchOneByOne:create()
+    fgLayerListener:setSwallowTouches(true)
+    fgLayerListener:registerScriptHandler(function(touch, event)
+        return true
+    end, cc.Handler.EVENT_TOUCH_BEGAN)
+    fgLayer:getEventDispatcher():addEventListenerWithSceneGraphPriority(fgLayerListener, fgLayer)
+    self.fgLayerListener = fgLayerListener
+
+    -- 默认关闭前置Layer的touch事件
+    fgLayerListener:setEnabled(false)
+
+    -- 开启onEnter和onExit等生命周期函数
     self:setNodeEventEnabled(true)
 end
 
@@ -45,12 +66,12 @@ function BaseDialog:setBgOpacity(opacity)
 end
 
 function BaseDialog:animStart()
-    self.fgLayer:show()
+    self.fgLayerListener:setEnabled(true)
     self.root:stopAllActions()
 end
 
 function BaseDialog:animEnded()
-    self.fgLayer:hide()
+    self.fgLayerListener:setEnabled(false)
 end
 
 function BaseDialog:showEaseScale(cb)
