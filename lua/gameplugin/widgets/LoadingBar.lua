@@ -108,6 +108,10 @@ function LoadingBar:getPercent()
 	return self.percent
 end
 
+function LoadingBar:setOpacity(opacity)
+	self.bar:setOpacity(opacity)
+end
+
 function LoadingBar:setBar(bar)
 	if self.params.bar == bar then
 		return
