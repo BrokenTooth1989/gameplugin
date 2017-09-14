@@ -51,11 +51,11 @@ std::string IETSystemUtil::getPlatformType() {
     return type;
 }
 
-long IETSystemUtil::getCurrentTimeMills() {
+long long IETSystemUtil::getCurrentTimeMills() {
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    time_t timep = tv.tv_sec;
-    return timep;
+    long long timestamp = tv.tv_sec*1000+tv.tv_usec/1000;
+    return timestamp;
 }
 
 unsigned char ToHex(unsigned char x) {

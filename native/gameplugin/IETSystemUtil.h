@@ -36,7 +36,7 @@ public:
     // 获取平台类别:ios/android/mac
     std::string getPlatformType();
     // 获取当前系统时间毫秒
-    long getCurrentTimeMills();
+    long long getCurrentTimeMills();
     // urlencode
     std::string urlEncode(std::string url);
     // urldecode

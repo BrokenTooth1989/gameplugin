@@ -1655,7 +1655,7 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCurrentTimeMills(lua_State* to
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getCurrentTimeMills'", nullptr);
             return 0;
         }
-        long ret = cobj->getCurrentTimeMills();
+        long long ret = cobj->getCurrentTimeMills();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }

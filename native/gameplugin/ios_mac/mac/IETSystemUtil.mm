@@ -69,7 +69,7 @@ std::string IETSystemUtil::getSystemVersion()
 }
 std::string IETSystemUtil::getNetworkState()
 {
-    return "";
+    return "ReachableViaWiFi";
 }
 void IETSystemUtil::showAlertDialog(std::string title, std::string message, std::string cancelBtnTitle, cocos2d::ValueVector otherBtnTitles, const std::function<void (int)> &func)
 {}

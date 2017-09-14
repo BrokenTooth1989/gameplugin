@@ -260,7 +260,7 @@
 -- 
 -- @function [parent=#IETSystemUtil] getCurrentTimeMills 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return long long#long long ret (return value: long long)
         
 --------------------------------
 -- 
