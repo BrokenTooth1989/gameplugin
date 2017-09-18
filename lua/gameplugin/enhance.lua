@@ -122,3 +122,93 @@ local function testString()
 end
 
 -- testString()
+
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-- Node
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+local Node = cc.Node
+
+function Node:scheduleUpdate(_listener)
+    return self:schedule(_listener, 0)
+end
+
+function Node:schedule(_listener, _interval)
+    self.m_timeMap = self.m_timeMap or {}
+    local action
+    action = cc.RepeatForever:create(cc.Sequence:create(
+        cc.DelayTime:create(_interval),
+        cc.CallFunc:create(function()
+            local time = SystemUtil:getCurrentTimeMills()
+            local offset = (time-self.m_timeMap[action])/1000
+            self.m_timeMap[action] = time
+            _listener(offset)
+        end)
+    ))
+    self.m_timeMap[action] = SystemUtil:getCurrentTimeMills()
+    self:runAction(action)
+    return action
+end
+
+function Node:unschedule(_handler)
+    self.m_timeMap = self.m_timeMap or {}
+    self:stopAction(_handler)
+    self.m_timeMap[_handler] = nil
+end
+
+function Node:performWithDelay(_listener, _time)
+    local _handler
+    _handler = self:schedule(function()
+        self:unschedule(_handler)
+        _listener()
+    end, _time)
+    return _handler
+end
+
+-- 开始计数
+function Node:startCount(_duration, _start, _ended, _progressCb, _finishCb)
+    _progressCb = _progressCb or function() end
+    _finishCb = _finishCb or function() end
+
+    if _start == _ended then
+        _finishCb()
+        return
+    end
+
+    local offset            = _ended-_start
+    local time              = 0
+    local schedulerId       = nil
+    schedulerId = self:scheduleUpdate(function(dt)
+        time = time + dt
+        local value
+        if time >= _duration then
+            time = _duration
+            value = _ended
+        else
+            value = _start+time/_duration*offset
+        end
+        _progressCb(value)
+        if time >= _duration then
+            self:unschedule(schedulerId)
+            _finishCb()
+        end
+    end)
+    return schedulerId
+end
+
+-- 停止计数
+function Node:stopCount(_handler)
+    self:unschedule(_handler)
+end
+
+local function testNode()
+    
+end
+
+-- testNode
+
+
+
+
