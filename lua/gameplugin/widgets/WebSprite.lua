@@ -148,6 +148,12 @@ function WebSprite:loadFromDisk(path)
 	self.sprite:setScale(self.size.width/size.width, self.size.height/size.height)
 end
 
+function WebSprite:loadFromApp(path)
+	local sprite = display.newSprite(path)
+	local frame = sprite:getSpriteFrame()
+	self.sprite:setSpriteFrame(frame)
+end
+
 function WebSprite:reset()
 	self.sprite:setSpriteFrame(display.newSprite(self.opts.default):getSpriteFrame())
 	self.sprite:setScale(1)
