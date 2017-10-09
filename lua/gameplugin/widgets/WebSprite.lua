@@ -25,6 +25,7 @@ opts.retry 下载失败重试次数
 
 local kLoadType = 
 {
+	NONE = 0,
 	URL = 1,
 	LOCAL = 2,
 }
@@ -66,13 +67,13 @@ end
 
 function WebSprite:loadFromUrl(url)
 	if url == nil then return end
-
+	
 	local path = imagePath..crypto.md5(url)
 	if fileutils:isFileExist(path) then
 		return self:loadFromDisk(path)
 	end
-	
-	local function start()
+
+	local function showProgress()
 		if self.progressBar ~= nil then
 			self.progressBar:setPercentage(100)
 			self.progressBar:stopAllActions()
@@ -80,13 +81,13 @@ function WebSprite:loadFromUrl(url)
 		end
 	end
 
-	local function progress(percent)
+	local function updateProgress(percent)
 		if self.progressBar ~= nil then
 			self.progressBar:setPercentage(percent)
 		end
 	end
 
-	local function finish()
+	local function hideProgress()
 		if self.progressBar ~= nil then
 			self.progressBar:setPercentage(0)
 			self.progressBar:stopAllActions()
@@ -95,7 +96,7 @@ function WebSprite:loadFromUrl(url)
 	end
 
 	local function download(url, path, retryNum, cb)
-		start()
+		showProgress()
 		SystemUtil:downloadFile(url, path, function(param1, param2)
 			if param1 == 0 then
 				if self.url ~= url then 
@@ -104,17 +105,17 @@ function WebSprite:loadFromUrl(url)
 				if self.loadType ~= kLoadType.URL then
 					return
 				end
-				progress(100-param2)
+				updateProgress(100-param2)
 			elseif param1 == -1 then
 				if self.url ~= url then
 					return cb()
 				end
 				if self.loadType ~= kLoadType.URL then
-					finish()
+					hideProgress()
 					return cb()
 				end
 				if retryNum <= 0 then
-					finish()
+					hideProgress()
 					return cb()
 				end
 				scheduler.performWithDelayGlobal(function()
@@ -135,13 +136,14 @@ function WebSprite:loadFromUrl(url)
 	self.url 		= url
 	self.loadType 	= kLoadType.URL
 	self:retain()
-	download(url, path, self.opts.retry, function(success)
+	download(url, path, self.opts.retry, function()
 		self:release()
 	end)
 end
 
 function WebSprite:loadFromDisk(path)
 	self.loadType = kLoadType.LOCAL
+	self.url = nil
 	if path == nil then 
 		print(path.."    is nil")
 		return
@@ -163,6 +165,8 @@ function WebSprite:loadFromDisk(path)
 end
 
 function WebSprite:loadFromApp(path)
+	self.loadType = kLoadType.LOCAL
+	self.url = nil
 	local sprite = display.newSprite(path)
 	local frame = sprite:getSpriteFrame()
 	self.sprite:setSpriteFrame(frame)
@@ -171,9 +175,10 @@ function WebSprite:loadFromApp(path)
 end
 
 function WebSprite:reset()
+	self.loadType = kLoadType.NONE
+	self.url = nil
 	self.sprite:setSpriteFrame(display.newSprite(self.opts.default):getSpriteFrame())
 	self.sprite:setScale(1)
-	self.url = nil
 end
 
 return WebSprite
