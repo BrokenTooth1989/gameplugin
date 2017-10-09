@@ -22,12 +22,20 @@ opts.url 图片链接
 opts.disk 图片路径
 opts.retry 下载失败重试次数
 ]]
+
+local kLoadType = 
+{
+	URL = 1,
+	LOCAL = 2,
+}
+
 function WebSprite:ctor(opts)
 	assert(opts.default)
 	
 	opts.retry = opts.retry or 5
 
 	self.opts = opts
+	self.loadType = nil
 
 	local clipNode
 	if opts.stencil ~= nil then
@@ -57,54 +65,56 @@ function WebSprite:ctor(opts)
 end
 
 function WebSprite:loadFromUrl(url)
-	if url == nil then 
-		return
-	end
-
-	if not string.match(url, "http") then
-		return
-	end
-
-	self.url = url
-
-	local function bind(path)
-		if self.progressBar ~= nil then
-			self.progressBar:setPercentage(0)
-			self.progressBar:stopAllActions()
-			self.progressBar:runAction(cc.FadeOut:create(0.3))
-		end
-		self:loadFromDisk(path)
-	end
+	if url == nil then return end
 
 	local path = imagePath..crypto.md5(url)
 	if fileutils:isFileExist(path) then
-		return bind(path)
+		return self:loadFromDisk(path)
 	end
 	
-	local function download(url, path, retryNum, cb)
+	local function start()
 		if self.progressBar ~= nil then
 			self.progressBar:setPercentage(100)
 			self.progressBar:stopAllActions()
 			self.progressBar:runAction(cc.FadeIn:create(0.3))
 		end
+	end
+
+	local function progress(percent)
+		if self.progressBar ~= nil then
+			self.progressBar:setPercentage(percent)
+		end
+	end
+
+	local function finish()
+		if self.progressBar ~= nil then
+			self.progressBar:setPercentage(0)
+			self.progressBar:stopAllActions()
+			self.progressBar:runAction(cc.FadeOut:create(0.3))
+		end
+	end
+
+	local function download(url, path, retryNum, cb)
+		start()
 		SystemUtil:downloadFile(url, path, function(param1, param2)
 			if param1 == 0 then
 				if self.url ~= url then 
 					return
 				end
-				if self.progressBar ~= nil then
-					self.progressBar:setPercentage(100-param2)
+				if self.loadType ~= kLoadType.URL then
+					return
 				end
+				progress(100-param2)
 			elseif param1 == -1 then
 				if self.url ~= url then
 					return cb()
 				end
+				if self.loadType ~= kLoadType.URL then
+					finish()
+					return cb()
+				end
 				if retryNum <= 0 then
-					if self.progressBar ~= nil then
-						self.progressBar:setPercentage(0)
-						self.progressBar:stopAllActions()
-						self.progressBar:runAction(cc.FadeOut:create(0.3))
-					end
+					finish()
 					return cb()
 				end
 				scheduler.performWithDelayGlobal(function()
@@ -114,12 +124,16 @@ function WebSprite:loadFromUrl(url)
 				if self.url ~= url then
                 	return cb()
             	end
-            	bind(path)
+            	if self.loadType ~= kLoadType.URL then
+            		return cb()
+            	end
+            	self:loadFromDisk(path)
             	cb()
         	end
 		end)
 	end
-	self.url = url
+	self.url 		= url
+	self.loadType 	= kLoadType.URL
 	self:retain()
 	download(url, path, self.opts.retry, function(success)
 		self:release()
@@ -127,6 +141,7 @@ function WebSprite:loadFromUrl(url)
 end
 
 function WebSprite:loadFromDisk(path)
+	self.loadType = kLoadType.LOCAL
 	if path == nil then 
 		print(path.."    is nil")
 		return
@@ -139,7 +154,6 @@ function WebSprite:loadFromDisk(path)
 	if not sprite then
 		print(path.."    new sprite failed")
 		cc.FileUtils:getInstance():removeFile(path)
-		self:loadFromUrl(self.url)
 		return
 	end
 	local frame = sprite:getSpriteFrame()
@@ -152,6 +166,8 @@ function WebSprite:loadFromApp(path)
 	local sprite = display.newSprite(path)
 	local frame = sprite:getSpriteFrame()
 	self.sprite:setSpriteFrame(frame)
+	local size = self.sprite:getContentSize()
+	self.sprite:setScale(self.size.width/size.width, self.size.height/size.height)
 end
 
 function WebSprite:reset()
