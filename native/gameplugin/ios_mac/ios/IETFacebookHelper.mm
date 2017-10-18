@@ -45,6 +45,20 @@ bool IETFacebookHelper::isLogin()
     return false;
 }
 
+void IETFacebookHelper::inviteFriend(std::string appLinkURL,std::string prviewImageURL, std::function<void(bool)>& func)
+{
+    void (^block)(BOOL) = [func](BOOL b) -> void {
+        func(b);
+    };
+    
+    NSString* nsappLinkURL = [NSString stringWithUTF8String:appLinkURL.c_str()];
+    NSString* nsprviewImageURL = [NSString stringWithUTF8String:prviewImageURL.c_str()];
+    
+    [[NSClassFromString(@"FacebookHelper") getInstance] inviteFriendsWithLink:nsappLinkURL andImg:nsprviewImageURL withBlock:block];
+    
+    
+}
+
 void IETFacebookHelper::login()
 {
     [[NSClassFromString(@"FacebookHelper") getInstance] login];
@@ -149,6 +163,7 @@ void IETFacebookHelper::share(std::string title, std::string description, std::s
     void (^block)(BOOL) = [func](BOOL result) -> void{
         func(result);
     };
+    
     [[NSClassFromString(@"FacebookHelper") getInstance] shareName:nsTitle
                                 description:nsDesc
                                    imageUrl:nsImgUrl

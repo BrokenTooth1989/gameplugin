@@ -34,6 +34,7 @@ public:
     void share(std::string title, std::string i, std::string caption, std::string imageUrl, std::string contentUrl, std::function<void(bool)>& func);
     void setLevel(int level);
     void getLevel(std::string fid, std::function<void(int)>& func);
+    void inviteFriend(std::string appLinkURL,std::string prviewImageURL, std::function<void(bool)>& func);
 };
 
 #endif
