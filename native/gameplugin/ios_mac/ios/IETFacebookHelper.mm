@@ -45,20 +45,6 @@ bool IETFacebookHelper::isLogin()
     return false;
 }
 
-void IETFacebookHelper::inviteFriend(std::string appLinkURL,std::string prviewImageURL, std::function<void(bool)>& func)
-{
-    void (^block)(BOOL) = [func](BOOL b) -> void {
-        func(b);
-    };
-    
-    NSString* nsappLinkURL = [NSString stringWithUTF8String:appLinkURL.c_str()];
-    NSString* nsprviewImageURL = [NSString stringWithUTF8String:prviewImageURL.c_str()];
-    
-    [[NSClassFromString(@"FacebookHelper") getInstance] inviteFriendsWithLink:nsappLinkURL andImg:nsprviewImageURL withBlock:block];
-    
-    
-}
-
 void IETFacebookHelper::login()
 {
     [[NSClassFromString(@"FacebookHelper") getInstance] login];
@@ -184,4 +170,18 @@ void IETFacebookHelper::getLevel(std::string fid, std::function<void (int)> &fun
         func(level);
     };
     [[NSClassFromString(@"FacebookHelper") getInstance] getLevelWithId:nsFid cb:block];
+}
+
+void IETFacebookHelper::inviteFriend(std::string appLinkURL,std::string prviewImageURL, std::function<void(bool)>& func)
+{
+    void (^block)(BOOL) = [func](BOOL b) -> void {
+        func(b);
+    };
+    
+    NSString* nsappLinkURL = [NSString stringWithUTF8String:appLinkURL.c_str()];
+    NSString* nsprviewImageURL = [NSString stringWithUTF8String:prviewImageURL.c_str()];
+    
+    [[NSClassFromString(@"FacebookHelper") getInstance] inviteFriendsWithLink:nsappLinkURL andImg:nsprviewImageURL withBlock:block];
+    
+    
 }
