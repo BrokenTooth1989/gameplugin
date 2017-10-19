@@ -60,12 +60,6 @@ function FacebookUtil:logout()
 	end
 end
 
--- 邀请好友
-function FacebookUtil:inviteFriend(_appLinkURL,_prviewImageURL,_cb)
-	FacebookHelper:inviteFriend(_appLinkURL,_prviewImageURL,function(_result)
-		_cb(_result)
-		end)
-end
 
 -- 可邀请好友
 function FacebookUtil:getInvitableFriends(cb)
