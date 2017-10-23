@@ -10,6 +10,8 @@ end)
 function BaseDialog:ctor(rootPos)
     self.rootPos = rootPos or cc.p(0, 0)
     
+    self.m_scaleFactor = 1
+
     -- background layer
     local bgLayer = cc.LayerColor:create(cc.c4b(0, 0, 0, 150))
         :zorder(-1)
@@ -65,6 +67,11 @@ function BaseDialog:setBgOpacity(opacity)
     self.bgLayer:setOpacity(opacity)
 end
 
+function BaseDialog:setScaleFactor(_scaleFactor)
+    self.m_scaleFactor = _scaleFactor
+    self.root:scale(self.m_scaleFactor)
+end
+
 function BaseDialog:animStart()
     self.fgLayerListener:setEnabled(true)
     self.root:stopAllActions()
@@ -79,7 +86,7 @@ function BaseDialog:showEaseScale(cb)
     self:animStart()
 	self.root:scale(0)
     self.root:runAction(cc.Sequence:create({
-        cc.EaseBackOut:create(cc.ScaleTo:create(0.3, 1)),
+        cc.EaseBackOut:create(cc.ScaleTo:create(0.3, self.m_scaleFactor)),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
