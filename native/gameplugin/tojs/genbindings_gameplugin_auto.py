@@ -96,7 +96,9 @@ def main():
         print 'path: %s or path: %s are not valid! ' % (x86_llvm_path, x64_llvm_path)
         sys.exit(1)
 
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'cocos2d-x'))
+    # by gy
+    # project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..', 'frameworks', 'cocos2d-x'))
     cocos_root = os.path.abspath(project_root)
     jsb_root = os.path.abspath(os.path.join(project_root, 'cocos/scripting/js-bindings'))
     cxx_generator_root = os.path.abspath(os.path.join(project_root, 'tools/bindings-generator'))
@@ -131,11 +133,11 @@ def main():
 
     try:
 
-        tojs_root = '%s/../gameplugin/tojs' % project_root
-        output_dir = '%s/../gameplugin/scripting/js-bindings/auto' % project_root
+        tojs_root = '%s/../../gameplugin/native/gameplugin/tojs' % project_root
+        output_dir = '%s/../../gameplugin/native/gameplugin/scripting/js-bindings/auto' % project_root
 
         cmd_args = {
-        'cocos2dx_gameplugin_auto.ini' : ('cocos2dx_gameplugin', 'jsb_cocos2dx_gameplugin_auto'),\
+            'cocos2dx_gameplugin_auto.ini' : ('cocos2dx_gameplugin', 'jsb_cocos2dx_gameplugin_auto'),\
         }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root
