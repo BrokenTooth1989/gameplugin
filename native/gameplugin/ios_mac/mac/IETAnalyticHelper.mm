@@ -70,8 +70,14 @@ void IETAnalyticHelper::onEvent(std::string eventId, cocos2d::ValueMap map)
     NSString* nsEventId = [NSString stringWithUTF8String:eventId.c_str()];
     NSDictionary* nsDict = [IETUtility valueMap2NsDict:map];
     initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"onEvent: %@, data: %@", nsEventId, nsDict];
+    NSString* eventMsg = [NSString stringWithFormat:@"onEvent: %@ {", nsEventId];
     writeTestData(eventMsg, false);
+    for (NSString *key in nsDict) {
+        id value = [nsDict objectForKey:key];
+        NSString* eventMsg = [NSString stringWithFormat:@"\tkey: %@, type:%@, value: %@", key, [value class], value];
+        writeTestData(eventMsg, false);
+    }
+    writeTestData(@"}", false);
 }
 
 void IETAnalyticHelper::setLevel(int level)
