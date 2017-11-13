@@ -55,12 +55,30 @@ function BaseDialog:ctor(rootPos)
     self:setNodeEventEnabled(true)
 end
 
-function BaseDialog:setCloseCb(closeCb)
-    self.closeCb = closeCb
+function BaseDialog:runEnterAnim(_cb)
+    _cb()
 end
 
-function BaseDialog:getCloseCb()
-    return self.closeCb or function() end
+function BaseDialog:startRunning()
+    
+end
+
+function BaseDialog:stopRunning()
+    
+end
+
+function BaseDialog:runExitAnim(_cb)
+    _cb()
+end
+
+function BaseDialog:setCloseCb(_cb)
+    self.m_closeCb = _cb
+end
+
+function BaseDialog:closeMe(_msg)
+    if self.m_closeCb then
+        self.m_closeCb(_msg)
+    end
 end
 
 function BaseDialog:setBgOpacity(opacity)
