@@ -64,6 +64,8 @@ end
 function string.formatNumThousands(num)
     if nil == num then return "" end
     num = tonumber(num)
+    local sign = num >= 0 and "" or "-"
+    num = math.abs(num)
     local integerPart = math.floor(num)
     local floatPart = num - integerPart
     local integerStr = tostring(integerPart)
@@ -77,11 +79,12 @@ function string.formatNumThousands(num)
         ended = start-1
     end
     if floatPart <= 0 then
-    	return table.concat(tab,",")
+    	return sign..table.concat(tab,",")
     else
-    	local floatStr = string.sub(tostring(floatPart), 3)
-    	return table.concat(tab,",").."."..floatStr
+    	local floatStr = string.sub(tostring(floatPart), 3, 5)
+    	return sign..table.concat(tab,",").."."..floatStr
     end
+
 end
 
 function string.formatNumShort(num)
