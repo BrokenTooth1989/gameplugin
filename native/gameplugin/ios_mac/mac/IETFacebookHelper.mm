@@ -64,7 +64,7 @@ void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::functi
     log("getUserProfile");
     ValueMap map;
     map["name"] = "John Smith";
-    map["id"] = "100000";
+    map["id"] = "110000";
     func(map);
 }
 
