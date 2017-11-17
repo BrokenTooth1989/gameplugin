@@ -22,7 +22,7 @@ function BaseDialog:ctor(rootPos)
     local bgLayerListener = cc.EventListenerTouchOneByOne:create()
     bgLayerListener:setSwallowTouches(true)
     bgLayerListener:registerScriptHandler(function(touch, event)
-        return true
+        return self:isVisible()
     end, cc.Handler.EVENT_TOUCH_BEGAN)
     bgLayer:getEventDispatcher():addEventListenerWithSceneGraphPriority(bgLayerListener, bgLayer)
     self.bgLayerListener = bgLayerListener
@@ -43,7 +43,7 @@ function BaseDialog:ctor(rootPos)
     local fgLayerListener = cc.EventListenerTouchOneByOne:create()
     fgLayerListener:setSwallowTouches(true)
     fgLayerListener:registerScriptHandler(function(touch, event)
-        return true
+        return self:isVisible()
     end, cc.Handler.EVENT_TOUCH_BEGAN)
     fgLayer:getEventDispatcher():addEventListenerWithSceneGraphPriority(fgLayerListener, fgLayer)
     self.fgLayerListener = fgLayerListener
