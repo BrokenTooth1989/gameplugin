@@ -157,46 +157,30 @@ void IETSystemUtil::copyToPasteboard(std::string str)
 
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
 {
-    CCLOG("%s, %s, %s", requestType.c_str(), url.c_str(), data.c_str());
-   
-    NSString* nsUrl =  [NSString stringWithCString:url.c_str()
-                                          encoding:[NSString defaultCStringEncoding]];
-    
+//    CCLOG("%s, %s, %s", requestType.c_str(), url.c_str(), data.c_str());
+    NSString* nsUrl =  [NSString stringWithCString:url.c_str() encoding:[NSString defaultCStringEncoding]];
     void(^success)(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) = ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
+//        NSLog(@"JSON: %@", responseObject);
         NSError *parseError = nil;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
         NSString *respStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
         std::string str=[respStr cStringUsingEncoding: NSUTF8StringEncoding];
-        
         func(true, str);
-        
     };
-    
     void(^failure)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) = ^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"Error: %@", error);
+//        NSLog(@"Error: %@", error);
         func(false, "");
     };
-
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     if (!strcmp(requestType.c_str(), "get")) {
-        [manager GET:nsUrl parameters:nil success:success failure:failure];
+//        [manager GET:nsUrl parameters:nil success:success failure:failure];
+        [manager GET:nsUrl parameters:nil progress:nil success:success failure:failure];
     } else {
-        
-        NSString* jData =  [NSString stringWithCString:data.c_str()
-                                              encoding:[NSString defaultCStringEncoding]];
-        
+        NSString* jData =  [NSString stringWithCString:data.c_str() encoding:[NSString defaultCStringEncoding]];
         NSData* jD = [jData dataUsingEncoding:NSUTF8StringEncoding];
-        
         NSDictionary *jdic = [NSJSONSerialization JSONObjectWithData:jD options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"%@",jdic);
-        
-
-        [manager POST:nsUrl parameters:jdic success:success failure:failure];
+//        NSLog(@"%@",jdic);
+//        [manager POST:nsUrl parameters:jdic success:success failure:failure];
+        [manager POST:nsUrl parameters:nil progress:nil success:success failure:failure];
     }
-
 }
