@@ -171,7 +171,11 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
 //        NSLog(@"Error: %@", error);
         func(false, "");
     };
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
     if (!strcmp(requestType.c_str(), "get")) {
 //        [manager GET:nsUrl parameters:nil success:success failure:failure];
         [manager GET:nsUrl parameters:nil progress:nil success:success failure:failure];
@@ -181,6 +185,6 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         NSDictionary *jdic = [NSJSONSerialization JSONObjectWithData:jD options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers error:nil];
 //        NSLog(@"%@",jdic);
 //        [manager POST:nsUrl parameters:jdic success:success failure:failure];
-        [manager POST:nsUrl parameters:nil progress:nil success:success failure:failure];
+        [manager POST:nsUrl parameters:jdic progress:nil success:success failure:failure];
     }
 }
