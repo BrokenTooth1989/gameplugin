@@ -108,5 +108,4 @@ int register_all_cocos2dx_gameplugin_auto(lua_State* tolua_S);
 
 
 
-
 #endif // __cocos2dx_gameplugin_auto_h__

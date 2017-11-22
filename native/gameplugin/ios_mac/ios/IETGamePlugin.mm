@@ -77,11 +77,6 @@ void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::func
     [[IOSGamePlugin getInstance] doIap:NSStringFromString(iapId) userId:NSStringFromString(userId) handler:block];
 }
 
-void IETGamePlugin::rate(int level)
-{
-    [[IOSGamePlugin getInstance] rate:level];
-}
-
 bool IETGamePlugin::gcIsAvailable()
 {
     return [[IOSGamePlugin getInstance] gcIsAvailable];

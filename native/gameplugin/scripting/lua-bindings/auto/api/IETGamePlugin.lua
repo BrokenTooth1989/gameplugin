@@ -16,12 +16,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETGamePlugin] rate 
--- @param self
--- @param #int level
-        
---------------------------------
--- 
 -- @function [parent=#IETGamePlugin] gcReportScore 
 -- @param self
 -- @param #int score

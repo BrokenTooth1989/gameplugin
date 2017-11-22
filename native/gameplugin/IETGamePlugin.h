@@ -24,7 +24,6 @@ public:
     void setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func);
     void setRestoreHandler(const std::function<void(bool, std::string, std::string)>& func);
     void doIap(std::string iapId, std::string userId, const std::function<void(bool, std::string)>& func);
-    void rate(int level);
     bool gcIsAvailable();
     cocos2d::ValueMap gcGetPlayerInfo();
     void gcGetPlayerFriends(const std::function<void (cocos2d::ValueVector)> &func);
