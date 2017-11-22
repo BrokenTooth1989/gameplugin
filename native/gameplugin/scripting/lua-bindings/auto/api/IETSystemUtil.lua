@@ -241,7 +241,7 @@
 -- 
 -- @function [parent=#IETSystemUtil] getDebugMode 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- 

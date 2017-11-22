@@ -1535,8 +1535,8 @@ int lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDebugMode(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_auto_IETSystemUtil_getDebugMode'", nullptr);
             return 0;
         }
-        bool ret = cobj->getDebugMode();
-        tolua_pushboolean(tolua_S,(bool)ret);
+        int ret = cobj->getDebugMode();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:getDebugMode",argc, 0);
