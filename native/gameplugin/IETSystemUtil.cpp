@@ -30,7 +30,7 @@ void IETSystemUtil::setLocalConfig(std::string file) {
 }
 
 int IETSystemUtil::getDebugMode() {
-    return COCOS2D_DEBUG;
+    return DEBUG_LEVEL;
 }
 
 std::string IETSystemUtil::getPlatformType() {

@@ -26,7 +26,9 @@ void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVecto
     [[IOSGamePlugin getInstance] crashReportExceptionWithReason:NSStringFromString(reason)
                                                    andTraceback:[IETUtility valueVector2NsArr:traceback]];
     Director::getInstance()->end();
-    exit(0);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        exit(0);
+    });
 }
 
 void IETGamePlugin::setNotifyHandler(const std::function<void (cocos2d::ValueMap)> &func)
