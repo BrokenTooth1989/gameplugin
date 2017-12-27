@@ -11,6 +11,7 @@ function BaseDialog:ctor(rootPos)
     self.rootPos = rootPos or cc.p(0, 0)
     
     self.m_scaleFactor = 1
+    self.m_isRunning = false
 
     -- background layer
     local bgLayer = cc.LayerColor:create(cc.c4b(0, 0, 0, 150))
@@ -60,15 +61,19 @@ function BaseDialog:runEnterAnim(_cb)
 end
 
 function BaseDialog:startRunning()
-    
+    self.m_isRunning = true
 end
 
 function BaseDialog:stopRunning()
-    
+    self.m_isRunning = false
 end
 
 function BaseDialog:runExitAnim(_cb)
     _cb()
+end
+
+function BaseDialog:isRunning()
+    return self.m_isRunning
 end
 
 function BaseDialog:setCloseCb(_cb)

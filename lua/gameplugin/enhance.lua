@@ -61,6 +61,8 @@ end
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 
+---
+-- 数字格式化 1000000 -> 1,000,000
 function string.formatNumThousands(num)
     if nil == num then return "" end
     num = tonumber(num)
@@ -87,6 +89,8 @@ function string.formatNumThousands(num)
 
 end
 
+--- 
+-- 数字格式化 1000000 -> 1000K
 function string.formatNumShort(num)
     if nil == num then return "" end
     local suffixTab   = {"","K","M","B","T","Q","Q","S","S"} 
@@ -101,15 +105,24 @@ function string.formatNumShort(num)
     return tostring(num..suffixTab[suffixIdx] or suffixTab[#suffixTab])
 end
 
+---
+-- 数字格式化  大于1天(3 Days)， 小于1天(03:10:29)
 function string.formatNumHMS(num)
     num = tonumber(num) or 0
     num = math.round(num)
     local second = num%60
     local minute = num/60%60
-    local hour = num/60/60
-    return string.format("%02d:%02d:%02d",hour, minute, second)
+    local hour = num/60/60%24
+    local day = num/60/60/24
+    if day >= 1 then
+        return string.format("%d Days", day)
+    else
+        return string.format("%02d:%02d:%02d", hour, minute, second)
+    end
 end
 
+--- 
+-- 数字格式化 60*60*24*4 -> [Jan.05.1970]
 function string.formatNumMDY(num, format)
 	format = format or "[%b.%d.%Y]"
     num = num or os.time()
