@@ -66,6 +66,7 @@ end
 -- end --
 
 function Node:addTo(target, zorder, tag)
+    assert(target, debug.traceback())
     target:addChild(self, zorder or self:getLocalZOrder(), tag or self:getTag())
 
     return self
