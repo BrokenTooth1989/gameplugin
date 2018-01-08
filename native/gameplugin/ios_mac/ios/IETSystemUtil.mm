@@ -12,6 +12,10 @@
 #include <sys/sysctl.h>
 #import "AFNetworking.h"
 
+int IETSystemUtil::getDebugMode() {
+    return DEBUG_LEVEL;
+}
+
 long IETSystemUtil::getCpuTime()
 {
     struct timeval boottime;

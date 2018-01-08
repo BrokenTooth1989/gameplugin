@@ -11,9 +11,11 @@
 #include <sys/sysctl.h>
 #include "network/HttpClient.h"
 
-
-
 using namespace cocos2d::network;
+
+int IETSystemUtil::getDebugMode() {
+    return DEBUG_LEVEL;
+}
 
 long IETSystemUtil::getCpuTime()
 {

@@ -24,6 +24,10 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace network;
 
+int IETSystemUtil::getDebugMode() {
+    return 3;
+}
+
 long IETSystemUtil::getCpuTime()
 {
     struct timeval tv;

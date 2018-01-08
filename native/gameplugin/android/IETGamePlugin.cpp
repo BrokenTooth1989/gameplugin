@@ -57,10 +57,6 @@ void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::func
     func(true, "");
 }
 
-void IETGamePlugin::rate(int level)
-{
-}
-
 bool IETGamePlugin::gcIsAvailable()
 {
     return false;

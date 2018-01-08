@@ -256,3 +256,7 @@ void IETFacebookHelper::getLevel(std::string fid, std::function<void (int)> &fun
     log("getLevel");
     func(5);
 }
+
+void IETFacebookHelper::inviteFriend(std::string appLinkURL,std::string prviewImageURL, std::function<void(bool)>& func)
+{
+}

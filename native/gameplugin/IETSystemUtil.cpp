@@ -29,10 +29,6 @@ void IETSystemUtil::setLocalConfig(std::string file) {
     _localConfigFile = file;
 }
 
-int IETSystemUtil::getDebugMode() {
-    return DEBUG_LEVEL;
-}
-
 std::string IETSystemUtil::getPlatformType() {
     string type = "mac";
     Application::Platform platform = Application::getInstance()->getTargetPlatform();

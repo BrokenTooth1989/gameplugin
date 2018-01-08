@@ -30,5 +30,4 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/ \
                     $(COCOS2DX_ROOT)/external/lua/tolua \
                     $(COCOS2DX_ROOT)/external/lua/luajit/include
 
-$(warning $(COCOS2DX_ROOT))
 include $(BUILD_STATIC_LIBRARY)

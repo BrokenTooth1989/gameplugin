@@ -31,8 +31,6 @@ public:
     SINGLETON(IETSystemUtil)
     // 设置本地配置文件
     static void setLocalConfig(std::string filePath);
-    // 获取当前是debug:1/release:2/submission:3模式
-    int getDebugMode();
     // 获取平台类别:ios/android/mac
     std::string getPlatformType();
     // 获取当前系统时间毫秒
@@ -75,6 +73,8 @@ public:
     void exitGame();
 
 #pragma mark 平台单独实现
+    // 获取当前是debug:1/release:2/submission:3模式
+    int getDebugMode();
     long getCpuTime();
     std::string getConfigValue(std::string key);
     std::string getBundleId();
