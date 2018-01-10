@@ -25,7 +25,7 @@ IETAndroidBridge* IETAndroidBridge::getInstance()
 
 std::string IETAndroidBridge::callJavaMathod(std::string className, std::string methodName, std::string reqData)
 {
-    return this->callJavaMethod(className, methodName, reqData, 0);
+    return this->callJavaMethod(className, methodName, reqData, -1);
 }
 
 void IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, std::string reqData, std::function<void (std::string)> handler)
