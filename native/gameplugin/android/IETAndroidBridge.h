@@ -26,7 +26,7 @@ public:
      @param reqData json数据
      @return json数据
      */
-    std::string callJavaMathod(std::string className, std::string methodName, std::string reqData);
+    std::string callJavaMethod(std::string className, std::string methodName, std::string reqData);
     
     /**
      调用Java函数

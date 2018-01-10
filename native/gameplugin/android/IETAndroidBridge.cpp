@@ -23,16 +23,16 @@ IETAndroidBridge* IETAndroidBridge::getInstance()
     return instance;
 }
 
-std::string IETAndroidBridge::callJavaMathod(std::string className, std::string methodName, std::string reqData)
+std::string IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, std::string reqData)
 {
     return this->callJavaMethod(className, methodName, reqData, -1);
 }
 
 void IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, std::string reqData, std::function<void (std::string)> handler)
 {
-    int requestId = requestId++;
-    handlerMap[requestId] = handler;
-    this->callJavaMethod(className, methodName, reqData, requestId);
+    int reqId = requestId++;
+    handlerMap[reqId] = handler;
+    this->callJavaMethod(className, methodName, reqData, reqId);
 }
 
 void IETAndroidBridge::handleJavaRes(int responseId, std::string resData)
@@ -50,8 +50,14 @@ std::string IETAndroidBridge::callJavaMethod(std::string className, std::string 
     jstring jclassName = env->NewStringUTF(className.c_str());
     jstring jmethodName = env->NewStringUTF(methodName.c_str());
     jstring jreqData = env->NewStringUTF(reqData.c_str());
-    jobject resData_ = env->CallStaticObjectMethod(clazz, method, jclassName, jmethodName, jreqData, requestId);
-    return env->GetStringUTFChars((jstring)resData_, 0);
+    jstring resData_ = (jstring)(env->CallStaticObjectMethod(clazz, method, jclassName, jmethodName, jreqData, requestId));
+    const char* resData = env->GetStringUTFChars((jstring)resData_, 0);
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(jclassName);
+    env->DeleteLocalRef(jmethodName);
+    env->DeleteLocalRef(jreqData);
+    env->ReleaseStringUTFChars(resData_, resData);
+    return resData;
 }
 
 IETAndroidBridge::IETAndroidBridge()
