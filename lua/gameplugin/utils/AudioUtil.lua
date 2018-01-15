@@ -15,6 +15,7 @@ local kEffectDefault        = 1
 local kUseNewEngine         = false
 
 function AudioUtil:ctor()
+    self.m_musicFile = nil
     if kUseNewEngine then
         self._musicId = -1
         self._effectIds = {}
@@ -130,11 +131,15 @@ end
 -- 播放音乐，是否循环
 function AudioUtil:playMusic(filename, isLoop)
     isLoop = isLoop or true
+    if self.m_musicFile == filename then
+        return
+    end
+    self.m_musicFile = filename
     if kUseNewEngine then
-        self:stopMusic()
+        ccexp.AudioEngine:stop(self._musicId)
         self._musicId = ccexp.AudioEngine:play2d(filename, true, self:getMusic())
     else
-        self:stopMusic()
+        AudioEngine.stopMusic(true)
         AudioEngine.playMusic(filename, isLoop)
     end
 end
@@ -177,6 +182,7 @@ end
 
 -- 停止音乐
 function AudioUtil:stopMusic()
+    self.m_musicFile = nil
     if kUseNewEngine then
         if self._musicId == -1 then return end
         local musicId = self._musicId
