@@ -31,11 +31,11 @@ int lua_cocos2dx_gameplugin_manual_IETSystemUtil_requestUrl(lua_State* tolua_S)
     {
         std::string arg0;
         std::string arg1;
-        std::string arg2;
+        cocos2d::ValueMap arg2;
         std::function<void (bool, std::basic_string<char>)> arg3;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "IETSystemUtil:requestUrl");
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "IETSystemUtil:requestUrl");
-        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "IETSystemUtil:requestUrl");
+        ok &= luaval_to_ccvaluemap(tolua_S, 4, &arg2, "IETSystemUtil:requestUrl");
         do {
             // Lambda binding for lua is not supported.
             LUA_FUNCTION func = toluafix_ref_function(tolua_S, 5, 0);
@@ -170,61 +170,6 @@ int lua_cocos2dx_gameplugin_manual_IETSystemUtil_downloadFile(lua_State* tolua_S
 
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_manual_IETSystemUtil_downloadFile'.",&tolua_err);
-
-    return 0;
-}
-int lua_cocos2dx_gameplugin_manual_IETSystemUtil_checkVersionBuild(lua_State* tolua_S)
-{
-    int argc = 0;
-    IETSystemUtil* cobj = nullptr;
-    bool ok  = true;
-
-    tolua_Error tolua_err;
-
-
-    if (!tolua_isusertype(tolua_S,1,"IETSystemUtil",0,&tolua_err)) goto tolua_lerror;
-
-    cobj = (IETSystemUtil*)tolua_tousertype(tolua_S,1,0);
-
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_manual_IETSystemUtil_checkVersionBuild'", nullptr);
-        return 0;
-    }
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 3)
-    {
-        std::string arg0;
-        int arg1;
-        std::function<void ()> arg2;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "IETSystemUtil:checkVersionBuild");
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "IETSystemUtil:checkVersionBuild");
-
-        do {
-			// Lambda binding for lua is not supported.
-            LUA_FUNCTION func = toluafix_ref_function(tolua_S, 4, 0);
-            arg2 = [=](){
-                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                stack->executeFunctionByHandler(func, 0);
-            };
-		} while(0)
-		;
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_manual_IETSystemUtil_checkVersionBuild'", nullptr);
-            return 0;
-        }
-        cobj->checkVersionBuild(arg0, arg1, arg2);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETSystemUtil:checkVersionBuild",argc, 2);
-    return 0;
-
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_manual_IETSystemUtil_checkVersionBuild'.",&tolua_err);
 
     return 0;
 }
@@ -419,7 +364,6 @@ int lua_register_cocos2dx_gameplugin_manual_IETSystemUtil(lua_State* tolua_S)
         tolua_function(tolua_S,"requestUrl", lua_cocos2dx_gameplugin_manual_IETSystemUtil_requestUrl);
         tolua_function(tolua_S,"syncGameConfig",lua_cocos2dx_gameplugin_manual_IETSystemUtil_syncGameConfig);
         tolua_function(tolua_S,"downloadFile",lua_cocos2dx_gameplugin_manual_IETSystemUtil_downloadFile);
-        tolua_function(tolua_S,"checkVersionBuild",lua_cocos2dx_gameplugin_manual_IETSystemUtil_checkVersionBuild);
         tolua_function(tolua_S,"showAlertDialog",lua_cocos2dx_gameplugin_manual_IETSystemUtil_showAlertDialog);
         tolua_function(tolua_S,"saveImage",lua_cocos2dx_gameplugin_manual_IETSystemUtil_saveImage);
         tolua_function(tolua_S,"sendEmail",lua_cocos2dx_gameplugin_manual_IETSystemUtil_sendEmail);

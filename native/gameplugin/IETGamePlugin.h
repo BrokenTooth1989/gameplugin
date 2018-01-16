@@ -39,7 +39,6 @@ public:
     void gcShowArchievement();
     void gcShowChallenge();
     void gcReset();
-    std::string uuidForDevice();
 };
 
 #endif /* defined(GamePlugin_GamePlugin_h) */

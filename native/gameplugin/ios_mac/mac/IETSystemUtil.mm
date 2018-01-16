@@ -16,7 +16,66 @@ using namespace cocos2d::network;
 int IETSystemUtil::getDebugMode() {
     return DEBUG_LEVEL;
 }
-
+std::string IETSystemUtil::getPlatCfgValue(std::string key)
+{
+    return "value";
+}
+std::string IETSystemUtil::getAppBundleId()
+{
+    return "bundleId";
+}
+std::string IETSystemUtil::getAppName()
+{
+    return "appName";
+}
+std::string IETSystemUtil::getAppVersion()
+{
+    return "1.0";
+}
+int IETSystemUtil::getAppBuild()
+{
+    return 1;
+}
+std::string IETSystemUtil::getDeviceName()
+{
+    return "user's macbook";
+}
+std::string IETSystemUtil::getDeviceModel()
+{
+    return "macbook";
+}
+std::string IETSystemUtil::getDeviceType()
+{
+    return "macbook pro";
+}
+std::string IETSystemUtil::getSystemName()
+{
+    return "osx";
+}
+std::string IETSystemUtil::getSystemVersion()
+{
+    return "10.12.6";
+}
+std::string IETSystemUtil::getIDFV()
+{
+    return "IDFV";
+}
+std::string IETSystemUtil::getIDFA()
+{
+    return "IDFA";
+}
+std::string IETSystemUtil::getUUID()
+{
+    return "UUID";
+}
+std::string IETSystemUtil::getCountryCode()
+{
+    return "CN";
+}
+std::string IETSystemUtil::getLanguageCode()
+{
+    return "ZH";
+}
 long IETSystemUtil::getCpuTime()
 {
     struct timeval boottime;
@@ -30,44 +89,6 @@ long IETSystemUtil::getCpuTime()
         uptime = now - boottime.tv_sec;
     }
     return uptime;
-}
-std::string IETSystemUtil::getConfigValue(std::string key)
-{
-    return "";
-}
-std::string IETSystemUtil::getBundleId()
-{
-    return "";
-}
-std::string IETSystemUtil::getAppName()
-{
-    return "";
-}
-std::string IETSystemUtil::getAppVersionName() {
-    return "1.0.0";
-}
-int IETSystemUtil::getAppBuildNum() {
-    return 1;
-}
-int IETSystemUtil::getAppVersion()
-{
-    return 1;
-}
-std::string IETSystemUtil::getCountryCode()
-{
-    return "";
-}
-std::string IETSystemUtil::getLanguageCode()
-{
-    return "";
-}
-std::string IETSystemUtil::getDeviceName()
-{
-    return "";
-}
-std::string IETSystemUtil::getSystemVersion()
-{
-    return "";
 }
 std::string IETSystemUtil::getNetworkState()
 {
@@ -84,9 +105,7 @@ void IETSystemUtil::showLoading(std::string message)
 void IETSystemUtil::hideLoading()
 {}
 void IETSystemUtil::showMessage(std::string message)
-{
-    CCLOG("%s", message.c_str());
-}
+{}
 void IETSystemUtil::vibrate()
 {}
 void IETSystemUtil::saveImage(std::string imgPath, std::string album, const std::function<void (bool, std::string)> &func)
@@ -99,6 +118,8 @@ void IETSystemUtil::setNotificationState(bool enable)
 }
 void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {}
+void IETSystemUtil::setBadgeNum(int num)
+{}
 void IETSystemUtil::share(cocos2d::ValueVector items)
 {}
 void IETSystemUtil::keychainSet(std::string key, std::string value)
@@ -109,15 +130,12 @@ std::string IETSystemUtil::keychainGet(std::string key)
 }
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
-
-void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {
     HttpClient::getInstance()->setTimeoutForConnect(10);
     HttpClient::getInstance()->setTimeoutForRead(10);
     HttpRequest* request = new HttpRequest();
     request->setUrl(url.c_str());
-    
-    CCLOG("http data %s %s",url.c_str(),data.c_str());
     if (strcmp(requestType.c_str(), "get") == 0) {
         request->setRequestType(HttpRequest::Type::GET);
     } else if (strcmp(requestType.c_str(), "post") == 0) {
@@ -126,25 +144,12 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
         assert(false);
     }
     if (data.size() > 0) {
-        CCLOG("Post data:%s",data.c_str());
-        NSString* jData =  [NSString stringWithCString:data.c_str()
-                                              encoding:[NSString defaultCStringEncoding]];
-        
-        NSData* jD = [jData dataUsingEncoding:NSUTF8StringEncoding];
-        
-        NSDictionary *jdic = [NSJSONSerialization JSONObjectWithData:jD options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers error:nil];
-        
+        NSDictionary *nsData = [IETUtility valueMap2NsDict:data];
         NSString *str = @"";
-        
-        for (NSString *key in jdic) {
-            
-           str =  [str stringByAppendingFormat:@"%@=%@&",key, jdic[key]];
+        for (NSString *key in nsData) {
+           str =  [str stringByAppendingFormat:@"%@=%@&",key, nsData[key]];
         }
-        
-         NSLog(@"str :%@",str);
-        
         std::string *params = new std::string([str UTF8String]);
-        
         request->setRequestData(params->c_str(), strlen(params->c_str()));
     }
     request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
@@ -153,18 +158,10 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
             func(false, "");
             return;
         }
-        
         std::vector<char> *buffer = response->getResponseData();
-        
         std::string bufffff(buffer->begin(),buffer->end());
         func(true, bufffff);
-        
-        CCLOG("response:%s",bufffff.c_str());
     });
     HttpClient::getInstance()->sendImmediate(request);
     request->release();
-    
-    
-    
-
 }

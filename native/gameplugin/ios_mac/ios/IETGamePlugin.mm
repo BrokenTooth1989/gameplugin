@@ -173,7 +173,3 @@ void IETGamePlugin::gcReset()
     [[IOSGamePlugin getInstance] gcReset];
 }
 
-std::string IETGamePlugin::uuidForDevice()
-{
-    return [[[IOSGamePlugin getInstance] uuidForDevice] UTF8String];
-}

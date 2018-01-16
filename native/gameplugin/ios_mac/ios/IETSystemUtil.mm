@@ -15,44 +15,47 @@
 int IETSystemUtil::getDebugMode() {
     return DEBUG_LEVEL;
 }
-
-long IETSystemUtil::getCpuTime()
-{
-    struct timeval boottime;
-    int mib[2] = {CTL_KERN, KERN_BOOTTIME};
-    size_t size = sizeof(boottime);
-    time_t now;
-    time_t uptime = -1;
-    (void)time(&now);
-    if (sysctl(mib, 2, &boottime, &size, NULL, 0) != -1 && boottime.tv_sec != 0)
-    {
-        uptime = now - boottime.tv_sec;
-    }
-    return uptime;
-}
-std::string IETSystemUtil::getConfigValue(std::string key)
+std::string IETSystemUtil::getPlatCfgValue(std::string key)
 {
     return [[[IOSSystemUtil getInstance] getConfigValueWithKey:NSStringFromString(key)] UTF8String];
 }
-std::string IETSystemUtil::getBundleId()
+std::string IETSystemUtil::getAppBundleId()
 {
-    return [[[IOSSystemUtil getInstance] getBundleId] UTF8String];
+    return [[[IOSSystemUtil getInstance] getAppBundleId] UTF8String];
 }
 std::string IETSystemUtil::getAppName()
 {
     return [[[IOSSystemUtil getInstance] getAppName] UTF8String];
 }
-std::string IETSystemUtil::getAppVersionName() {
-    NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    return [version UTF8String];
+std::string IETSystemUtil::getAppVersion() {
+    return [[[IOSSystemUtil getInstance] getAppVersion] UTF8String];
 }
-int IETSystemUtil::getAppBuildNum() {
-    NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
-    return [build intValue];
+int IETSystemUtil::getAppBuild() {
+    return [[[IOSSystemUtil getInstance] getAppBuild] intValue];
 }
-int IETSystemUtil::getAppVersion()
-{
-    return [[[IOSSystemUtil getInstance] getAppVersion] intValue];
+std::string IETSystemUtil::getDeviceName() {
+    return [[[IOSSystemUtil getInstance] getDeviceName] UTF8String];
+}
+std::string IETSystemUtil::getDeviceModel() {
+    return [[[IOSSystemUtil getInstance] getDeviceModel] UTF8String];
+}
+std::string IETSystemUtil::getDeviceType() {
+    return [[[IOSSystemUtil getInstance] getDeviceType] UTF8String];
+}
+std::string IETSystemUtil::getSystemName() {
+    return [[[IOSSystemUtil getInstance] getSystemName] UTF8String];
+}
+std::string IETSystemUtil::getSystemVersion() {
+    return [[[IOSSystemUtil getInstance] getSystemVersion] UTF8String];
+}
+std::string IETSystemUtil::getIDFV() {
+    return [[[IOSSystemUtil getInstance] getIDFV] UTF8String];
+}
+std::string IETSystemUtil::getIDFA() {
+    return [[[IOSSystemUtil getInstance] getIDFA] UTF8String];
+}
+std::string IETSystemUtil::getUUID() {
+    return [[[IOSSystemUtil getInstance] getUUID] UTF8String];
 }
 std::string IETSystemUtil::getCountryCode()
 {
@@ -62,13 +65,8 @@ std::string IETSystemUtil::getLanguageCode()
 {
     return [[[IOSSystemUtil getInstance] getLanguageCode] UTF8String];
 }
-std::string IETSystemUtil::getDeviceName()
-{
-    return [[[IOSSystemUtil getInstance] getDeviceName] UTF8String];
-}
-std::string IETSystemUtil::getSystemVersion()
-{
-    return [[[IOSSystemUtil getInstance] getSystemVersion] UTF8String];
+long IETSystemUtil::getCpuTime() {
+    return [[IOSSystemUtil getInstance] getCpuTime];
 }
 std::string IETSystemUtil::getNetworkState()
 {
@@ -137,9 +135,13 @@ void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {
     [[IOSSystemUtil getInstance] postNotification:[IETUtility valueMap2NsDict:map]];
 }
+void IETSystemUtil::setBadgeNum(int num)
+{
+    [[IOSSystemUtil getInstance] setBadgeNum:num];
+}
 void IETSystemUtil::share(cocos2d::ValueVector items)
 {
-    
+    [[IOSSystemUtil getInstance] share:[IETUtility valueVector2NsArr:items]];
 }
 void IETSystemUtil::keychainSet(std::string key, std::string value)
 {
@@ -155,40 +157,16 @@ std::string IETSystemUtil::keychainGet(std::string key)
 }
 void IETSystemUtil::copyToPasteboard(std::string str)
 {
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [NSString stringWithUTF8String:str.c_str()];
+    [[IOSSystemUtil getInstance] saveToPasteboard:NSStringFromString(str)];
 }
 
-void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {
-//    CCLOG("%s, %s, %s", requestType.c_str(), url.c_str(), data.c_str());
-    NSString* nsUrl =  [NSString stringWithCString:url.c_str() encoding:[NSString defaultCStringEncoding]];
-    void(^success)(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) = ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NSLog(@"JSON: %@", responseObject);
-        NSError *parseError = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
-        NSString *respStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        std::string str=[respStr cStringUsingEncoding: NSUTF8StringEncoding];
-        func(true, str);
+    NSString *nsReqType = NSStringFromString(requestType);
+    NSString *nsUrl = NSStringFromString(url);
+    NSDictionary *nsData = [IETUtility valueMap2NsDict:data];
+    void (^block)(BOOL result, NSString *resp) = [func](BOOL result, NSString *resp) -> void {
+        func(result, [resp UTF8String]);
     };
-    void(^failure)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) = ^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"Error: %@", error);
-        func(false, "");
-    };
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
-    if (!strcmp(requestType.c_str(), "get")) {
-//        [manager GET:nsUrl parameters:nil success:success failure:failure];
-        [manager GET:nsUrl parameters:nil progress:nil success:success failure:failure];
-    } else {
-        NSString* jData =  [NSString stringWithCString:data.c_str() encoding:[NSString defaultCStringEncoding]];
-        NSData* jD = [jData dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *jdic = [NSJSONSerialization JSONObjectWithData:jD options:NSJSONReadingMutableLeaves|NSJSONReadingMutableContainers error:nil];
-//        NSLog(@"%@",jdic);
-//        [manager POST:nsUrl parameters:jdic success:success failure:failure];
-        [manager POST:nsUrl parameters:jdic progress:nil success:success failure:failure];
-    }
+    [[IOSSystemUtil getInstance] sendRequest:nsReqType url:nsUrl data:nsData handler:block];
 }

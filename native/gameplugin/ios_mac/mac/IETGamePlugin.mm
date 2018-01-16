@@ -105,8 +105,3 @@ void IETGamePlugin::gcShowChallenge()
 void IETGamePlugin::gcReset()
 {
 }
-
-std::string IETGamePlugin::uuidForDevice()
-{
-    return "123";
-}

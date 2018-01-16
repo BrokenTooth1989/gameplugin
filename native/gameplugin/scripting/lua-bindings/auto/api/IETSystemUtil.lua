@@ -23,12 +23,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getBuildPath 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
 -- @function [parent=#IETSystemUtil] hideProgressDialog 
 -- @param self
         
@@ -54,13 +48,7 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getBundleId 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#IETSystemUtil] getDeviceName 
+-- @function [parent=#IETSystemUtil] getDeviceType 
 -- @param self
 -- @return string#string ret (return value: string)
         
@@ -83,35 +71,41 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getAppVersionName 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#IETSystemUtil] getWebServerRoot 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#IETSystemUtil] keychainGet 
+-- @function [parent=#IETSystemUtil] keychainSet 
 -- @param self
 -- @param #string key
--- @return string#string ret (return value: string)
+-- @param #string value
         
 --------------------------------
 -- 
 -- @function [parent=#IETSystemUtil] getAppVersion 
 -- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getLocalCfgValue 
+-- @param self
+-- @param #string key
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getDeviceName 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getAppBuild 
+-- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getOnLineValue 
+-- @function [parent=#IETSystemUtil] getPlatformType 
 -- @param self
--- @param #string key
--- @return Value#Value ret (return value: cc.Value)
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -120,20 +114,19 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getAppBuildNum 
+-- @function [parent=#IETSystemUtil] setBadgeNum 
 -- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- 
--- @function [parent=#IETSystemUtil] keychainSet 
--- @param self
--- @param #string key
--- @param #string value
+-- @param #int num
         
 --------------------------------
 -- 
 -- @function [parent=#IETSystemUtil] getNetworkState 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getIDFA 
 -- @param self
 -- @return string#string ret (return value: string)
         
@@ -154,10 +147,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getConfigValue 
+-- @function [parent=#IETSystemUtil] getCpuTime 
 -- @param self
--- @param #string key
--- @return string#string ret (return value: string)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- 
@@ -167,12 +159,13 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] hideLoading 
+-- @function [parent=#IETSystemUtil] getAppBundleId 
 -- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getCachePath 
+-- @function [parent=#IETSystemUtil] getSystemName 
 -- @param self
 -- @return string#string ret (return value: string)
         
@@ -186,22 +179,23 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getLocalValue 
+-- @function [parent=#IETSystemUtil] getOnlineCfgValue 
 -- @param self
 -- @param #string key
--- @return Value#Value ret (return value: cc.Value)
-        
---------------------------------
--- 
--- @function [parent=#IETSystemUtil] getFileServerRoot 
--- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getCpuTime 
+-- @function [parent=#IETSystemUtil] getPlatCfgValue 
 -- @param self
--- @return long#long ret (return value: long)
+-- @param #string key
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getDeviceModel 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -212,9 +206,22 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] showMessage 
+-- @function [parent=#IETSystemUtil] keychainGet 
 -- @param self
--- @param #string message
+-- @param #string key
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getIDFV 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETSystemUtil] getUUID 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -232,10 +239,8 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getValue 
+-- @function [parent=#IETSystemUtil] hideLoading 
 -- @param self
--- @param #string key
--- @return Value#Value ret (return value: cc.Value)
         
 --------------------------------
 -- 
@@ -245,8 +250,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] getPlatformType 
+-- @function [parent=#IETSystemUtil] getCfgValue 
 -- @param self
+-- @param #string key
 -- @return string#string ret (return value: string)
         
 --------------------------------
@@ -264,9 +270,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETSystemUtil] setMainLuaFile 
+-- @function [parent=#IETSystemUtil] showMessage 
 -- @param self
--- @param #string file
+-- @param #string message
         
 --------------------------------
 -- 

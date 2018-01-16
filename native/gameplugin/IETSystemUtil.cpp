@@ -157,25 +157,8 @@ std::string IETSystemUtil::base64Decode(std::string input) {
     }
 }
 
-std::string IETSystemUtil::getWebServerRoot() {
-#if DEBUG
-    return this->getValue("WebServerRootDev").asString();
-#else
-    return this->getValue("WebServerRoot").asString();
-#endif
-}
-
-std::string IETSystemUtil::getFileServerRoot() {
-#if DEBUG
-    return this->getValue("FileServerRootDev").asString();
-#else
-    return this->getValue("FileServerRoot").asString();
-#endif
-}
-
-
 void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<void()> &func) {
-    IETSystemUtil::requestUrl("get", configUrl, "", [=](bool success, std::string data) {
+    IETSystemUtil::requestUrl("get", configUrl, ValueMapNull, [=](bool success, std::string data) {
         if (success && data.length() > 0) {
             UserDefault::getInstance()->setStringForKey("online_config", data);
             UserDefault::getInstance()->flush();
@@ -189,20 +172,20 @@ void IETSystemUtil::syncGameConfig(std::string configUrl, const std::function<vo
     });
 }
 
-cocos2d::Value IETSystemUtil::getValue(std::string key) {
-    Value v = getOnLineValue(key);
-    if (v != Value::Null) {
+std::string IETSystemUtil::getCfgValue(std::string key) {
+    std::string v = getOnlineCfgValue(key);
+    if (strcmp(v.c_str(), "")) {
         return v;
     }
-    return getLocalValue(key);
+    return getLocalCfgValue(key);
 }
 
-cocos2d::Value IETSystemUtil::getLocalValue(std::string key) {
-    return _localValueMap[key];
+std::string IETSystemUtil::getLocalCfgValue(std::string key) {
+    return _localValueMap[key].asString();
 }
 
-cocos2d::Value IETSystemUtil::getOnLineValue(std::string key) {
-    return _onlineValueMap[key];
+std::string IETSystemUtil::getOnlineCfgValue(std::string key) {
+    return _onlineValueMap[key].asString();
 }
 
 void IETSystemUtil::downloadFile(std::string url, std::string path, const std::function<void(int, int)> &callback) {
@@ -304,7 +287,7 @@ bool IETSystemUtil::uncompressZip(std::string file, std::string path) {
 
                     // Write data to file.
                     if (error > 0) {
-                        int dbuf = fwrite(read_buffer, error, 1, out); // You should check return of fwrite...
+                        unsigned long dbuf = fwrite(read_buffer, error, 1, out); // You should check return of fwrite...
                         CC_UNUSED_PARAM(dbuf);
                         // log("debug bytes written %d %s",dbuf,filename);
                     }
@@ -332,37 +315,6 @@ bool IETSystemUtil::uncompressZip(std::string file, std::string path) {
     return true;
 }
 
-void IETSystemUtil::setMainLuaFile(std::string file) {
-    _mainLuaFile = file;
-}
-
-void IETSystemUtil::checkVersionBuild(std::string configUrl, int currentBuild, const std::function<void()> &func) {
-    this->syncGameConfig(configUrl, [=]() {
-        // 提示用户升级客户端
-        this->showNewVersionDialog([=](int result) {
-            if (result == 1) {// 升级
-                IETSystemUtil::exitGame();
-            } else if (result == 0) {// 暂不升级
-                func();
-            } else if (result == -1) {// 当前已是最新
-                // 提示用户更新资源包
-                this->showNewBuildDialog(currentBuild, [=](int result) {
-                    if (result == 1) {
-                        // 清除缓存
-                        Director::getInstance()->purgeCachedData();
-                        // 清除已加载的lua，执行入口lua文件
-                        LuaEngine *engine = LuaEngine::getInstance();
-                        engine->executeString("for k,v in pairs(package.loaded) do package.loaded[k] = nil end");
-                        engine->executeScriptFile(this->_mainLuaFile.c_str());
-                    } else if (result == 0 || result == -1) {
-                        func();
-                    }
-                });
-            }
-        });
-    });
-}
-
 void IETSystemUtil::openUrl(std::string url) {
     Application::getInstance()->openURL(url);
 }
@@ -377,7 +329,8 @@ void IETSystemUtil::exitGame() {
 #pragma mark private
 
 IETSystemUtil::IETSystemUtil()
-        : _downloader(nullptr) {
+:_downloader(nullptr)
+{
     _downloadItems.clear();
     _downloader = std::make_shared<Downloader>();
     _downloader->setProgressCallback([&](double total, double current, string url, string id) {
@@ -405,6 +358,9 @@ IETSystemUtil::IETSystemUtil()
         Downloader::ErrorCode code = error.code;
         int curle_code = error.curle_code;
         int curlm_code = error.curlm_code;
+        CC_UNUSED_PARAM(code);
+        CC_UNUSED_PARAM(curle_code);
+        CC_UNUSED_PARAM(curlm_code);
         string message = error.message;
         string customId = error.customId;
         string url = error.url;
@@ -426,147 +382,6 @@ IETSystemUtil::~IETSystemUtil() {
 }
 
 void IETSystemUtil::init() {
-    string writablePath = FileUtils::getInstance()->getWritablePath();
-
     // 读取本地配置文件
     _localValueMap = FileUtils::getInstance()->getValueMapFromFile(_localConfigFile);
-
-    // 创建热更资源搜索路径并增加到searchPath
-    int build = this->getAppVersion();
-    _buildPath = StringUtils::format("%snewbuild_%d/", writablePath.c_str(), build);
-    if (!FileUtils::getInstance()->isDirectoryExist(_buildPath)) {
-        FileUtils::getInstance()->createDirectory(_buildPath);
-    }
-    FileUtils::getInstance()->addSearchPath(_buildPath + "src/", true);
-    FileUtils::getInstance()->addSearchPath(_buildPath + "res/", true);
-    FileUtils::getInstance()->addSearchPath(_buildPath + "res/ccs_res/", true);
-
-    // 创建缓存文件路径
-    _cachePath = StringUtils::format("%sgameplugincache/", writablePath.c_str());
-    if (!FileUtils::getInstance()->isDirectoryExist(_cachePath)) {
-        FileUtils::getInstance()->createDirectory(_cachePath);
-    }
-
-    // Lua脚本搜索路径
-#if CC_LUA_ENGINE_ENABLED > 0
-    LuaEngine *engine = LuaEngine::getInstance();
-    LuaStack *stack = engine->getLuaStack();
-    lua_State *state = stack->getLuaState();
-    lua_getglobal(state, "package");
-    lua_getfield(state, -1, "path");
-    const char *cur_path = lua_tostring(state, -1);
-    string path = _buildPath + "src/?.lua";
-    lua_pushfstring(state, "%s;%s", path.c_str(), cur_path);
-    lua_setfield(state, -3, "path");
-    lua_pop(state, 2);
-#endif
 }
-
-bool IETSystemUtil::isNewVersionValid() {
-    Value newVersionValue = this->getValue("new_version");
-    if (newVersionValue.isNull()) {
-        return false;
-    }
-    ValueMap newVersionMap = newVersionValue.asValueMap();
-    if (!newVersionMap["enable"].asBool()) {
-        return false;
-    }
-    int version = newVersionMap["version"].asInt();
-    int clientVersion = this->getAppVersion();
-    if (clientVersion >= version) {
-        return false;
-    }
-    return true;
-}
-
-void IETSystemUtil::showNewVersionDialog(const std::function<void(int)> &func) {
-    if (!isNewVersionValid()) {
-        func(-1);
-        return;
-    }
-    ValueMap newVersionMap = this->getValue("new_version").asValueMap();
-    string msg = newVersionMap["msg"].asString();
-    string url = newVersionMap["url"].asString();
-    string force = newVersionMap["force"].asString();
-    ValueVector otherBtnTitles;
-    if (force != "on") {
-        otherBtnTitles.push_back(Value("Later"));
-    }
-    this->showAlertDialog("New Version", msg, "Get Now", otherBtnTitles, [=](int buttonIdx) {
-        if (buttonIdx == 0) {
-            IETSystemUtil::getInstance()->openUrl(url);
-            func(1);
-        } else {
-            func(0);
-        }
-    });
-}
-
-bool IETSystemUtil::isNewBuildValid(int currentBuild) {
-    Value newBuildValue = this->getValue("new_build");
-    if (newBuildValue.isNull()) {
-        return false;
-    }
-    ValueMap newBuildMap = newBuildValue.asValueMap();
-    if (!newBuildMap["enable"].asBool()) {
-        return false;
-    }
-    int build = newBuildMap["build"].asInt();
-    if (currentBuild >= build) {
-        return false;
-    }
-    return true;
-}
-
-void IETSystemUtil::showNewBuildDialog(int currentBuild, const std::function<void(int)> &func) {
-    if (!isNewBuildValid(currentBuild)) {
-        func(-1);
-        return;
-    }
-    IETAnalyticHelper::getInstance()->onEvent("update_start");// 统计更新更新失败的比例
-    ValueMap newBuildMap = this->getValue("new_build").asValueMap();
-    string filePath = newBuildMap["url"].asString();
-    string force = newBuildMap["force"].asString();
-    string serverRoot = IETSystemUtil::getFileServerRoot();
-    string url = StringUtils::format("%s%s", serverRoot.c_str(), filePath.c_str());
-    string fileName = this->urlEncode(url);
-    string localPath = StringUtils::format("%s%s", _cachePath.c_str(), fileName.c_str());
-    this->showProgressDialog("Connecting", 0);
-    this->downloadFile(url, localPath, [=](int first, int second) {
-        if (first == 0) {
-            this->showProgressDialog("Loading...", second);
-        } else if (first == 1) {
-            this->showProgressDialog("Uncompressing...", 100);
-            string buildPath = this->getBuildPath();
-            bool result = this->uncompressZip(localPath, buildPath);
-            FileUtils::getInstance()->removeFile(localPath);
-            this->hideProgressDialog();
-            if (result) {
-                IETAnalyticHelper::getInstance()->onEvent("update_success");
-                if (this->_mainLuaFile.size() > 0) {
-                    func(1);
-                } else {
-                    this->showAlertDialog("Update Success", "Please Relaunch The Game.", "Relaunch", ValueVectorNull, [=](int buttonIdx) {
-                        IETSystemUtil::exitGame();
-                    });
-                }
-            } else {
-                IETAnalyticHelper::getInstance()->onEvent("update_failed", "Uncompress Failed");// 统计更新更新失败的比例
-                this->showAlertDialog("Update Failed", "Please Try Again.[Uncompress Failed]", "Ok", ValueVectorNull, [=](int buttonIdx) {
-                    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=] {
-                        this->showNewBuildDialog(currentBuild, func);
-                    });
-                });
-            }
-        } else if (first == -1) {
-            IETAnalyticHelper::getInstance()->onEvent("update_failed", "Download Failed");// 统计更新更新失败的比例
-            this->hideProgressDialog();
-            this->showAlertDialog("Update Failed", "Please Try Again.[Download Failed]", "Ok", ValueVectorNull, [=](bool ok) {
-                Director::getInstance()->getScheduler()->performFunctionInCocosThread([=] {
-                    this->showNewBuildDialog(currentBuild, func);
-                });
-            });
-        }
-    });
-}
-
