@@ -155,6 +155,10 @@ std::string IETSystemUtil::keychainGet(std::string key)
     }
     return [value UTF8String];
 }
+bool IETSystemUtil::isJailbroken()
+{
+    return [[IOSSystemUtil getInstance] isJailbroken];
+}
 void IETSystemUtil::copyToPasteboard(std::string str)
 {
     [[IOSSystemUtil getInstance] saveToPasteboard:NSStringFromString(str)];

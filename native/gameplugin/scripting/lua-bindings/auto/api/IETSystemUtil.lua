@@ -165,6 +165,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#IETSystemUtil] isJailbroken 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#IETSystemUtil] getSystemName 
 -- @param self
 -- @return string#string ret (return value: string)

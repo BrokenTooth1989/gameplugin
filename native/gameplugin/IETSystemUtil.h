@@ -99,6 +99,7 @@ public:
     void share(cocos2d::ValueVector items);
     void keychainSet(std::string key, std::string value);
     std::string keychainGet(std::string key);
+    bool isJailbroken();
     void copyToPasteboard(std::string str);
     void requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func);
 private:

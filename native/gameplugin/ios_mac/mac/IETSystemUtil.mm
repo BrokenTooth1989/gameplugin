@@ -128,6 +128,10 @@ std::string IETSystemUtil::keychainGet(std::string key)
 {
     return "";
 }
+bool IETSystemUtil::isJailbroken()
+{
+    return false;
+}
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
