@@ -107,14 +107,25 @@ end
 
 ---
 -- 数字格式化  大于1天(3 Days)， 小于1天(03:10:29)
-function string.formatNumHMS(num)
+function string.formatNumHMS(num, hourFormat)
+    num = tonumber(num) or 0
+    num = math.round(num)
+    local second = num%60
+    local minute = num/60%60
+    local hour = num/60/60
+    return string.format("%02d:%02d:%02d", hour, minute, second)
+end
+
+---
+-- 数字格式化  大于1天(3 Days)， 小于1天(03:10:29)
+function string.formatNumDHMS(num, hourFormat)
     num = tonumber(num) or 0
     num = math.round(num)
     local second = num%60
     local minute = num/60%60
     local hour = num/60/60%24
     local day = num/60/60/24
-    if day >= 1 then
+    if day >= 1 and not hourFormat then
         return string.format("%d Days", day)
     else
         return string.format("%02d:%02d:%02d", hour, minute, second)
