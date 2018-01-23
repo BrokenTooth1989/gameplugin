@@ -9,14 +9,19 @@
 #include "IETFacebookHelper.h"
 
 #include "cocos2d.h"
-
+#include "IETAndroidBridge.h"
 #include "jni.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/JniHelper.h"
 #endif
 
-#define CALL_JAVA_PACKAGE "org/cocos2dx/lua/AppActivity"
+#include "json/document.h"  
+#include "json/writer.h"  
+#include "json/stringbuffer.h"  
+using namespace  rapidjson; 
 
+#define CALL_JAVA_PACKAGE "org/cocos2dx/lua/AppActivity"
+#define JAVA_CLASS_NAME "com.joycastle.my_facebook.FacebookHelper"
 
 using namespace std;
 using namespace cocos2d;
@@ -26,7 +31,28 @@ bool _isLogin = false;
 
 void IETFacebookHelper::setLoginFunc(const std::function<void (std::string, std::string)> &func)
 {
-    _loginFunc = func;
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"setLoginListener",reqData,[=](std::string _resData){
+        log("IETFacebookHelper::setLoginFunc: async  %s", _resData.c_str());
+        rapidjson::Document readdoc;
+        readdoc.Parse<0>(_resData.c_str());     
+        if(!readdoc.HasParseError() && readdoc.HasMember("userId") && readdoc.HasMember("accessToken"))  
+        {  
+            rapidjson::Value& idValue=readdoc["userId"];
+            rapidjson::Value& tokenValue=readdoc["accessToken"];
+            func(idValue.GetString(),tokenValue.GetString());
+        } 
+    });
+
 }
 
 void IETFacebookHelper::setAppLinkFunc(const std::function<void (cocos2d::ValueMap)> &func)
@@ -43,167 +69,149 @@ void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url
 bool IETFacebookHelper::isLogin()
 {
 
-    //  //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 CALL_JAVA_PACKAGE,
-                                                 "getJavaObj",
-                                                 "()Ljava/lang/Object;");
-    jobject jobj;
-    if(isHave)
-    {
-        log("call static method");
-        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
-    }
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(msg,allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string islogin = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"isLogin",reqData);
+    log("facebook islogin json :%s",islogin.c_str());
 
-    jboolean ret;
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"isLoginFaceBook","()Z");
-    if(re)
-    {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        ret = minfo.env->CallBooleanMethod(jobj,minfo.methodID);
-        log("facebook islogin:%d",ret);
-    }
-    return ret;
+    rapidjson::Document readdoc;
+    readdoc.Parse<0>(islogin.c_str());     
+    if(readdoc.HasParseError())  
+    {  
+        CCLOG("GetParseError%s\n", readdoc.GetParseError());  
+    } 
+    const rapidjson::Value& jsonValue=readdoc["islogin"];
+
+    return jsonValue.GetBool();
 }
 
 void IETFacebookHelper::login()
 {
-    log("login");
-    
-    // _loginFunc("fid", "token");
-
-
-    //  //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 CALL_JAVA_PACKAGE,
-                                                 "getJavaObj",
-                                                 "()Ljava/lang/Object;");
-    jobject jobj;
-    if(isHave)
-    {
-        log("call static method");
-        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
-    }
-
-
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"onLoginFaceBook","()V");
-    if(re)
-    {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        minfo.env->CallVoidMethod(jobj,minfo.methodID);
-    }
-
-    _isLogin = true;
-    _loginFunc(this->getUserID(), this->getAccessToken());
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(msg,allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    // std::string islogin = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"isLogin",reqData);
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"login",reqData);
+    // _isLogin = true;
+    // _loginFunc(this->getUserID(), this->getAccessToken());
 }
 
 void IETFacebookHelper::logout()
 {
-    log("logout");
-    _isLogin = false;
-
-
-     //  //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 CALL_JAVA_PACKAGE,
-                                                 "getJavaObj",
-                                                 "()Ljava/lang/Object;");
-    jobject jobj;
-    if(isHave)
-    {
-        log("call static method");
-        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
-    }
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"FBLogOut","()V");
-    if(re)
-    {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        minfo.env->CallVoidMethod(jobj,minfo.methodID);
-    }
-
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"logout",reqData);
 }
 
 std::string IETFacebookHelper::getUserID()
 {
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(msg,allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
 
-     //  //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 CALL_JAVA_PACKAGE,
-                                                 "getJavaObj",
-                                                 "()Ljava/lang/Object;");
-    jobject jobj;
-    if(isHave)
-    {
-        log("call static method");
-        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
-    }
-    jstring jstr;
-    const char* str;
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getFBUserId","()Ljava/lang/String;");
-    if(re)
-    {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        jstr = (jstring)minfo.env->CallObjectMethod(jobj,minfo.methodID);
-        str = minfo.env->GetStringUTFChars(jstr, NULL);    
-        std::string ret(str);
-        minfo.env->ReleaseStringUTFChars(jstr, str);//str 
-        minfo.env->DeleteLocalRef(jstr);//释放jstr 
-    }
+    std::string uid = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getUserId",reqData);
+    log("facebook userId:%s",uid.c_str());
 
-    log("facebook userId:%s",str);
-    return str;
+    std::string _uid = "";
+    rapidjson::Document readdoc;
+    readdoc.Parse<0>(uid.c_str());     
+    if(!readdoc.HasParseError() && readdoc.HasMember("uid"))  
+    {  
+        const rapidjson::Value& jsonValue=readdoc["uid"];
+        _uid = jsonValue.GetString();
+    } 
+   
+    return _uid;
 }
 
 std::string IETFacebookHelper::getAccessToken()
 {
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(msg,allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string token = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAccessToken",reqData);
+    log("facebook AccessToken:%s",token.c_str());
 
-      //  //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 CALL_JAVA_PACKAGE,
-                                                 "getJavaObj",
-                                                 "()Ljava/lang/Object;");
-    jobject jobj;
-    if(isHave)
-    {
-        log("call static method");
-        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
-    }
-    jstring jstr;
-    const char* str;
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getAccessToken","()Ljava/lang/String;");
-    if(re)
-    {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        jstr = (jstring)minfo.env->CallObjectMethod(jobj,minfo.methodID);
-        str = minfo.env->GetStringUTFChars(jstr, NULL);    
-        std::string ret(str);
-        minfo.env->ReleaseStringUTFChars(jstr, str);//str 
-        minfo.env->DeleteLocalRef(jstr);//释放jstr 
-    }
-
-    log("facebook AccessToken:%s",str);
-    return str;
+    std::string _token = "";
+    rapidjson::Document readdoc;
+    readdoc.Parse<0>(token.c_str());     
+    if(!readdoc.HasParseError() && readdoc.HasMember("token"))  
+    {  
+        rapidjson::Value& jsonValue=readdoc["token"];
+        _token = jsonValue.GetString();
+    } 
+    return _token;
 }
 
 void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)
 {
-    log("getUserProfile");
-    func(ValueMapNull);
+
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    // arr.PushBack(msg,allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"getUserProfile",reqData,[=](std::string _resData){
+        log("IETFacebookHelper::getUserProfile: async  %s", _resData.c_str());
+        cocos2d::ValueMap respData;
+        rapidjson::Document readdoc;
+        readdoc.Parse<0>(_resData.c_str());     
+        if(!readdoc.HasParseError() && readdoc.HasMember("id") && readdoc.HasMember("name"))  
+        {  
+            rapidjson::Value& idValue=readdoc["id"];
+            respData["id"] = idValue.GetString();
+            rapidjson::Value& nameValue=readdoc["name"];
+            respData["name"] = nameValue.GetString();
+        } 
+
+        func(respData);
+    });
 }
 
 void IETFacebookHelper::getInvitableFriends(cocos2d::ValueVector inviteTokens, int picSize, std::function<void(cocos2d::ValueMap)>& func)
@@ -221,7 +229,40 @@ void IETFacebookHelper::getFriends(int picSize, std::function<void(cocos2d::Valu
 void IETFacebookHelper::confirmRequest(cocos2d::ValueVector fidOrTokens, std::string title, std::string msg, std::function<void (cocos2d::ValueMap)> &func)
 {
     log("confirmRequest");
-    func(ValueMapNull);
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value obj(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(obj,allocate);
+    arr.PushBack(title.c_str(),allocate);
+    arr.PushBack(msg.c_str(),allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"confirmRequest",reqData,[=](std::string _resData){
+        log("IETFacebookHelper::confirmRequest: async  %s", _resData.c_str());
+        cocos2d::ValueMap respData;
+        rapidjson::Document readdoc;
+        readdoc.Parse<0>(_resData.c_str());     
+        if(!readdoc.HasParseError() && readdoc.HasMember("json"))  
+        {  
+            rapidjson::Value& jsonValue=readdoc["json"];
+            log("#### %d",jsonValue.IsArray());
+            char key[20] = "tofid";
+            for (int i = 0; i < jsonValue.Size(); ++i)
+            {
+                sprintf(key,"%d",i );
+                rapidjson::Value &v = jsonValue[i];
+                respData[key] = v.GetString();
+            }
+        } 
+
+        func(respData);
+    });
+
 }
 
 void IETFacebookHelper::queryRequest(std::function<void (cocos2d::ValueMap)> &func)

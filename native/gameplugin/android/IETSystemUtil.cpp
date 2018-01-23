@@ -11,20 +11,28 @@
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "network/HttpClient.h"
+#include "IETAndroidBridge.h"
 
+#include "json/document.h"  
+#include "json/writer.h"  
+#include "json/stringbuffer.h"  
+using namespace  rapidjson; 
 
 #include "jni.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/JniHelper.h"
 #endif
 
-#define CALL_JAVA_PACKAGE "org/cocos2dx/lua/AppActivity"
+
+#define JAVA_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace network;
 
 int IETSystemUtil::getDebugMode() {
+    // std::string timeStr = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getCpuTime","{}");
+    // log("IETSystemUtil::getDebugMode:  %s",timeStr.c_str());
     return 3;
 }
 
@@ -37,49 +45,40 @@ long IETSystemUtil::getCpuTime()
 
     return (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
 
-
-    //  //1. 获取activity静态对象
-    JniMethodInfo minfo;
-    bool isHave = JniHelper::getStaticMethodInfo(minfo,
-                                                 CALL_JAVA_PACKAGE,
-                                                 "getJavaObj",
-                                                 "()Ljava/lang/Object;");
-    jobject jobj;
-    if(isHave)
-    {
-        log("call static method");
-        jobj = minfo.env->CallStaticObjectMethod(minfo.classID,minfo.methodID);
-    }
-    jlong ctime;
-    const char* str;
-    //getMethodInfo判断java定义的类非静态函数是否存在，返回bool
-    bool re = JniHelper::getMethodInfo(minfo,CALL_JAVA_PACKAGE,"getCpuTime","()J;");
-    if(re)
-    {
-        log("call no-static method");
-        //非静态函数调用的时候，需要的是对象，所以与静态函数调用的第一个参数不同
-        ctime = (jlong)minfo.env->CallObjectMethod(jobj,minfo.methodID);
-      
-    }
-    return ctime;
-
 }
 
-std::string IETSystemUtil::getConfigValue(std::string key)
+// std::string IETSystemUtil::getConfigValue(std::string key)
+// {
+//     return "";
+// }
+// std::string IETSystemUtil::getBundleId()
+// {
+//     return "";
+// }
+std::string IETSystemUtil::getAppBundleId()
 {
+
+
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getBundleId",reqData);
     return "";
 }
-std::string IETSystemUtil::getBundleId()
-{
-    return "";
-}
+
 std::string IETSystemUtil::getAppName()
 {
     return "";
 }
-int IETSystemUtil::getAppVersion()
+std::string IETSystemUtil::getAppVersion()
 {
-    return 1;
+    return "";
 }
 std::string IETSystemUtil::getCountryCode()
 {
@@ -121,6 +120,22 @@ void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector, std::st
 {}
 void IETSystemUtil::setNotificationState(bool enable)
 {
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    msg.AddMember("title","hello world",allocate);
+    arr.PushBack(msg,allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+                                                                                    
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"showAlertDialog",reqData,[=](std::string resData){
+        log("IETSystemUtil::setNotificationState:  %s", resData.c_str());
+    });
 }
 void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {}
@@ -136,8 +151,7 @@ std::string IETSystemUtil::keychainGet(std::string key)
 void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 
-
-void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::string data, const std::function<void (bool, std::string)> func)
+void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {
     
     HttpClient::getInstance()->setTimeoutForConnect(10);
@@ -145,7 +159,7 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
     HttpRequest* request = new HttpRequest();
     request->setUrl(url.c_str());
     
-    CCLOG("http data %s %s",url.c_str(),data.c_str());
+    CCLOG("http data %s ",url.c_str());
     if (strcmp(requestType.c_str(), "get") == 0) {
         request->setRequestType(HttpRequest::Type::GET);
     } else if (strcmp(requestType.c_str(), "post") == 0) {
@@ -153,10 +167,17 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
     } else {
         assert(false);
     }
-    if (data.size() > 0) {
 
-        request->setRequestData(data.c_str(), strlen(data.c_str()));
+    std::string postData = ""; 
+    for (auto iter = data.cbegin(); iter != data.cend(); ++iter)
+    {
+        postData += iter->first.c_str();
+        postData += "=";
+        postData += iter->second.asString().c_str();
+        postData += "&";
     }
+    request->setRequestData(postData.c_str(), strlen(postData.c_str()));
+
     request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
         if (response == nullptr || !response->isSucceed())
         {
@@ -177,16 +198,42 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, std::st
 
 }
 
-
-std::string IETSystemUtil::getAppVersionName()
+std::string IETSystemUtil::getPlatCfgValue(std::string key)
 {
-    
     return "";
 }
 
-
-int IETSystemUtil::getAppBuildNum()
+int IETSystemUtil::getAppBuild()
 {
-    return 0;
+    return 1;
 }
+std::string IETSystemUtil::getDeviceModel()
+{
+    return "";
+}
+std::string IETSystemUtil::getDeviceType()
+{
+    return "";
+}
+std::string IETSystemUtil::getSystemName()
+{
+    return "";
+}
+std::string IETSystemUtil::getIDFV()
+{
+    return "";
+}
+std::string IETSystemUtil::getIDFA()
+{
+    return "";
+}
+std::string IETSystemUtil::getUUID()
+{
+    return "";
+}
+void IETSystemUtil::setBadgeNum(int num)
+{
+
+}
+
 

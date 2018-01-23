@@ -7,6 +7,7 @@
 //
 
 #include "IETGamePlugin.h"
+#include "IETAndroidBridge.h"
 
 using namespace std;
 #include "cocos2d.h"
@@ -15,8 +16,12 @@ USING_NS_CC;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/JniHelper.h"
 #else
-
 #endif
+
+#include "json/document.h"  
+#include "json/writer.h"  
+#include "json/stringbuffer.h"  
+using namespace  rapidjson; 
  
 // #define CLASS_NAME_NATIVE_HELPER "com/fatalsignal/game/NativeHelper"
 
@@ -54,7 +59,25 @@ void IETGamePlugin::setRestoreHandler(const std::function<void (bool, std::strin
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)
 {
-    func(true, "");
+	std::string JAVA_CLASS_NAME = "com.joycastle.gameplugin.IabHelper";
+
+	rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(iapId.c_str(),allocate);
+    arr.PushBack(userId.c_str(),allocate);
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"purchase",reqData,[=](std::string resData){
+        log("IETGamePlugin::doIap:  %s", resData.c_str());
+        func(true, "");
+    });
+
 }
 
 bool IETGamePlugin::gcIsAvailable()
@@ -124,12 +147,6 @@ void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)
 {}
 void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
 {}
-
-std::string IETGamePlugin::uuidForDevice()
-{
-
-    return "";
-}
 
 
 
