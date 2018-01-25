@@ -9,6 +9,7 @@
 #include "IETAnalyticHelper.h"
 #import <Foundation/Foundation.h>
 #import "IETUtility.h"
+#include "IETSystemUtil.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -16,120 +17,133 @@ using namespace cocos2d;
 NSFileHandle *myHandle = nil;
 NSMutableArray *testArr = nil;
 
-void initFileHandler()
-{
-    if (myHandle == nil) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString* fileName = [documentsDirectory stringByAppendingString:@"/event.txt"];
-        myHandle = [NSFileHandle fileHandleForWritingAtPath:fileName];
-        [myHandle retain];
-        [myHandle seekToEndOfFile];
-    }
-}
-
-void writeTestData(NSString* str, BOOL flush)
-{
-    if (testArr == nil) {
-        testArr = [NSMutableArray array];
-        [testArr retain];
-    }
-    [testArr addObject:str];
-    if ([testArr count] > 0 || flush) {
-        NSString* str = [NSString stringWithFormat:@"%@\n", [testArr componentsJoinedByString:@"\n"]];
-        [myHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
-        [testArr removeAllObjects];
-    }
-}
-
 void IETAnalyticHelper::setAccountInfo(cocos2d::ValueMap userInfo)
 {
-    
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(userInfo));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::onEvent(std::string eventId)
 {
-    if (!strcmp(eventId.c_str(), "finish")) {
-        writeTestData([NSString stringWithUTF8String:"\n"], true);
-    } else {
-        initFileHandler();
-        NSString* eventMsg = [NSString stringWithFormat:@"onEvent: %s", eventId.c_str()];
-        writeTestData(eventMsg, false);
-    }
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(eventId));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::onEvent(std::string eventId, std::string label)
 {
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"onEvent: %s, label: %s", eventId.c_str(), label.c_str()];
-    writeTestData(eventMsg, false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(eventId));
+    valueVec.push_back(Value(label));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::onEvent(std::string eventId, cocos2d::ValueMap map)
 {
-    NSString* nsEventId = [NSString stringWithUTF8String:eventId.c_str()];
-    NSDictionary* nsDict = [IETUtility valueMap2NsDict:map];
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"onEvent: %@ {", nsEventId];
-    writeTestData(eventMsg, false);
-    for (NSString *key in nsDict) {
-        id value = [nsDict objectForKey:key];
-        NSString* eventMsg = [NSString stringWithFormat:@"\tkey: %@, type:%@, value: %@", key, [value class], value];
-        writeTestData(eventMsg, false);
-    }
-    writeTestData(@"}", false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(eventId));
+    valueVec.push_back(Value(map));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::setLevel(int level)
 {
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"setLevel: %d", level];
-    writeTestData(eventMsg, false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(level));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::charge(std::string name, double cash, double coin, int type)
 {
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"charge: %s, cash: %f, coin: %f, type: %d", name.c_str(), cash, coin, type];
-    writeTestData(eventMsg, false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(name));
+    valueVec.push_back(Value(cash));
+    valueVec.push_back(Value(coin));
+    valueVec.push_back(Value(type));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::reward(double coin, int type)
 {
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"reward: %f, reason: %d", coin, type];
-    writeTestData(eventMsg, false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(coin));
+    valueVec.push_back(Value(type));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::purchase(std::string name, int amount, double coin)
 {
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"purchase: %s, amount: %d, coin: %f", name.c_str(), amount, coin];
-    writeTestData(eventMsg, false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(name));
+    valueVec.push_back(Value(amount));
+    valueVec.push_back(Value(coin));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::use(std::string name, int amount, double coin)
 {
-    initFileHandler();
-    NSString* eventMsg = [NSString stringWithFormat:@"use: %s, amount: %d, coin: %f", name.c_str(), amount, coin];
-    writeTestData(eventMsg, false);
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(name));
+    valueVec.push_back(Value(amount));
+    valueVec.push_back(Value(coin));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::missionStart(std::string missionId)
 {
-    log("missionStart");
-    log("missionId=%s", missionId.c_str());
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(missionId));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::missionSuccess(std::string missionId)
 {
-    log("missionSuccess");
-    log("missionId=%s", missionId.c_str());
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(missionId));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }
 
 void IETAnalyticHelper::missionFailed(std::string missionId, std::string reason)
 {
-    log("missionFailed");
-    log("missionId=%s", missionId.c_str());
-    log("reason=%s", reason.c_str());
+    ValueVector valueVec;
+    valueVec.push_back(Value(__FUNCTION__));
+    valueVec.push_back(Value(missionId));
+    valueVec.push_back(Value(reason));
+    cocos2d::ValueMap valueMap;
+    valueMap["Analytic"] = valueVec;
+    IETSystemUtil::getInstance()->requestUrl("post", "http://127.0.0.1:3000/log", valueMap, [](bool, std::string){});
 }

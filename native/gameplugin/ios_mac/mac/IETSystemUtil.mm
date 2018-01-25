@@ -10,6 +10,7 @@
 #import "IETUtility.h"
 #include <sys/sysctl.h>
 #include "network/HttpClient.h"
+#include <AFNetworking/AFNetworking.h>
 
 using namespace cocos2d::network;
 
@@ -136,36 +137,24 @@ void IETSystemUtil::copyToPasteboard(std::string str)
 {}
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {
-    HttpClient::getInstance()->setTimeoutForConnect(10);
-    HttpClient::getInstance()->setTimeoutForRead(10);
-    HttpRequest* request = new HttpRequest();
-    request->setUrl(url.c_str());
-    if (strcmp(requestType.c_str(), "get") == 0) {
-        request->setRequestType(HttpRequest::Type::GET);
-    } else if (strcmp(requestType.c_str(), "post") == 0) {
-        request->setRequestType(HttpRequest::Type::POST);
+    void(^success)(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) = ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSError *parseError = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:&parseError];
+        NSString *respStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        func(true, [respStr UTF8String]);
+    };
+    void(^failure)(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) = ^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        func(false, [[NSString stringWithFormat:@"%@", error] UTF8String]);
+    };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [manager.requestSerializer setTimeoutInterval:10];
+    
+    if ([NSStringFromString(requestType) isEqualToString:@"get"]) {
+        [manager GET:NSStringFromString(url) parameters:nil progress:nil success:success failure:failure];
     } else {
-        assert(false);
+        [manager POST:NSStringFromString(url) parameters:[IETUtility valueMap2NsDict:data] progress:nil success:success failure:failure];
     }
-    if (data.size() > 0) {
-        NSDictionary *nsData = [IETUtility valueMap2NsDict:data];
-        NSString *str = @"";
-        for (NSString *key in nsData) {
-           str =  [str stringByAppendingFormat:@"%@=%@&",key, nsData[key]];
-        }
-        std::string *params = new std::string([str UTF8String]);
-        request->setRequestData(params->c_str(), strlen(params->c_str()));
-    }
-    request->setResponseCallback([=](HttpClient *sender, HttpResponse *response){
-        if (response == nullptr || !response->isSucceed())
-        {
-            func(false, "");
-            return;
-        }
-        std::vector<char> *buffer = response->getResponseData();
-        std::string bufffff(buffer->begin(),buffer->end());
-        func(true, bufffff);
-    });
-    HttpClient::getInstance()->sendImmediate(request);
-    request->release();
 }
