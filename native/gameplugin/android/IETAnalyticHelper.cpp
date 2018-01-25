@@ -8,6 +8,7 @@
 
 #include "IETAnalyticHelper.h"
 #include "IETAndroidBridge.h"
+#include <string>
 
 using namespace std;
 using namespace cocos2d;
@@ -16,7 +17,7 @@ using namespace cocos2d;
 #include "json/writer.h"  
 #include "json/stringbuffer.h"  
 using namespace  rapidjson; 
-
+#include <sstream>
 
 #define JAVA_CLASS_NAME "com.joycastle.gameplugin.AnalyticHelper"
 
@@ -25,9 +26,16 @@ void initFileHandler()
     
 }
 
+std::string double_to_string(double dNum)
+{
+    char str[256];
+    sprintf(str, "%.2f", dNum);
+    string result = str;
+    return result;
+}
+
 void IETAnalyticHelper::setAccountInfo(cocos2d::ValueMap userInfo)
 {   
-
     // rapidjson::Value msg(rapidjson::kObjectType);
     // rapidjson::Value arr(rapidjson::kArrayType);
     // rapidjson::StringBuffer  buffer;
@@ -129,8 +137,8 @@ void IETAnalyticHelper::charge(std::string name, double cash, double coin, int t
     document.SetObject();
     rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
     arr.PushBack(name.c_str(),allocate);
-    arr.PushBack(cash,allocate);
-    arr.PushBack(coin,allocate);
+    arr.PushBack(double_to_string(cash).c_str(),allocate);
+    arr.PushBack(double_to_string(coin).c_str(),allocate);
     arr.PushBack(type,allocate);
     document.AddMember("json",arr,allocate);
     document.Accept(writer);
@@ -141,17 +149,19 @@ void IETAnalyticHelper::charge(std::string name, double cash, double coin, int t
 
 void IETAnalyticHelper::reward(double coin, int type)
 {
+    log("reward %f",coin);
     rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::StringBuffer  buffer;
     rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
     rapidjson::Document document ;
     document.SetObject();
     rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    arr.PushBack(2.1,allocate);
+    arr.PushBack(double_to_string(coin).c_str(),allocate);
     arr.PushBack(type,allocate);
     document.AddMember("json",arr,allocate);
     document.Accept(writer);
     auto reqData = buffer.GetString();
+    log("IETAnalyticHelper reward: %s",buffer.GetString());
 
     IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"reward",reqData);
 }
@@ -167,7 +177,7 @@ void IETAnalyticHelper::purchase(std::string name, int amount, double coin)
     rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
     arr.PushBack(name.c_str(),allocate);
     arr.PushBack(amount,allocate);
-    arr.PushBack(coin,allocate);
+    arr.PushBack(double_to_string(coin).c_str(),allocate);
     document.AddMember("json",arr,allocate);
     document.Accept(writer);
     auto reqData = buffer.GetString();
@@ -185,7 +195,7 @@ void IETAnalyticHelper::use(std::string name, int amount, double coin)
     rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
     arr.PushBack(name.c_str(),allocate);
     arr.PushBack(amount,allocate);
-    arr.PushBack(coin,allocate);
+    arr.PushBack(double_to_string(coin).c_str(),allocate);
     document.AddMember("json",arr,allocate);
     document.Accept(writer);
     auto reqData = buffer.GetString();
