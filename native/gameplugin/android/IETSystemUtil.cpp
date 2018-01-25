@@ -55,6 +55,12 @@ long IETSystemUtil::getCpuTime()
 // {
 //     return "";
 // }
+
+bool IETSystemUtil::isJailbroken()
+{
+    return false;
+}
+
 std::string IETSystemUtil::getAppBundleId()
 {
 
