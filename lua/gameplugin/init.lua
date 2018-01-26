@@ -17,7 +17,12 @@ end
 printInfo(string.format("# display.type                 = %s", device.type))
 
 -- set random seed
-math.newrandomseed()
+math.randomseed(tostring(os.time()):reverse():sub(1, 6))  
+math.random()
+math.random()
+math.random()
+math.random()
+math.random()
 
 -- enhance
 require("enhance")
