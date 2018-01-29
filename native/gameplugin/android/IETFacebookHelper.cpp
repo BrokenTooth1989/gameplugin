@@ -185,7 +185,7 @@ std::string IETFacebookHelper::getAccessToken()
 
 void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)
 {
-
+    log("IETFacebookHelper::getUserProfile:—");
     rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::Value msg(rapidjson::kObjectType);
     rapidjson::StringBuffer  buffer;
@@ -202,14 +202,14 @@ void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::functi
         cocos2d::ValueMap respData;
         rapidjson::Document readdoc;
         readdoc.Parse<0>(_resData.c_str());     
-        if(!readdoc.HasParseError() && readdoc.HasMember("id") && readdoc.HasMember("name"))  
+        if(!readdoc.HasParseError() && readdoc.HasMember("facebookId") && readdoc.HasMember("name"))  
         {  
-            rapidjson::Value& idValue=readdoc["id"];
+            rapidjson::Value& idValue=readdoc["facebookId"];
             respData["id"] = idValue.GetString();
             rapidjson::Value& nameValue=readdoc["name"];
             respData["name"] = nameValue.GetString();
         } 
-
+        log(" @@@ getUserProfile");
         func(respData);
     });
 }
@@ -250,7 +250,6 @@ void IETFacebookHelper::confirmRequest(cocos2d::ValueVector fidOrTokens, std::st
         if(!readdoc.HasParseError() && readdoc.HasMember("json"))  
         {  
             rapidjson::Value& jsonValue=readdoc["json"];
-            log("#### %d",jsonValue.IsArray());
             char key[20] = "tofid";
             for (int i = 0; i < jsonValue.Size(); ++i)
             {
