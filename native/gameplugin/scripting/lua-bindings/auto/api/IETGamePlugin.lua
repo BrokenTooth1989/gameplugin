@@ -5,21 +5,14 @@
 
 --------------------------------
 -- 
--- @function [parent=#IETGamePlugin] gcGetScore 
--- @param self
--- @param #string leaderboard
--- @return int#int ret (return value: int)
-        
---------------------------------
--- 
--- @function [parent=#IETGamePlugin] gcReset 
--- @param self
-        
---------------------------------
--- 
 -- @function [parent=#IETGamePlugin] crashReportLogs 
 -- @param self
 -- @param #string message
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] gcShowArchievement 
+-- @param self
         
 --------------------------------
 -- 
@@ -31,25 +24,45 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETGamePlugin] gcShowLeaderBoard 
+-- @function [parent=#IETGamePlugin] gcShowChallenge 
 -- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] setSuspensiveIap 
+-- @param self
+-- @param #map_table iapInfo
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] gcReset 
+-- @param self
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] gcGetScore 
+-- @param self
+-- @param #string leaderboard
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] canDoIap 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] setIapVerifyUrlAndSign 
+-- @param self
+-- @param #string url
+-- @param #string sign
         
 --------------------------------
 -- 
 -- @function [parent=#IETGamePlugin] gcIsAvailable 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#IETGamePlugin] gcGetPlayerInfo 
--- @param self
--- @return map_table#map_table ret (return value: map_table)
-        
---------------------------------
--- 
--- @function [parent=#IETGamePlugin] gcShowChallenge 
--- @param self
         
 --------------------------------
 -- 
@@ -60,13 +73,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETGamePlugin] gcReportAchievement 
--- @param self
--- @param #string achievement
--- @param #double percent
-        
---------------------------------
--- 
 -- @function [parent=#IETGamePlugin] crashReportException 
 -- @param self
 -- @param #string reason
@@ -74,7 +80,26 @@
         
 --------------------------------
 -- 
--- @function [parent=#IETGamePlugin] gcShowArchievement 
+-- @function [parent=#IETGamePlugin] gcGetPlayerInfo 
+-- @param self
+-- @return map_table#map_table ret (return value: map_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] getSuspensiveIap 
+-- @param self
+-- @return map_table#map_table ret (return value: map_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] gcReportAchievement 
+-- @param self
+-- @param #string achievement
+-- @param #double percent
+        
+--------------------------------
+-- 
+-- @function [parent=#IETGamePlugin] gcShowLeaderBoard 
 -- @param self
         
 --------------------------------

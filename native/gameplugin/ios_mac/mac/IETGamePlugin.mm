@@ -29,17 +29,29 @@ void IETGamePlugin::setNotifyHandler(const std::function<void (cocos2d::ValueMap
     
 }
 
-void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
+void IETGamePlugin::setIapVerifyUrlAndSign(std::string url, std::string sign)
 {
+    
 }
 
-void IETGamePlugin::setRestoreHandler(const std::function<void (bool, std::string, std::string)> &func)
+bool IETGamePlugin::canDoIap()
 {
+    return true;
 }
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)
 {
     func(true, "");
+}
+
+cocos2d::ValueMap IETGamePlugin::getSuspensiveIap()
+{
+    return ValueMapNull;
+}
+
+void IETGamePlugin::setSuspensiveIap(cocos2d::ValueMap iapInfo)
+{
+    return;
 }
 
 bool IETGamePlugin::gcIsAvailable()

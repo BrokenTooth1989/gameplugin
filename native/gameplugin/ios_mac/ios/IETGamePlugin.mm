@@ -39,36 +39,14 @@ void IETGamePlugin::setNotifyHandler(const std::function<void (cocos2d::ValueMap
     [[IOSGamePlugin getInstance] setNotificationHandler:block];
 }
 
-void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
+void IETGamePlugin::setIapVerifyUrlAndSign(std::string url, std::string sign)
 {
-    void(^block)(NSDictionary*, void(^)(int, NSString*)) = [func](NSDictionary* dict, void(^cb)(int state, NSString* msg)) -> void {
-        __block id observerId;
-        observerId = [[NSNotificationCenter defaultCenter] addObserverForName:@"IapVerifyCallback"
-                                                                          object:nil
-                                                                           queue:[NSOperationQueue mainQueue]
-                                                                      usingBlock:^(NSNotification * _Nonnull note) {
-                                                                          [[NSNotificationCenter defaultCenter] removeObserver:observerId];
-                                                                          NSDictionary *userInfo = note.userInfo;
-                                                                          int state = [[userInfo objectForKey:@"state"] intValue];
-                                                                          NSString *message = [userInfo objectForKey:@"message"];
-                                                                          cb(state, message);
-                                                                      }];
-        func([IETUtility nsDict2ValueMap:dict], [cb](int state, std::string message) {
-            NSDictionary *userInfo = @{@"state":@(state), @"message":NSStringFromString(message)};
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"IapVerifyCallback"
-                                                                object:nil
-                                                              userInfo:userInfo];
-        });
-    };
-    [[IOSGamePlugin getInstance] setVerifyIapHandler:block];
+    [[IOSGamePlugin getInstance] setIapVerifyUrl:NSStringFromString(url) sign:NSStringFromString(sign)];
 }
 
-void IETGamePlugin::setRestoreHandler(const std::function<void (bool, std::string, std::string)> &func)
+bool IETGamePlugin::canDoIap()
 {
-    void (^block)(BOOL, NSString*, NSString*) = [func](BOOL result, NSString *message, NSString *iapId) -> void {
-        func(result, [message UTF8String], [iapId UTF8String]);
-    };
-    [[IOSGamePlugin getInstance] setRestoreHandler:block];
+    return [[IOSGamePlugin getInstance] canDoIap];
 }
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)
@@ -77,6 +55,25 @@ void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::func
         func(result, [message UTF8String]);
     };
     [[IOSGamePlugin getInstance] doIap:NSStringFromString(iapId) userId:NSStringFromString(userId) handler:block];
+}
+
+cocos2d::ValueMap IETGamePlugin::getSuspensiveIap()
+{
+    NSDictionary* suspensiveIap = [[IOSGamePlugin getInstance] getSuspensiveIap];
+    if (suspensiveIap == nil) {
+        return ValueMapNull;
+    } else {
+        return [IETUtility nsDict2ValueMap:suspensiveIap];
+    }
+}
+
+void IETGamePlugin::setSuspensiveIap(cocos2d::ValueMap iapInfo)
+{
+    if (iapInfo == ValueMapNull) {
+        [[IOSGamePlugin getInstance] setSuspensiveIap:nil];
+    } else {
+        [[IOSGamePlugin getInstance] setSuspensiveIap:[IETUtility valueMap2NsDict:iapInfo]];
+    }
 }
 
 bool IETGamePlugin::gcIsAvailable()

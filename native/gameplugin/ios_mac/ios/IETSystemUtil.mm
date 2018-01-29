@@ -169,8 +169,10 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d
     NSString *nsReqType = NSStringFromString(requestType);
     NSString *nsUrl = NSStringFromString(url);
     NSDictionary *nsData = [IETUtility valueMap2NsDict:data];
-    void (^block)(BOOL result, NSString *resp) = [func](BOOL result, NSString *resp) -> void {
-        func(result, [resp UTF8String]);
+    void (^block)(BOOL result, NSDictionary *resp) = [func](BOOL result, NSDictionary *resp) -> void {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:resp options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        func(result, [jsonString UTF8String]);
     };
     [[IOSSystemUtil getInstance] sendRequest:nsReqType url:nsUrl data:nsData handler:block];
 }

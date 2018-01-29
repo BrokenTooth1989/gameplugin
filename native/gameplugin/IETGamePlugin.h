@@ -21,8 +21,10 @@ public:
     void crashReportLogs(std::string message);
     void crashReportException(std::string reason, cocos2d::ValueVector traceback);
     void setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func);
-    void setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func);
-    void setRestoreHandler(const std::function<void(bool, std::string, std::string)>& func);
+    void setIapVerifyUrlAndSign(std::string url, std::string sign);
+    bool canDoIap();
+    cocos2d::ValueMap getSuspensiveIap();
+    void setSuspensiveIap(cocos2d::ValueMap iapInfo);
     void doIap(std::string iapId, std::string userId, const std::function<void(bool, std::string)>& func);
     bool gcIsAvailable();
     cocos2d::ValueMap gcGetPlayerInfo();

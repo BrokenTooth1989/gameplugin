@@ -439,112 +439,6 @@ int iapVerifyCallback(lua_State* tolua_S)
     }
     return 0;
 }
-int lua_cocos2dx_gameplugin_manual_IETGamePlugin_setVerifyIapHandler(lua_State* tolua_S)
-{
-    int argc = 0;
-    IETGamePlugin* cobj = nullptr;
-    bool ok  = true;
-    
-    tolua_Error tolua_err;
-    
-    
-    if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-    
-    cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
-    
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_manual_IETGamePlugin_setVerifyIapHandler'", nullptr);
-        return 0;
-    }
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    {
-        std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> arg0;
-        
-        do {
-            // Lambda binding for lua is not supported.
-            // assert(false);
-            LUA_FUNCTION func = toluafix_ref_function(tolua_S, 2, 0);
-            arg0 = [func](cocos2d::ValueMap map, std::function<void (int, std::string)> cb){
-                _iapVerifyCallback = cb;
-                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                ccvaluemap_to_luaval(stack->getLuaState(), map);
-                lua_pushcfunction(stack->getLuaState(), iapVerifyCallback);
-                stack->executeFunctionByHandler(func, 2);
-            };
-        } while(0)
-            ;
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_manual_IETGamePlugin_setVerifyIapHandler'", nullptr);
-            return 0;
-        }
-        cobj->setVerifyIapHandler(arg0);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:setVerifyIapHandler",argc, 1);
-    return 0;
-    
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_manual_IETGamePlugin_setVerifyIapHandler'.",&tolua_err);
-    
-    return 0;
-}
-int lua_cocos2dx_gameplugin_manual_IETGamePlugin_setRestoreHandler(lua_State* tolua_S)
-{
-    int argc = 0;
-    IETGamePlugin* cobj = nullptr;
-    bool ok  = true;
-    
-    tolua_Error tolua_err;
-    
-    
-    if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
-    
-    cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
-    
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_manual_IETGamePlugin_setRestoreHandler'", nullptr);
-        return 0;
-    }
-    
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
-    {
-        std::function<void (bool, std::basic_string<char>, std::basic_string<char>)> arg0;
-        
-        do {
-            // Lambda binding for lua is not supported.
-            // assert(false);
-            LUA_FUNCTION func = toluafix_ref_function(tolua_S, 2, 0);
-            arg0 = [=](bool b, std::basic_string<char> str1, std::basic_string<char> str2){
-                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                stack->pushBoolean(b);
-                stack->pushString(str1.c_str());
-                stack->pushString(str2.c_str());
-                stack->executeFunctionByHandler(func, 3);
-            };
-        } while(0)
-            ;
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_manual_IETGamePlugin_setRestoreHandler'", nullptr);
-            return 0;
-        }
-        cobj->setRestoreHandler(arg0);
-        return 0;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:setRestoreHandler",argc, 1);
-    return 0;
-    
-tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_manual_IETGamePlugin_setRestoreHandler'.",&tolua_err);
-    
-    return 0;
-}
 int lua_cocos2dx_gameplugin_manual_IETGamePlugin_doIap(lua_State* tolua_S)
 {
     int argc = 0;
@@ -875,8 +769,6 @@ int lua_register_cocos2dx_gameplugin_manual_IETGamePlugin(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"IETGamePlugin");
     {
         tolua_function(tolua_S,"setNotifyHandler",lua_cocos2dx_gameplugin_manual_IETGamePlugin_setNotifyHandler);
-        tolua_function(tolua_S,"setVerifyIapHandler",lua_cocos2dx_gameplugin_manual_IETGamePlugin_setVerifyIapHandler);
-        tolua_function(tolua_S,"setRestoreHandler",lua_cocos2dx_gameplugin_manual_IETGamePlugin_setRestoreHandler);
         tolua_function(tolua_S,"doIap",lua_cocos2dx_gameplugin_manual_IETGamePlugin_doIap);
         tolua_function(tolua_S,"gcGetPlayerFriends",lua_cocos2dx_gameplugin_manual_IETGamePlugin_gcGetPlayerFriends);
         tolua_function(tolua_S,"gcGetPlayerAvatarWithId",lua_cocos2dx_gameplugin_manual_IETGamePlugin_gcGetPlayerAvatarWithId);
