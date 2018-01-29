@@ -87,21 +87,6 @@ bool IETAdvertiseHelper::showSpotAd(const std::function<void (bool)> &func)
 
 bool IETAdvertiseHelper::isVedioReady()
 {   
-    // rapidjson::Value arr(rapidjson::kArrayType);
-    // rapidjson::StringBuffer  buffer;
-    // rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    // rapidjson::Document document ;
-    // document.SetObject();
-    // rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    // document.AddMember("json",arr,allocate);
-    // document.Accept(writer);
-    // auto reqData = buffer.GetString();
-
-    // std::string isReady = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"isVideoAdReady",reqData);
-    // log(" IETAdvertiseHelper::isVedioReady() :%s",isReady.c_str());
-
-    // return isReady=="true" ? true:false;
-
     rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::Value msg(rapidjson::kObjectType);
     rapidjson::StringBuffer  buffer;
@@ -113,11 +98,9 @@ bool IETAdvertiseHelper::isVedioReady()
     document.Accept(writer);
     auto reqData = buffer.GetString();
 
-    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"showVideoAd",reqData,[=](std::string resData){
-        log("IETSystemUtil::setNotificationState:  %s", resData.c_str());
-    });
+    std::string isReady = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"isVideoAdReady",reqData);
 
-    return true;
+    return isReady=="true" ? true:false;
 }
 
 bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc, const std::function<void (bool)> &clickFunc)
@@ -134,12 +117,27 @@ bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc,
     document.Accept(writer);
     auto reqData = buffer.GetString();
 
-    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"showVideoAd",reqData,[=](std::string resData){
-        log("IETSystemUtil::setNotificationState:  %s", resData.c_str());
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"showVideoAd",reqData,[=](std::string _resData){
+        log("IETSystemUtil::setNotificationState:  %s", _resData.c_str());
+ 
+        rapidjson::Document readdoc;
+        readdoc.Parse<0>(_resData.c_str());     
+        if(!readdoc.HasParseError() )  
+        {  
+            if (readdoc.HasMember("reward"))
+            {
+                rapidjson::Value& idValue=readdoc["reward"];
+                viewFunc(idValue.GetBool());
+            } 
+            else if (readdoc.HasMember("click"))
+            {
+                rapidjson::Value& idValue=readdoc["click"];
+                clickFunc(idValue.GetBool());
+            }
+        } 
     });
-
   
-    return false;
+    return true;
 }
 void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
 {}
