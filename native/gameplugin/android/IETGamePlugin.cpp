@@ -44,17 +44,23 @@ void IETGamePlugin::init()
 void IETGamePlugin::crashReportLogs(std::string message)
 {
 }
+bool IETGamePlugin::canDoIap(){
+    return true;
+}
 
 void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVector traceback)
 {
 }
 
-//void IETGamePlugin::setGenVerifyUrlHandler(const std::function<std::string (cocos2d::ValueMap)> &func)
-//{
-//}
-
-void IETGamePlugin::setRestoreHandler(const std::function<void (bool, std::string, std::string)> &func)
+void IETGamePlugin::setIapVerifyUrlAndSign(std::string url, std::string sign)
 {
+}
+void IETGamePlugin::setSuspensiveIap(cocos2d::ValueMap iapInfo)
+{
+}
+cocos2d::ValueMap IETGamePlugin::getSuspensiveIap()
+{
+    return ValueMapNull;
 }
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)
@@ -145,8 +151,7 @@ void IETGamePlugin::gcReset()
 }
 void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func)
 {}
-void IETGamePlugin::setVerifyIapHandler(const std::function<void (cocos2d::ValueMap, std::function<void (int, std::string)>)> &func)
-{}
+
 
 
 
