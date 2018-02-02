@@ -122,6 +122,7 @@ function BaseDialog:showEaseScale(cb)
 	self.root:scale(0)
     self.root:runAction(cc.Sequence:create({
         cc.EaseBackOut:create(cc.ScaleTo:create(0.3, self.m_scaleFactor)),
+        cc.DelayTime:create(0.05),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
@@ -132,6 +133,7 @@ function BaseDialog:dismissEaseScale(cb)
     self:animStart()
     self.root:runAction(cc.Sequence:create({
         cc.EaseBackIn:create(cc.ScaleTo:create(0.3, 0)),
+        cc.DelayTime:create(0.05),
         cc.CallFunc:create(handler(self, self.animEnded)),
         cc.CallFunc:create(cb),
     }))
