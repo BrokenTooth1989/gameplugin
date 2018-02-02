@@ -4,7 +4,7 @@
 --
 
 local BaseDialog = class("BaseDialog", function()
-	return display.newNode()
+	return ccui.Widget:create()
 end)
 
 function BaseDialog:ctor(rootPos)
