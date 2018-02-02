@@ -12,6 +12,7 @@ function BaseDialog:ctor(rootPos)
     
     self.m_scaleFactor = 1
     self.m_isRunning = false
+    self.m_isCleanup = false
 
     -- background layer
     local bgLayer = cc.LayerColor:create(cc.c4b(0, 0, 0, 150))
@@ -56,6 +57,13 @@ function BaseDialog:ctor(rootPos)
     self:setNodeEventEnabled(true)
 end
 
+function BaseDialog:onEnter()
+end
+
+function BaseDialog:onExit()
+    self.m_isCleanup = true
+end
+
 function BaseDialog:runEnterAnim(_cb)
     _cb()
 end
@@ -74,6 +82,10 @@ end
 
 function BaseDialog:isRunning()
     return self.m_isRunning
+end
+
+function BaseDialog:isCleanup()
+    return self.m_isCleanup
 end
 
 function BaseDialog:setCloseCb(_cb)
