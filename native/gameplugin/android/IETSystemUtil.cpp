@@ -31,8 +31,18 @@ USING_NS_CC_EXT;
 using namespace network;
 
 int IETSystemUtil::getDebugMode() {
-    // std::string timeStr = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getCpuTime","{}");
-    // log("IETSystemUtil::getDebugMode:  %s",timeStr.c_str());
+    // rapidjson::Value arr(rapidjson::kArrayType);
+    // rapidjson::StringBuffer  buffer;
+    // rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    // rapidjson::Document document ;
+    // document.SetObject();
+    // rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    // document.AddMember("json", arr, allocate);
+    // document.Accept(writer);
+    // auto reqData = buffer.GetString();
+    // std::string isDebug = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDebugMode",reqData);
+    // int mode = isDebug=="0" ? 0 : 1;
+    // return mode;
     return 3;
 }
 
@@ -47,23 +57,8 @@ long IETSystemUtil::getCpuTime()
 
 }
 
-// std::string IETSystemUtil::getConfigValue(std::string key)
-// {
-//     return "";
-// }
-// std::string IETSystemUtil::getBundleId()
-// {
-//     return "";
-// }
-
 bool IETSystemUtil::isJailbroken()
 {
-    return false;
-}
-
-std::string IETSystemUtil::getAppBundleId()
-{
-
 
     rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::StringBuffer  buffer;
@@ -74,37 +69,137 @@ std::string IETSystemUtil::getAppBundleId()
     document.AddMember("json", arr, allocate);
     document.Accept(writer);
     auto reqData = buffer.GetString();
-    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getBundleId",reqData);
-    return "";
+    std::string isRoot = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"isRoot",reqData);
+    bool isroot = isRoot == "0" ? true:false;
+    return isroot;
+}
+
+std::string IETSystemUtil::getAppBundleId()
+{
+
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string bundle = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getBundleId",reqData);
+    return bundle;
 }
 
 std::string IETSystemUtil::getAppName()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string appName = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAppName",reqData);
+    return appName;
 }
 std::string IETSystemUtil::getAppVersion()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string version = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAppVer",reqData);
+    return version;
 }
 std::string IETSystemUtil::getCountryCode()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string code = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getCountryCode",reqData);
+    return code;
 }
 std::string IETSystemUtil::getLanguageCode()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string code = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getLanguageCode",reqData);
+    return code;
 }
 std::string IETSystemUtil::getDeviceName()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string device = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDeviceName",reqData);
+    return device;
 }
 std::string IETSystemUtil::getSystemVersion()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string version = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getSystemVersion",reqData);
+    return version;
 }
 std::string IETSystemUtil::getNetworkState()
 {
-    return "";
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string state = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getNetworkState",reqData);
+    return state;
+}
+void IETSystemUtil::vibrate()
+{
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"vibrate",reqData);
 }
 void IETSystemUtil::showAlertDialog(std::string title, std::string message, std::string cancelBtnTitle, cocos2d::ValueVector otherBtnTitles, const std::function<void (int)> &func)
 {}
@@ -118,44 +213,175 @@ void IETSystemUtil::hideLoading()
 {}
 void IETSystemUtil::showMessage(std::string message)
 {}
-void IETSystemUtil::vibrate()
-{}
 void IETSystemUtil::saveImage(std::string imgPath, std::string album, const std::function<void (bool, std::string)> &func)
 {}
 void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector, std::string emailBody, const std::function<void (bool, std::string)> &func)
-{}
-void IETSystemUtil::setNotificationState(bool enable)
 {
-    rapidjson::Value arr(rapidjson::kArrayType);
+}
+void IETSystemUtil::share(cocos2d::ValueVector items)
+{}
+void IETSystemUtil::keychainSet(std::string key, std::string value)
+{}
+std::string IETSystemUtil::keychainGet(std::string key)
+{
+    return "";
+}
+std::string IETSystemUtil::getPlatCfgValue(std::string key)
+{
+    return "";
+}
+void IETSystemUtil::postNotification(cocos2d::ValueMap map)
+{
     rapidjson::Value msg(rapidjson::kObjectType);
+    rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::StringBuffer  buffer;
     rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
     rapidjson::Document document ;
     document.SetObject();
     rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    msg.AddMember("title","hello world",allocate);
+    for (auto iter = map.cbegin(); iter != map.cend(); ++iter)
+    {
+        msg.AddMember(iter->first.c_str(),iter->second.asString().c_str(),allocate);
+    }
     arr.PushBack(msg,allocate);
+    document.AddMember("json",arr,allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"postNotification",reqData);
+}
+
+void IETSystemUtil::copyToPasteboard(std::string str)
+{
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(str.c_str(),allocate);
+    document.AddMember("json",arr,allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"copyToClipboard",reqData);
+}
+
+
+int IETSystemUtil::getAppBuild()
+{
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
     document.AddMember("json", arr, allocate);
     document.Accept(writer);
     auto reqData = buffer.GetString();
-                                                                                    
-    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"showAlertDialog",reqData,[=](std::string resData){
-        log("IETSystemUtil::setNotificationState:  %s", resData.c_str());
-    });
+    std::string appbuild = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAppBuild",reqData);
+    return atoi(appbuild.c_str());
 }
-void IETSystemUtil::postNotification(cocos2d::ValueMap map)
-{}
-void IETSystemUtil::share(cocos2d::ValueVector items)
-{}
-void IETSystemUtil::keychainSet(std::string key, std::string value)
+std::string IETSystemUtil::getDeviceModel()
 {
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string model = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDeviceModel",reqData);
+    return model;
 }
-std::string IETSystemUtil::keychainGet(std::string key)
+std::string IETSystemUtil::getDeviceType()
 {
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string type = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDeviceType",reqData);
+    return type;
+}
+std::string IETSystemUtil::getSystemName()
+{
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string sysname = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getSystemName",reqData);
+    return sysname;
+}
+std::string IETSystemUtil::getIDFV()
+{
+    assert(false);
     return "";
 }
-void IETSystemUtil::copyToPasteboard(std::string str)
-{}
+std::string IETSystemUtil::getIDFA()
+{
+    assert(false);
+    return "";
+}
+std::string IETSystemUtil::getUUID()
+{
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    document.AddMember("json", arr, allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    std::string UUID = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getUDID",reqData);
+    return UUID;
+}
+void IETSystemUtil::setBadgeNum(int num)
+{
+    rapidjson::Value arr(rapidjson::kArrayType);
+    rapidjson::StringBuffer  buffer;
+    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    rapidjson::Document document ;
+    document.SetObject();
+    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    arr.PushBack(num,allocate);
+    document.AddMember("json",arr,allocate);
+    document.Accept(writer);
+    auto reqData = buffer.GetString();
+    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"setBadgeNum",reqData);
+}
+
+void IETSystemUtil::setNotificationState(bool enable)
+{
+    // rapidjson::Value arr(rapidjson::kArrayType);
+    // rapidjson::Value msg(rapidjson::kObjectType);
+    // rapidjson::StringBuffer  buffer;
+    // rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
+    // rapidjson::Document document ;
+    // document.SetObject();
+    // rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
+    // msg.AddMember("title","hello world",allocate);
+    // arr.PushBack(msg,allocate);
+    // document.AddMember("json", arr, allocate);
+    // document.Accept(writer);
+    // auto reqData = buffer.GetString();
+                                                                                    
+    // IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"showAlertDialog",reqData,[=](std::string resData){
+    //     log("IETSystemUtil::setNotificationState:  %s", resData.c_str());
+    // });
+}
+
 
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {
@@ -201,45 +427,6 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d
     HttpClient::getInstance()->sendImmediate(request);
     request->release();
     
-
-}
-
-std::string IETSystemUtil::getPlatCfgValue(std::string key)
-{
-    return "";
-}
-
-int IETSystemUtil::getAppBuild()
-{
-    return 1;
-}
-std::string IETSystemUtil::getDeviceModel()
-{
-    return "";
-}
-std::string IETSystemUtil::getDeviceType()
-{
-    return "";
-}
-std::string IETSystemUtil::getSystemName()
-{
-    return "";
-}
-std::string IETSystemUtil::getIDFV()
-{
-    return "";
-}
-std::string IETSystemUtil::getIDFA()
-{
-    return "";
-}
-std::string IETSystemUtil::getUUID()
-{
-    return "";
-}
-void IETSystemUtil::setBadgeNum(int num)
-{
-
 }
 
 
