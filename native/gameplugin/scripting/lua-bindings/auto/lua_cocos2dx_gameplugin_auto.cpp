@@ -2154,6 +2154,44 @@ int lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowChallenge(lua_State* tolua_
 
     return 0;
 }
+int lua_cocos2dx_gameplugin_auto_IETGamePlugin_rateGame(lua_State* tolua_S)
+{
+    int argc = 0;
+    IETGamePlugin* cobj = nullptr;
+    bool ok  = true;
+
+    tolua_Error tolua_err;
+
+
+    if (!tolua_isusertype(tolua_S,1,"IETGamePlugin",0,&tolua_err)) goto tolua_lerror;
+
+    cobj = (IETGamePlugin*)tolua_tousertype(tolua_S,1,0);
+
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_rateGame'", nullptr);
+        return 0;
+    }
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_rateGame'", nullptr);
+            return 0;
+        }
+        cobj->rateGame();
+        return 0;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "IETGamePlugin:rateGame",argc, 0);
+    return 0;
+
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_gameplugin_auto_IETGamePlugin_rateGame'.",&tolua_err);
+
+    return 0;
+}
 int lua_cocos2dx_gameplugin_auto_IETGamePlugin_setSuspensiveIap(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2687,6 +2725,7 @@ int lua_register_cocos2dx_gameplugin_auto_IETGamePlugin(lua_State* tolua_S)
         tolua_function(tolua_S,"gcShowArchievement",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowArchievement);
         tolua_function(tolua_S,"gcReportScore",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReportScore);
         tolua_function(tolua_S,"gcShowChallenge",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcShowChallenge);
+        tolua_function(tolua_S,"rateGame",lua_cocos2dx_gameplugin_auto_IETGamePlugin_rateGame);
         tolua_function(tolua_S,"setSuspensiveIap",lua_cocos2dx_gameplugin_auto_IETGamePlugin_setSuspensiveIap);
         tolua_function(tolua_S,"gcReset",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcReset);
         tolua_function(tolua_S,"gcGetScore",lua_cocos2dx_gameplugin_auto_IETGamePlugin_gcGetScore);

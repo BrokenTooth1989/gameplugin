@@ -13,12 +13,6 @@
 #include "IETGamePlugin.h"
 #include "IETAnalyticHelper.h"
 
-#if CC_LUA_ENGINE_ENABLED > 0
-
-#include "CCLuaEngine.h"
-
-#endif
-
 using namespace std;
 using namespace cocos2d;
 using namespace cocos2d::extension;

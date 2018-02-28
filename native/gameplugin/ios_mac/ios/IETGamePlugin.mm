@@ -170,3 +170,8 @@ void IETGamePlugin::gcReset()
     [[IOSGamePlugin getInstance] gcReset];
 }
 
+void IETGamePlugin::rateGame()
+{
+    [[IOSGamePlugin getInstance] rateGame];
+}
+

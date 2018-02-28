@@ -117,3 +117,7 @@ void IETGamePlugin::gcShowChallenge()
 void IETGamePlugin::gcReset()
 {
 }
+
+void IETGamePlugin::rateGame()
+{
+}

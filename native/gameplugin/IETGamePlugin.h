@@ -41,6 +41,7 @@ public:
     void gcShowArchievement();
     void gcShowChallenge();
     void gcReset();
+    void rateGame();
 };
 
 #endif /* defined(GamePlugin_GamePlugin_h) */

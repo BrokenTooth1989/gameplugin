@@ -29,6 +29,11 @@
         
 --------------------------------
 -- 
+-- @function [parent=#IETGamePlugin] rateGame 
+-- @param self
+        
+--------------------------------
+-- 
 -- @function [parent=#IETGamePlugin] setSuspensiveIap 
 -- @param self
 -- @param #map_table iapInfo
