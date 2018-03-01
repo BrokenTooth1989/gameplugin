@@ -7,6 +7,9 @@
 //
 
 #include "cocos2d.h"
+#include "json/document.h"
+#include "json/writer.h"
+#include "json/stringbuffer.h"
 
 class IETAndroidBridge
 {
@@ -26,7 +29,7 @@ public:
      @param reqData json数据
      @return json数据
      */
-    std::string callJavaMethod(std::string className, std::string methodName, std::string reqData);
+    std::string callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec);
     
     /**
      调用Java函数
@@ -36,7 +39,7 @@ public:
      @param reqData json数据
      @param handler 回调函数
      */
-    void callJavaMethodAsync(std::string className, std::string methodName, std::string reqData, std::function<void (std::string)> handler);
+    void callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler);
     
     /**
      Java异步回调结果处理
@@ -45,6 +48,22 @@ public:
      @param resData json数据
      */
     void handleJavaRes(int responseId, std::string resData);
+    
+    /**
+     生成Json
+
+     @param vec 参数
+     @return json
+     */
+    std::string generateJson(cocos2d::ValueVector vec);;
+    
+    /**
+     Json解析
+
+     @param str json
+     @return 参数
+     */
+    cocos2d::ValueVector parseJson(std::string str);
     
 private:
     IETAndroidBridge();
@@ -59,14 +78,23 @@ private:
      @param requestId requestId
      @return json数据
      */
-	std::string callJavaMethod(std::string className, std::string methodName, std::string reqData, int requestId);
+    std::string callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId);
+    
+    void valueVec2JsonArray(cocos2d::ValueVector vec, rapidjson::Value &valArr, rapidjson::Value &typeArr, rapidjson::Document::AllocatorType &allocate);
 
+    void valueMap2JsonObject(cocos2d::ValueMap map, rapidjson::Value &valObj, rapidjson::Value &typeObj, rapidjson::Document::AllocatorType &allocate);
+    
+    void jsonArray2ValueVec(rapidjson::Value &valArr, cocos2d::ValueVector &vec);
+    
+    void jsonObject2ValueMap(rapidjson::Value &valObj, cocos2d::ValueMap &map);
+    
 private:
     static IETAndroidBridge *instance;
     int requestId;
-    std::map<int, std::function<void (std::string)>> handlerMap;
+    std::map<int, std::function<void (cocos2d::ValueVector)>> handlerMap;
 };
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -80,4 +108,5 @@ JNIEXPORT void JNICALL Java_com_joycastle_gameplugin_NativeUtil_invokeCppMethod
 
 #ifdef __cplusplus
 }
+#endif
 #endif

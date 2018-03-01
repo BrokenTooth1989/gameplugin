@@ -7,28 +7,18 @@
 //
 
 #include "IETSystemUtil.h"
-
-#include "cocos2d.h"
-#include "extensions/cocos-ext.h"
 #include "network/HttpClient.h"
 #include "IETAndroidBridge.h"
-
-#include "json/document.h"  
+#include "json/document.h"
 #include "json/writer.h"  
 #include "json/stringbuffer.h"  
-using namespace  rapidjson; 
 
-#include "jni.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "platform/android/jni/JniHelper.h"
-#endif
-
-
-#define JAVA_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
-
-USING_NS_CC;
-USING_NS_CC_EXT;
+using namespace cocos2d;
+using namespace cocos2d::extension;
+using namespace rapidjson;
 using namespace network;
+
+#define SYSTEM_UTIL_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
 
 int IETSystemUtil::getDebugMode() {
     // rapidjson::Value arr(rapidjson::kArrayType);
@@ -59,7 +49,6 @@ long IETSystemUtil::getCpuTime()
 
 bool IETSystemUtil::isJailbroken()
 {
-
     rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::StringBuffer  buffer;
     rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
@@ -76,7 +65,6 @@ bool IETSystemUtil::isJailbroken()
 
 std::string IETSystemUtil::getAppBundleId()
 {
-
     rapidjson::Value arr(rapidjson::kArrayType);
     rapidjson::StringBuffer  buffer;
     rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
@@ -426,7 +414,4 @@ void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d
     });
     HttpClient::getInstance()->sendImmediate(request);
     request->release();
-    
 }
-
-
