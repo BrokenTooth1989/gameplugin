@@ -27,233 +27,100 @@ void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url
 
 void IETFacebookHelper::setLoginFunc(const std::function<void (std::string, std::string)> &func)
 {
-//    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"setLoginListener",ValueVectorNull,[=](cocos2d::ValueVector _resData){
-//        log("IETFacebookHelper::setLoginFunc: async  %s", _resData.c_str());
-//        rapidjson::Document readdoc;
-//        readdoc.Parse<0>(_resData.c_str());
-//        if(!readdoc.HasParseError() && readdoc.HasMember("userId") && readdoc.HasMember("accessToken"))
-//        {
-//            rapidjson::Value& idValue=readdoc["userId"];
-//            rapidjson::Value& tokenValue=readdoc["accessToken"];
-//            func(idValue.GetString(),tokenValue.GetString());
-//        }
-//    });
-
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"setLoginFunc",ValueVectorNull,[=](cocos2d::ValueVector resVec){
+        func(resVec[0].asString(),resVec[1].asString());
+    });
 }
 
 void IETFacebookHelper::setAppLinkFunc(const std::function<void (cocos2d::ValueMap)> &func)
 {
-    
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"setAppLinkFunc",ValueVectorNull,[=](cocos2d::ValueVector resVec){
+        func(resVec[0].asValueMap());
+    });
 }
 
 bool IETFacebookHelper::isLogin()
 {
-
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::Value msg(rapidjson::kObjectType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    arr.PushBack(msg,allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    std::string islogin = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"isLogin",reqData);
-//    log("facebook islogin json :%s",islogin.c_str());
-//
-//    rapidjson::Document readdoc;
-//    readdoc.Parse<0>(islogin.c_str());
-//    if(readdoc.HasParseError())
-//    {
-//        CCLOG("GetParseError%s\n", readdoc.GetParseError());
-//    }
-//    const rapidjson::Value& jsonValue=readdoc["islogin"];
-//
-//    return jsonValue.GetBool();
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"isLogin",ValueVectorNull);
+    return resVec[0].asBool();
 }
 
 void IETFacebookHelper::login()
 {
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::Value msg(rapidjson::kObjectType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    arr.PushBack(msg,allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    // std::string islogin = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"isLogin",reqData);
-//    IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"login",reqData);
-//    // _isLogin = true;
-//    // _loginFunc(this->getUserID(), this->getAccessToken());
+    IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"login",ValueVectorNull);
 }
 
 void IETFacebookHelper::logout()
 {
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"logout",reqData);
+    IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"logout",ValueVectorNull);
 }
 
 std::string IETFacebookHelper::getUserID()
 {
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::Value msg(rapidjson::kObjectType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    arr.PushBack(msg,allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//
-//    std::string uid = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getUserId",reqData);
-//    log("facebook userId:%s",uid.c_str());
-//
-//    std::string _uid = "";
-//    rapidjson::Document readdoc;
-//    readdoc.Parse<0>(uid.c_str());
-//    if(!readdoc.HasParseError() && readdoc.HasMember("uid"))
-//    {
-//        const rapidjson::Value& jsonValue=readdoc["uid"];
-//        _uid = jsonValue.GetString();
-//    }
-//
-//    return _uid;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getUserID",ValueVectorNull);
+    return resVec[0].asString();
 }
 
 std::string IETFacebookHelper::getAccessToken()
 {
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::Value msg(rapidjson::kObjectType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    arr.PushBack(msg,allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    std::string token = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getAccessToken",reqData);
-//    log("facebook AccessToken:%s",token.c_str());
-//
-//    std::string _token = "";
-//    rapidjson::Document readdoc;
-//    readdoc.Parse<0>(token.c_str());
-//    if(!readdoc.HasParseError() && readdoc.HasMember("token"))
-//    {
-//        rapidjson::Value& jsonValue=readdoc["token"];
-//        _token = jsonValue.GetString();
-//    }
-//    return _token;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getAccessToken",ValueVectorNull);
+    return resVec[0].asString();
 }
 
 void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)
 {
-//    log("IETFacebookHelper::getUserProfile:—");
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::Value msg(rapidjson::kObjectType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    // arr.PushBack(msg,allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getUserProfile",reqData,[=](std::string _resData){
-//        log("IETFacebookHelper::getUserProfile: async  %s", _resData.c_str());
-//        cocos2d::ValueMap respData;
-//        rapidjson::Document readdoc;
-//        readdoc.Parse<0>(_resData.c_str());
-//        if(!readdoc.HasParseError() && readdoc.HasMember("facebookId") && readdoc.HasMember("name"))
-//        {
-//            rapidjson::Value& idValue=readdoc["facebookId"];
-//            respData["id"] = idValue.GetString();
-//            rapidjson::Value& nameValue=readdoc["name"];
-//            respData["name"] = nameValue.GetString();
-//        }
-//        log(" @@@ getUserProfile");
-//        func(respData);
-//    });
+    ValueVector reqVec;
+    reqVec.push_back(Value(fid));
+    reqVec.push_back(Value(picSize));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getUserProfile",reqVec,[=](ValueVector resVec){
+        func(resVec[1].asValueMap());
+    });
 }
 
 void IETFacebookHelper::getInvitableFriends(cocos2d::ValueVector inviteTokens, int picSize, std::function<void(cocos2d::ValueMap)>& func)
 {
-    log("getInvitableFriends");
-    func(ValueMapNull);
+    ValueVector reqVec;
+    reqVec.push_back(Value(inviteTokens));
+    reqVec.push_back(Value(picSize));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getInvitableFriends",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asValueMap());
+    });
 }
 
 void IETFacebookHelper::getFriends(int picSize, std::function<void(cocos2d::ValueMap)>& func)
 {
-    log("getFriends");
-    func(ValueMapNull);
+    ValueVector reqVec;
+    reqVec.push_back(Value(picSize));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getFriends",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asValueMap());
+    });
 }
 
 void IETFacebookHelper::confirmRequest(cocos2d::ValueVector fidOrTokens, std::string title, std::string msg, std::function<void (cocos2d::ValueMap)> &func)
 {
-//    log("confirmRequest");
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::Value obj(rapidjson::kObjectType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    arr.PushBack(obj,allocate);
-//    arr.PushBack(title.c_str(),allocate);
-//    arr.PushBack(msg.c_str(),allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"confirmRequest",reqData,[=](std::string _resData){
-//        log("IETFacebookHelper::confirmRequest: async  %s", _resData.c_str());
-//        cocos2d::ValueMap respData;
-//        rapidjson::Document readdoc;
-//        readdoc.Parse<0>(_resData.c_str());     
-//        if(!readdoc.HasParseError() && readdoc.HasMember("json"))  
-//        {  
-//            rapidjson::Value& jsonValue=readdoc["json"];
-//            char key[20] = "tofid";
-//            for (int i = 0; i < jsonValue.Size(); ++i)
-//            {
-//                sprintf(key,"%d",i );
-//                rapidjson::Value &v = jsonValue[i];
-//                respData[key] = v.GetString();
-//            }
-//        } 
-//
-//        func(respData);
-//    });
-
+    ValueVector reqVec;
+    reqVec.push_back(Value(fidOrTokens));
+    reqVec.push_back(Value(title));
+    reqVec.push_back(Value(msg));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"confirmRequest",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asValueMap());
+    });
 }
 
 void IETFacebookHelper::queryRequest(std::function<void (cocos2d::ValueMap)> &func)
 {
-    log("queryRequest");
-    func(ValueMapNull);
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"queryRequest",ValueVectorNull,[=](ValueVector resVec){
+        func(resVec[0].asValueMap());
+    });
 }
 
 void IETFacebookHelper::acceptRequest(std::string requestId, std::function<void (bool)> &func)
 {
-    log("acceptRequest");
-    func(true);
+    ValueVector reqVec;
+    reqVec.push_back(Value(requestId));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"acceptRequest",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asBool());
+    });
 }
 
 void IETFacebookHelper::share(std::string title, std::string description, std::string caption, std::string imageUrl, std::string contentUrl, std::function<void (bool)> &func)
@@ -264,19 +131,41 @@ void IETFacebookHelper::share(std::string title, std::string description, std::s
     log("caption = %s", caption.c_str());
     log("imageUrl = %s", imageUrl.c_str());
     log("contentUrl = %s", contentUrl.c_str());
+    ValueVector reqVec;
+    reqVec.push_back(Value(title));
+    reqVec.push_back(Value(description));
+    reqVec.push_back(Value(caption));
+    reqVec.push_back(Value(imageUrl));
+    reqVec.push_back(Value(contentUrl));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"share",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asBool());
+    });
 }
 
 void IETFacebookHelper::setLevel(int level)
 {
     log("setLevel");
+    ValueVector reqVec;
+    reqVec.push_back(Value(level));
+    IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"setLevel",reqVec);
 }
 
 void IETFacebookHelper::getLevel(std::string fid, std::function<void (int)> &func)
 {
     log("getLevel");
-    func(5);
+    ValueVector reqVec;
+    reqVec.push_back(Value(fid));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getLevel",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asInt());
+    });
 }
 
 void IETFacebookHelper::inviteFriend(std::string appLinkURL,std::string prviewImageURL, std::function<void(bool)>& func)
 {
+    ValueVector reqVec;
+    reqVec.push_back(Value(appLinkURL));
+    reqVec.push_back(Value(prviewImageURL));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"inviteFriend",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asBool());
+    });
 }

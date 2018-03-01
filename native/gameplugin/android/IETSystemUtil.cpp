@@ -9,13 +9,9 @@
 #include "IETSystemUtil.h"
 #include "network/HttpClient.h"
 #include "IETAndroidBridge.h"
-#include "json/document.h"
-#include "json/writer.h"  
-#include "json/stringbuffer.h"  
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
-using namespace rapidjson;
 using namespace network;
 
 #define SYSTEM_UTIL_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
@@ -30,54 +26,49 @@ std::string IETSystemUtil::getPlatCfgValue(std::string key)
 }
 std::string IETSystemUtil::getAppBundleId()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getBundleId",ValueVectorNull);
-    std::string bundle = resVec[1].asString();
-    return bundle;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getBundleId",ValueVectorNull);
+    return resVec[0].asString();
 }
 
 std::string IETSystemUtil::getAppName()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAppName",ValueVectorNull);
-    std::string appName = resVec[1].asString();
-    return appName;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppName",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getAppVersion()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAppVer",ValueVectorNull);
-    std::string version = resVec[1].asString();
-    return version;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppVer",ValueVectorNull);
+    return resVec[0].asString();
 }
 int IETSystemUtil::getAppBuild()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getAppBuild",ValueVectorNull);
-    int appbuild = resVec[1].asInt();
-    return appbuild
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppBuild",ValueVectorNull);
+    return resVec[0].asInt();
 }
 std::string IETSystemUtil::getDeviceName()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDeviceName",ValueVectorNull);
-    std::string device = resVec[1].asString();
-    return device;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getDeviceName",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getDeviceModel()
 {
-    std::string model = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDeviceModel",ValueVectorNull);
-    return model;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getDeviceModel",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getDeviceType()
 {
-    std::string type = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getDeviceType",ValueVectorNull);
-    return type;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getDeviceType",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getSystemName()
 {
-    std::string sysname = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getSystemName",ValueVectorNull);
-    return sysname;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getSystemName",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getSystemVersion()
 {
-    std::string version = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getSystemVersion",ValueVectorNull);
-    return version;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getSystemVersion",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getIDFV()
 {
@@ -91,18 +82,18 @@ std::string IETSystemUtil::getIDFA()
 }
 std::string IETSystemUtil::getUUID()
 {
-    std::string UUID = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getUDID",ValueVectorNull);
-    return UUID;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getUDID",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getCountryCode()
 {
-    std::string code = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getCountryCode",ValueVectorNull);
-    return code;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getCountryCode",ValueVectorNull);
+    return resVec[0].asString();
 }
 std::string IETSystemUtil::getLanguageCode()
 {
-    std::string code = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getLanguageCode",ValueVectorNull);
-    return code;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getLanguageCode",ValueVectorNull);
+    return resVec[0].asString();
 }
 long IETSystemUtil::getCpuTime()
 {
@@ -116,17 +107,8 @@ long IETSystemUtil::getCpuTime()
 }
 std::string IETSystemUtil::getNetworkState()
 {
-    rapidjson::Value arr(rapidjson::kArrayType);
-    rapidjson::StringBuffer  buffer;
-    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    rapidjson::Document document ;
-    document.SetObject();
-    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    document.AddMember("json", arr, allocate);
-    document.Accept(writer);
-    auto reqData = buffer.GetString();
-    std::string state = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"getNetworkState",reqData);
-    return state;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getNetworkState",ValueVectorNull);
+    return resVec[0].asString();
 }
 void IETSystemUtil::showAlertDialog(std::string title, std::string message, std::string cancelBtnTitle, cocos2d::ValueVector otherBtnTitles, const std::function<void (int)> &func)
 {}
@@ -142,16 +124,7 @@ void IETSystemUtil::showMessage(std::string message)
 {}
 void IETSystemUtil::vibrate()
 {
-    rapidjson::Value arr(rapidjson::kArrayType);
-    rapidjson::StringBuffer  buffer;
-    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    rapidjson::Document document ;
-    document.SetObject();
-    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    document.AddMember("json", arr, allocate);
-    document.Accept(writer);
-    auto reqData = buffer.GetString();
-    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"vibrate",reqData);
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"vibrate",ValueVectorNull);
 }
 void IETSystemUtil::saveImage(std::string imgPath, std::string album, const std::function<void (bool, std::string)> &func)
 {
@@ -167,37 +140,15 @@ void IETSystemUtil::setNotificationState(bool enable)
 }
 void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {
-    rapidjson::Value msg(rapidjson::kObjectType);
-    rapidjson::Value arr(rapidjson::kArrayType);
-    rapidjson::StringBuffer  buffer;
-    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    rapidjson::Document document ;
-    document.SetObject();
-    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    for (auto iter = map.cbegin(); iter != map.cend(); ++iter)
-    {
-        msg.AddMember(iter->first.c_str(),iter->second.asString().c_str(),allocate);
-    }
-    arr.PushBack(msg,allocate);
-    document.AddMember("json",arr,allocate);
-    document.Accept(writer);
-    auto reqData = buffer.GetString();
-
-    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"postNotification",reqData);
+    ValueVector reqVec;
+    reqVec.push_back(Value(map));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"postNotification",reqVec);
 }
 void IETSystemUtil::setBadgeNum(int num)
 {
-    rapidjson::Value arr(rapidjson::kArrayType);
-    rapidjson::StringBuffer  buffer;
-    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    rapidjson::Document document ;
-    document.SetObject();
-    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    arr.PushBack(num,allocate);
-    document.AddMember("json",arr,allocate);
-    document.Accept(writer);
-    auto reqData = buffer.GetString();
-    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"setBadgeNum",reqData);
+    ValueVector reqVec;
+    reqVec.push_back(Value(num));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"setBadgeNum",reqVec);
 }
 void IETSystemUtil::share(cocos2d::ValueVector items)
 {}
@@ -209,33 +160,14 @@ std::string IETSystemUtil::keychainGet(std::string key)
 }
 bool IETSystemUtil::isJailbroken()
 {
-
-    rapidjson::Value arr(rapidjson::kArrayType);
-    rapidjson::StringBuffer  buffer;
-    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    rapidjson::Document document ;
-    document.SetObject();
-    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    document.AddMember("json", arr, allocate);
-    document.Accept(writer);
-    auto reqData = buffer.GetString();
-    std::string isRoot = IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"isRoot",reqData);
-    bool isroot = isRoot == "0" ? true:false;
-    return isroot;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"isRoot",ValueVectorNull);
+    return resVec[0].asBool();
 }
 void IETSystemUtil::copyToPasteboard(std::string str)
 {
-    rapidjson::Value arr(rapidjson::kArrayType);
-    rapidjson::StringBuffer  buffer;
-    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-    rapidjson::Document document ;
-    document.SetObject();
-    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-    arr.PushBack(str.c_str(),allocate);
-    document.AddMember("json",arr,allocate);
-    document.Accept(writer);
-    auto reqData = buffer.GetString();
-    IETAndroidBridge::getInstance()->callJavaMethod(JAVA_CLASS_NAME,"copyToClipboard",reqData);
+    ValueVector reqVec;
+    reqVec.push_back(Value(str));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"copyToClipboard",reqVec);
 }
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {

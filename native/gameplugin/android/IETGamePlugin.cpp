@@ -10,13 +10,9 @@
 #include "IETAndroidBridge.h"
 
 #include "cocos2d.h"
-#include "json/document.h"  
-#include "json/writer.h"  
-#include "json/stringbuffer.h"  
 
 using namespace std;
 using namespace cocos2d;
-using namespace rapidjson;
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,6 +21,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+#define GAME_PLUGIN_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
 // jobject mNativeHelper;
 void IETGamePlugin::init()
 {
@@ -43,42 +40,41 @@ void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVecto
 }
 void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func)
 {
-
+	IETAndroidBridge::getInstance()->callJavaMethodAsync(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",ValueVectorNull,[=](ValueVector resVec){
+		func(resVec[0].asValueMap());
+	});
+}
 void IETGamePlugin::setIapVerifyUrlAndSign(std::string url, std::string sign)
 {
+	ValueVector reqVec;
+    reqVec.push_back(Value(url));
+    reqVec.push_back(Value(sign));
+	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",ValueVectorNull);
 }
 bool IETGamePlugin::canDoIap(){
-    return true;
+	ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"canDoIap",ValueVectorNull);
+    return resVec[0].asBool();
 }
 cocos2d::ValueMap IETGamePlugin::getSuspensiveIap()
 {
-    return ValueMapNull;
+	ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"getSuspensiveIap",ValueVectorNull);
+    return resVec[0].asValueMap();
 }
 void IETGamePlugin::setSuspensiveIap(cocos2d::ValueMap iapInfo)
 {
+	ValueVector reqVec;
+    reqVec.push_back(Value(iapInfo));
+	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setSuspensiveIap",ValueVectorNull);
 }
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)
 {
-//    std::string JAVA_CLASS_NAME = "com.joycastle.gameplugin.IabHelper";
-//    
-//    rapidjson::Value arr(rapidjson::kArrayType);
-//    rapidjson::StringBuffer  buffer;
-//    rapidjson::Writer<rapidjson::StringBuffer>  writer(buffer);
-//    rapidjson::Document document ;
-//    document.SetObject();
-//    rapidjson::Document::AllocatorType & allocate = document.GetAllocator();
-//    arr.PushBack(iapId.c_str(),allocate);
-//    arr.PushBack(userId.c_str(),allocate);
-//    document.AddMember("json", arr, allocate);
-//    document.Accept(writer);
-//    auto reqData = buffer.GetString();
-//    IETAndroidBridge::getInstance()->callJavaMethodAsync(JAVA_CLASS_NAME,"purchase",reqData,[func](std::string resData){
-//        log("IETGamePlugin::doIap:  %s", resData.c_str());
-//        // func(true, "");
-//        log("IETGamePlugin::doIap:  %s", resData.c_str());
-//    });
-
+	ValueVector reqVec;
+    reqVec.push_back(Value(iapId));
+    reqVec.push_back(Value(userId));
+	IETAndroidBridge::getInstance()->callJavaMethodAsync(GAME_PLUGIN_CLASS_NAME,"doIap",reqVec,[=](ValueVector resVec){
+		func(resVec[0].asBool(),resVec[1].asString());
+	});
 }
 
 bool IETGamePlugin::gcIsAvailable()
@@ -146,7 +142,7 @@ void IETGamePlugin::gcReset()
 }
 void IETGamePlugin::rateGame()
 {
-    
+    IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"rateGame",ValueVectorNull);
 }
 
 
