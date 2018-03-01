@@ -14,13 +14,28 @@ using namespace cocos2d;
 
 #define ADVERTISE_HELPER_CLASS_NAME "com.joycastle.gameplugin.AdvertiseHelper"
 
+void IETAdvertiseHelper::setBannerAdName(std::string name)
+{
+    assert(false);
+}
+
+void IETAdvertiseHelper::setSpotAdNames(cocos2d::ValueVector names)
+{
+    assert(false);
+}
+
+void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
+{
+    assert(false);
+}
+
 int IETAdvertiseHelper::showBannerAd(bool isPortrait, bool isBottom)
 {
     ValueVector reqVec;
     reqVec.push_back(Value(isPortrait));
     reqVec.push_back(Value(isBottom));
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"showBannerAd",reqVec);
-    int height = resVec[1].asInt();
+    ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"showBannerAd",reqVec);
+    int height = retVec[0].asInt();
     return height;
 }
 
@@ -31,51 +46,32 @@ void IETAdvertiseHelper::hideBannerAd()
 
 bool IETAdvertiseHelper::isSpotAdReady()
 {
-    log("isSpotAdReady");
-    IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"hideBannerAd",ValueVectorNull);
-    return true;
+    ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"isInterstitialAdReady",ValueVectorNull);
+    return retVec[0].asBool();
 }
 
 bool IETAdvertiseHelper::showSpotAd(const std::function<void (bool)> &func)
 {
-    log("showSpotAd");
-    func(true);
-    return true;
+    ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethodAsync(ADVERTISE_HELPER_CLASS_NAME, "showInterstitialAd", ValueVectorNull, [=](cocos2d::ValueVector resVec) {
+        func(resVec[0].asBool());
+    });
+    return retVec[0].asBool();
 }
 
 bool IETAdvertiseHelper::isVedioReady()
 {
-    std::string isReady = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"isVideoAdReady",ValueVectorNull);
-    return isReady=="true" ? true:false;
+    ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"isVideoAdReady",ValueVectorNull);
+    return retVec[0].asBool();
 }
 
 bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc, const std::function<void (bool)> &clickFunc)
 {
-//    IETAndroidBridge::getInstance()->callJavaMethodAsync(ADVERTISE_HELPER_CLASS_NAME,"showVideoAd",ValueVectorNull,[=](std::string _resData){
-//        log("IETSystemUtil::setNotificationState:  %s", _resData.c_str());
-// 
-//        rapidjson::Document readdoc;
-//        readdoc.Parse<0>(_resData.c_str());     
-//        if(!readdoc.HasParseError() )  
-//        {  
-//            if (readdoc.HasMember("reward"))
-//            {
-//                rapidjson::Value& idValue=readdoc["reward"];
-//                viewFunc(idValue.GetBool());
-//            } 
-//            else if (readdoc.HasMember("click"))
-//            {
-//                rapidjson::Value& idValue=readdoc["click"];
-//                clickFunc(idValue.GetBool());
-//            }
-//        } 
-//    });
-  
-    return true;
+    ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethodAsync(ADVERTISE_HELPER_CLASS_NAME, "showVideoAd", ValueVectorNull, [=](ValueVector resVec) {
+        bool viewed = resVec[0].asBool();
+        bool clicked = resVec[1].asBool();
+        viewFunc(viewed);
+        clickFunc(clicked);
+    });
+    return retVec[0].asBool();
 }
-void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
-{}
-void IETAdvertiseHelper::setBannerAdName(std::string name)
-{}
-void IETAdvertiseHelper::setSpotAdNames(cocos2d::ValueVector names)
-{}
+
