@@ -41,23 +41,19 @@ void IETGamePlugin::crashReportLogs(std::string message)
 void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVector traceback)
 {
 }
-
 void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func)
-{}
+{
 
 void IETGamePlugin::setIapVerifyUrlAndSign(std::string url, std::string sign)
 {
 }
-
 bool IETGamePlugin::canDoIap(){
     return true;
 }
-
 cocos2d::ValueMap IETGamePlugin::getSuspensiveIap()
 {
     return ValueMapNull;
 }
-
 void IETGamePlugin::setSuspensiveIap(cocos2d::ValueMap iapInfo)
 {
 }
@@ -148,7 +144,6 @@ void IETGamePlugin::gcShowChallenge()
 void IETGamePlugin::gcReset()
 {
 }
-
 void IETGamePlugin::rateGame()
 {
     

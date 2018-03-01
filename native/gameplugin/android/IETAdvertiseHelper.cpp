@@ -14,6 +14,13 @@ using namespace cocos2d;
 
 #define ADVERTISE_HELPER_CLASS_NAME "com.joycastle.gameplugin.AdvertiseHelper"
 
+void IETAdvertiseHelper::setBannerAdName(std::string name)
+{}
+void IETAdvertiseHelper::setSpotAdNames(cocos2d::ValueVector names)
+{}
+void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
+{}
+
 int IETAdvertiseHelper::showBannerAd(bool isPortrait, bool isBottom)
 {
     ValueVector reqVec;
@@ -50,31 +57,26 @@ bool IETAdvertiseHelper::isVedioReady()
 
 bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc, const std::function<void (bool)> &clickFunc)
 {
-//    IETAndroidBridge::getInstance()->callJavaMethodAsync(ADVERTISE_HELPER_CLASS_NAME,"showVideoAd",ValueVectorNull,[=](std::string _resData){
-//        log("IETSystemUtil::setNotificationState:  %s", _resData.c_str());
-// 
-//        rapidjson::Document readdoc;
-//        readdoc.Parse<0>(_resData.c_str());     
-//        if(!readdoc.HasParseError() )  
-//        {  
-//            if (readdoc.HasMember("reward"))
-//            {
-//                rapidjson::Value& idValue=readdoc["reward"];
-//                viewFunc(idValue.GetBool());
-//            } 
-//            else if (readdoc.HasMember("click"))
-//            {
-//                rapidjson::Value& idValue=readdoc["click"];
-//                clickFunc(idValue.GetBool());
-//            }
-//        } 
-//    });
-  
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(ADVERTISE_HELPER_CLASS_NAME,"showVideoAd",ValueVectorNull,[=](std::string _resData){
+    log("IETSystemUtil::setNotificationState:  %s", _resData.c_str());
+
+    rapidjson::Document readdoc;
+    readdoc.Parse<0>(_resData.c_str());     
+    if(!readdoc.HasParseError() )  
+    {  
+       if (readdoc.HasMember("reward"))
+       {
+           rapidjson::Value& idValue=readdoc["reward"];
+           viewFunc(idValue.GetBool());
+       } 
+       else if (readdoc.HasMember("click"))
+       {
+           rapidjson::Value& idValue=readdoc["click"];
+           clickFunc(idValue.GetBool());
+       }
+    } 
+    });
+
     return true;
 }
-void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
-{}
-void IETAdvertiseHelper::setBannerAdName(std::string name)
-{}
-void IETAdvertiseHelper::setSpotAdNames(cocos2d::ValueVector names)
-{}
+

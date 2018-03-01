@@ -19,6 +19,12 @@ using namespace cocos2d;
 std::function<void (std::string, std::string)> _loginFunc = nullptr;
 bool _isLogin = false;
 
+void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url)
+{
+    log("installUrl=%s", installUrl.c_str());
+    log("url=%s", url.c_str());
+}
+
 void IETFacebookHelper::setLoginFunc(const std::function<void (std::string, std::string)> &func)
 {
 //    IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"setLoginListener",ValueVectorNull,[=](cocos2d::ValueVector _resData){
@@ -38,12 +44,6 @@ void IETFacebookHelper::setLoginFunc(const std::function<void (std::string, std:
 void IETFacebookHelper::setAppLinkFunc(const std::function<void (cocos2d::ValueMap)> &func)
 {
     
-}
-
-void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url)
-{
-    log("installUrl=%s", installUrl.c_str());
-    log("url=%s", url.c_str());
 }
 
 bool IETFacebookHelper::isLogin()
