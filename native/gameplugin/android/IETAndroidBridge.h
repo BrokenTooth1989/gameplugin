@@ -26,10 +26,10 @@ public:
 
      @param className 类名
      @param methodName 函数名
-     @param reqData json数据
-     @return json数据
+     @param reqData 数据
+     @return 数据
      */
-    std::string callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec);
+    cocos2d::ValueVector callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec);
     
     /**
      调用Java函数
@@ -38,8 +38,9 @@ public:
      @param methodName 函数名
      @param reqData json数据
      @param handler 回调函数
+     @return 数据
      */
-    void callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler);
+    cocos2d::ValueVector callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler);
     
     /**
      Java异步回调结果处理
@@ -78,7 +79,7 @@ private:
      @param requestId requestId
      @return json数据
      */
-    std::string callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId);
+    cocos2d::ValueVector callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId);
     
     void valueVec2JsonArray(cocos2d::ValueVector vec, rapidjson::Value &valArr, rapidjson::Value &typeArr, rapidjson::Document::AllocatorType &allocate);
 

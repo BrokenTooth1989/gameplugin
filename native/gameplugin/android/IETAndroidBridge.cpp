@@ -26,16 +26,16 @@ IETAndroidBridge* IETAndroidBridge::getInstance()
     return instance;
 }
 
-std::string IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec)
+cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec)
 {
     return this->callJavaMethod(className, methodName, reqVec, -1);
 }
 
-void IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler)
+cocos2d::ValueVector IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler)
 {
     int reqId = requestId++;
     handlerMap[reqId] = handler;
-    this->callJavaMethod(className, methodName, reqVec, reqId);
+    return this->callJavaMethod(className, methodName, reqVec, reqId);
 }
 
 void IETAndroidBridge::handleJavaRes(int responseId, std::string resJson)
@@ -46,7 +46,7 @@ void IETAndroidBridge::handleJavaRes(int responseId, std::string resJson)
     handlerMap[responseId] = nullptr;
 }
 
-std::string IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId)
+cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     string reqJson = generateJson(reqVec);
@@ -56,17 +56,16 @@ std::string IETAndroidBridge::callJavaMethod(std::string className, std::string 
     jstring jclassName = env->NewStringUTF(className.c_str());
     jstring jmethodName = env->NewStringUTF(methodName.c_str());
     jstring jreqJson = env->NewStringUTF(reqJson.c_str());
-    jstring resData_ = (jstring)(env->CallStaticObjectMethod(clazz, method, jclassName, jmethodName, jreqJson, requestId));
-//    log("IETAndroidBridge::callJavaMethod --%d",requestId);
-    const char* resData = env->GetStringUTFChars((jstring)resData_, 0);
-//    log("IETAndroidBridge::callJavaMethod resposeData--%s",resData);
+    jstring jresJson = (jstring)(env->CallStaticObjectMethod(clazz, method, jclassName, jmethodName, jreqJson, requestId));
+    const char* resJson = env->GetStringUTFChars((jstring)jresJson, 0);
     env->DeleteLocalRef(clazz);
     env->DeleteLocalRef(jclassName);
     env->DeleteLocalRef(jmethodName);
     env->DeleteLocalRef(jreqJson);
-    return resData;
+    ValueVector resVec = parseJson(resJson);
+    return resVec;
 #else
-    return "";
+    return ValueVectorNull;
 #endif
 }
 
@@ -148,7 +147,7 @@ void IETAndroidBridge::valueVec2JsonArray(cocos2d::ValueVector vec, rapidjson::V
             {
                 string str = iter->asString();
                 rapidjson::Value strVal;
-                strVal.SetString(str.c_str(), str.length(), allocate);
+                strVal.SetString(str.c_str(), (unsigned)str.length(), allocate);
                 valArr.PushBack(strVal, allocate);
                 typeArr.PushBack("string", allocate);
             }
@@ -210,7 +209,7 @@ void IETAndroidBridge::valueMap2JsonObject(cocos2d::ValueMap map, rapidjson::Val
             {
                 string str = iter->second.asString();
                 rapidjson::Value strVal;
-                strVal.SetString(str.c_str(), str.length(), allocate);
+                strVal.SetString(str.c_str(), (unsigned)str.length(), allocate);
                 valObj.AddMember(iter->first.c_str(), strVal, allocate);
                 typeObj.AddMember(iter->first.c_str(), "string", allocate);
             }

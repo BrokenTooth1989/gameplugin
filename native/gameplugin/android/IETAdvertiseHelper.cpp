@@ -26,8 +26,9 @@ int IETAdvertiseHelper::showBannerAd(bool isPortrait, bool isBottom)
     ValueVector reqVec;
     reqVec.push_back(Value(isPortrait));
     reqVec.push_back(Value(isBottom));
-    std::string height = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"showBannerAd",reqVec);
-    return atoi(height.c_str());
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"showBannerAd",reqVec);
+    int height = resVec[1].asInt();
+    return height;
 }
 
 void IETAdvertiseHelper::hideBannerAd()
