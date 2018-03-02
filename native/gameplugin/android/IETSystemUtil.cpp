@@ -160,7 +160,7 @@ std::string IETSystemUtil::keychainGet(std::string key)
 }
 bool IETSystemUtil::isJailbroken()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"isRoot",ValueVectorNull);
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"isJailbroken",ValueVectorNull);
     return resVec[0].asBool();
 }
 void IETSystemUtil::copyToPasteboard(std::string str)
