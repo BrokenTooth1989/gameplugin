@@ -144,7 +144,6 @@ void IETFacebookHelper::share(std::string title, std::string description, std::s
 
 void IETFacebookHelper::setLevel(int level)
 {
-    log("setLevel");
     ValueVector reqVec;
     reqVec.push_back(Value(level));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"setLevel",reqVec);
@@ -152,7 +151,6 @@ void IETFacebookHelper::setLevel(int level)
 
 void IETFacebookHelper::getLevel(std::string fid, std::function<void (int)> &func)
 {
-    log("getLevel");
     ValueVector reqVec;
     reqVec.push_back(Value(fid));
     IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getLevel",reqVec,[=](ValueVector resVec){

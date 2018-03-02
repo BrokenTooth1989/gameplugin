@@ -111,32 +111,60 @@ std::string IETSystemUtil::getNetworkState()
     return resVec[0].asString();
 }
 void IETSystemUtil::showAlertDialog(std::string title, std::string message, std::string cancelBtnTitle, cocos2d::ValueVector otherBtnTitles, const std::function<void (int)> &func)
-{}
+{
+    ValueVector reqVec;
+    reqVec.push_back(Value(title));
+    reqVec.push_back(Value(message));
+    reqVec.push_back(Value(cancelBtnTitle));
+    reqVec.push_back(Value(otherBtnTitles));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(SYSTEM_UTIL_CLASS_NAME,"showAlertDialog",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asInt());
+    });
+}
 void IETSystemUtil::showProgressDialog(std::string message, int percent)
-{}
+{
+    assert(false);
+}
 void IETSystemUtil::hideProgressDialog()
-{}
+{
+    assert(false);
+}
 void IETSystemUtil::showLoading(std::string message)
-{}
+{
+    assert(false);
+}
 void IETSystemUtil::hideLoading()
-{}
+{
+    assert(false);
+}
 void IETSystemUtil::showMessage(std::string message)
-{}
+{
+    assert(false);
+}
 void IETSystemUtil::vibrate()
 {
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"vibrate",ValueVectorNull);
 }
 void IETSystemUtil::saveImage(std::string imgPath, std::string album, const std::function<void (bool, std::string)> &func)
 {
-    
+    assert(false);
 }
-void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector, std::string emailBody, const std::function<void (bool, std::string)> &func)
+void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector toRecipients, std::string emailBody, const std::function<void (bool, std::string)> &func)
 {
+    ValueVector reqVec;
+    reqVec.push_back(Value(subject));
+    reqVec.push_back(Value(toRecipients));
+    reqVec.push_back(Value(emailBody));
+    IETAndroidBridge::getInstance()->callJavaMethodAsync(SYSTEM_UTIL_CLASS_NAME,"sendEmail",reqVec,[=](ValueVector resVec){
+        func(resVec[0].asBool(),resVec[1].asString());
+    });
 }
 
 void IETSystemUtil::setNotificationState(bool enable)
 {
-    
+    ValueVector reqVec;
+    reqVec.push_back(Value(enable));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"setNotificationState",reqVec);
 }
 void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {
@@ -151,12 +179,22 @@ void IETSystemUtil::setBadgeNum(int num)
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"setBadgeNum",reqVec);
 }
 void IETSystemUtil::share(cocos2d::ValueVector items)
-{}
+{
+    assert(false);
+}
 void IETSystemUtil::keychainSet(std::string key, std::string value)
-{}
+{
+    ValueVector reqVec;
+    reqVec.push_back(Value(key));
+    reqVec.push_back(Value(value));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"keychainSet",reqVec);
+}
 std::string IETSystemUtil::keychainGet(std::string key)
 {
-    return "";
+    ValueVector reqVec;
+    reqVec.push_back(Value(key));
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"keychainGet",reqVec);
+    return resVec[0].asString();
 }
 bool IETSystemUtil::isJailbroken()
 {
