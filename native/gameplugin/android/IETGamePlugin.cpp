@@ -40,7 +40,7 @@ void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVecto
 }
 void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func)
 {
-	IETAndroidBridge::getInstance()->callJavaMethodAsync(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",ValueVectorNull,[=](ValueVector resVec){
+	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",ValueVectorNull,[=](ValueVector resVec){
 		func(resVec[0].asValueMap());
 	});
 }
@@ -76,7 +76,7 @@ void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::func
 	ValueVector reqVec;
     reqVec.push_back(Value(iapId));
     reqVec.push_back(Value(userId));
-	IETAndroidBridge::getInstance()->callJavaMethodAsync(GAME_PLUGIN_CLASS_NAME,"doIap",reqVec,[=](ValueVector resVec){
+	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"doIap",reqVec,[=](ValueVector resVec){
 		func(resVec[0].asBool(),resVec[1].asString());
 	});
 }

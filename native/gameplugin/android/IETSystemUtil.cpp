@@ -117,7 +117,7 @@ void IETSystemUtil::showAlertDialog(std::string title, std::string message, std:
     reqVec.push_back(Value(message));
     reqVec.push_back(Value(cancelBtnTitle));
     reqVec.push_back(Value(otherBtnTitles));
-    IETAndroidBridge::getInstance()->callJavaMethodAsync(SYSTEM_UTIL_CLASS_NAME,"showAlertDialog",reqVec,[=](ValueVector resVec){
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"showAlertDialog",reqVec,[=](ValueVector resVec){
         func(resVec[0].asInt());
     });
 }
@@ -157,7 +157,7 @@ void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector toRecipi
     reqVec.push_back(Value(subject));
     reqVec.push_back(Value(toRecipients));
     reqVec.push_back(Value(emailBody));
-    IETAndroidBridge::getInstance()->callJavaMethodAsync(SYSTEM_UTIL_CLASS_NAME,"sendEmail",reqVec,[=](ValueVector resVec){
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"sendEmail",reqVec,[=](ValueVector resVec){
         func(resVec[0].asBool(),resVec[1].asString());
     });
 }

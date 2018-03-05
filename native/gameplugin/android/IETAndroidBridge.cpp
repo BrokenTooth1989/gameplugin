@@ -26,12 +26,7 @@ IETAndroidBridge* IETAndroidBridge::getInstance()
     return instance;
 }
 
-cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec)
-{
-    return this->callJavaMethod(className, methodName, reqVec, -1);
-}
-
-cocos2d::ValueVector IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> func, bool keep)
+cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> func, bool keep)
 {
     int reqId = -1;
     if (func != nullptr) {

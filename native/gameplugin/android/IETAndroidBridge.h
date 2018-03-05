@@ -30,22 +30,12 @@ public:
 
      @param className 类名
      @param methodName 函数名
-     @param reqData 数据
-     @return 数据
-     */
-    cocos2d::ValueVector callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec);
-    
-    /**
-     调用Java函数
-
-     @param className 类名
-     @param methodName 函数名
      @param reqData json数据
      @param func 回调函数
      @param keep 多次回调
      @return 数据
      */
-    cocos2d::ValueVector callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> func = nullptr, bool keep = false);
+    cocos2d::ValueVector callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> func = nullptr, bool keep = false);
     
     /**
      Java异步回调结果处理
