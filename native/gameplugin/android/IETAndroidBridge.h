@@ -13,6 +13,10 @@
 
 class IETAndroidBridge
 {
+    typedef struct {
+        std::function<void (cocos2d::ValueVector)> func;
+        bool keep;
+    } Handler;
 public:
     /**
      单例
@@ -37,10 +41,11 @@ public:
      @param className 类名
      @param methodName 函数名
      @param reqData json数据
-     @param handler 回调函数
+     @param func 回调函数
+     @param keep 多次回调
      @return 数据
      */
-    cocos2d::ValueVector callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler);
+    cocos2d::ValueVector callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> func = nullptr, bool keep = false);
     
     /**
      Java异步回调结果处理
@@ -92,7 +97,7 @@ private:
 private:
     static IETAndroidBridge *instance;
     int requestId;
-    std::map<int, std::function<void (cocos2d::ValueVector)>> handlerMap;
+    std::map<int, Handler> handlerMap;
 };
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

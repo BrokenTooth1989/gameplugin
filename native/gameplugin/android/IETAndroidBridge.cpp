@@ -31,19 +31,40 @@ cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std
     return this->callJavaMethod(className, methodName, reqVec, -1);
 }
 
-cocos2d::ValueVector IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> handler)
+cocos2d::ValueVector IETAndroidBridge::callJavaMethodAsync(std::string className, std::string methodName, cocos2d::ValueVector reqVec, std::function<void (cocos2d::ValueVector)> func, bool keep)
 {
-    int reqId = requestId++;
-    handlerMap[reqId] = handler;
+    int reqId = -1;
+    if (func != nullptr) {
+        // 分配requestId
+        while (true) {
+            if (requestId == INT_MAX) {
+                requestId = 0;
+            }
+            requestId++;
+            if (handlerMap.find(requestId) != handlerMap.end()) {
+                break;
+            }
+        }
+        reqId = requestId;
+        Handler handler;
+        handler.func = func;
+        handler.keep = keep;
+        handlerMap[reqId] = handler;
+    }
     return this->callJavaMethod(className, methodName, reqVec, reqId);
 }
 
 void IETAndroidBridge::handleJavaRes(int responseId, std::string resJson)
 {
-    std::function<void (cocos2d::ValueVector)> handler = handlerMap[responseId];
+    if (handlerMap.find(responseId) == handlerMap.end()) {
+        return;
+    }
+    Handler handler = handlerMap[responseId];
     ValueVector resVec = parseJson(resJson);
-    handler(resVec);
-    handlerMap[responseId] = nullptr;
+    handler.func(resVec);
+    if (!handler.keep) {
+        handlerMap.erase(responseId);
+    }
 }
 
 cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId)
