@@ -26,9 +26,4 @@
 -- @field [parent=#ccg] IETFacebookHelper#IETFacebookHelper IETFacebookHelper preloaded module
 
 
---------------------------------------------------------
--- the ccg IETAmazonAWSHelper
--- @field [parent=#ccg] IETAmazonAWSHelper#IETAmazonAWSHelper IETAmazonAWSHelper preloaded module
-
-
 return nil

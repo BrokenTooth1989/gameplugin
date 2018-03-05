@@ -42,7 +42,6 @@ GamePlugin 			= ccg.IETGamePlugin:getInstance()
 SystemUtil 			= ccg.IETSystemUtil:getInstance()
 AnalyticHelper 		= ccg.IETAnalyticHelper:getInstance()
 AdvertiseHelper		= ccg.IETAdvertiseHelper:getInstance()
-AmazonAWSHelper 	= ccg.IETAmazonAWSHelper:getInstance()
 FacebookHelper 		= ccg.IETFacebookHelper:getInstance()
 
 -- utils

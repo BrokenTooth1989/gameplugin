@@ -15,6 +15,5 @@
 #include "IETAdvertiseHelper.h"
 #include "IETAnalyticHelper.h"
 #include "IETFacebookHelper.h"
-#include "IETAmazonAWSHelper.h"
 
 #endif
