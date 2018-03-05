@@ -21,7 +21,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#define GAME_PLUGIN_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
+#define GAME_PLUGIN_CLASS_NAME  "com.joycastle.gameplugin.GamePlugin"
 // jobject mNativeHelper;
 void IETGamePlugin::init()
 {
@@ -49,7 +49,7 @@ void IETGamePlugin::setIapVerifyUrlAndSign(std::string url, std::string sign)
 	ValueVector reqVec;
     reqVec.push_back(Value(url));
     reqVec.push_back(Value(sign));
-	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",ValueVectorNull);
+	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",reqVec);
 }
 bool IETGamePlugin::canDoIap(){
 	ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"canDoIap",ValueVectorNull);
@@ -58,13 +58,17 @@ bool IETGamePlugin::canDoIap(){
 cocos2d::ValueMap IETGamePlugin::getSuspensiveIap()
 {
 	ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"getSuspensiveIap",ValueVectorNull);
-    return resVec[0].asValueMap();
+    if(resVec.size()>0){
+ 		return resVec[0].asValueMap();
+    }else{
+    	return ValueMapNull;
+    }
 }
 void IETGamePlugin::setSuspensiveIap(cocos2d::ValueMap iapInfo)
 {
 	ValueVector reqVec;
     reqVec.push_back(Value(iapInfo));
-	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setSuspensiveIap",ValueVectorNull);
+	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setSuspensiveIap",reqVec);
 }
 
 void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::function<void (bool, std::string)> &func)

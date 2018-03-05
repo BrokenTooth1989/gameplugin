@@ -37,7 +37,7 @@ std::string IETSystemUtil::getAppName()
 }
 std::string IETSystemUtil::getAppVersion()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppVer",ValueVectorNull);
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppVersion",ValueVectorNull);
     return resVec[0].asString();
 }
 int IETSystemUtil::getAppBuild()
@@ -82,7 +82,7 @@ std::string IETSystemUtil::getIDFA()
 }
 std::string IETSystemUtil::getUUID()
 {
-    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getUDID",ValueVectorNull);
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getUUID",ValueVectorNull);
     return resVec[0].asString();
 }
 std::string IETSystemUtil::getCountryCode()
@@ -131,10 +131,12 @@ void IETSystemUtil::hideProgressDialog()
 }
 void IETSystemUtil::showLoading(std::string message)
 {
+    //TODO
     assert(false);
 }
 void IETSystemUtil::hideLoading()
 {
+    //TODO
     assert(false);
 }
 void IETSystemUtil::showMessage(std::string message)
@@ -159,7 +161,6 @@ void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector toRecipi
         func(resVec[0].asBool(),resVec[1].asString());
     });
 }
-
 void IETSystemUtil::setNotificationState(bool enable)
 {
     ValueVector reqVec;

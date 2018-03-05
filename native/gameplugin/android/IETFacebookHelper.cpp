@@ -58,13 +58,21 @@ void IETFacebookHelper::logout()
 std::string IETFacebookHelper::getUserID()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getUserID",ValueVectorNull);
-    return resVec[0].asString();
+    if(resVec.size()>0){
+        return resVec[0].asString();
+    }else{
+        return "";
+    }
 }
 
 std::string IETFacebookHelper::getAccessToken()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getAccessToken",ValueVectorNull);
-    return resVec[0].asString();
+    if(resVec.size()>0){
+        return resVec[0].asString();
+    }else{
+        return "";
+    }
 }
 
 void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::function<void (cocos2d::ValueMap)> &func)
@@ -73,7 +81,7 @@ void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::functi
     reqVec.push_back(Value(fid));
     reqVec.push_back(Value(picSize));
     IETAndroidBridge::getInstance()->callJavaMethodAsync(FACEBOOK_HELPER_CLASS_NAME,"getUserProfile",reqVec,[=](ValueVector resVec){
-        func(resVec[1].asValueMap());
+        func(resVec[0].asValueMap());
     });
 }
 
