@@ -11,8 +11,6 @@
 
 using namespace std;
 using namespace cocos2d;
-void IETGamePlugin::init()
-{}
 
 void IETGamePlugin::crashReportLogs(std::string message)
 {

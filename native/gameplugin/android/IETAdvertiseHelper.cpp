@@ -16,17 +16,23 @@ using namespace cocos2d;
 
 void IETAdvertiseHelper::setBannerAdName(std::string name)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(name));
+    IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"setBannerAdName",reqVec);
 }
 
 void IETAdvertiseHelper::setSpotAdNames(cocos2d::ValueVector names)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(names));
+    IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"setSpotAdNames",reqVec);
 }
 
 void IETAdvertiseHelper::setVideoAdNames(cocos2d::ValueVector names)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(names));
+    IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME,"setVideoAdNames",reqVec);
 }
 
 int IETAdvertiseHelper::showBannerAd(bool isPortrait, bool isBottom)

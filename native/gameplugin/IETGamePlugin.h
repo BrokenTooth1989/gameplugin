@@ -13,8 +13,8 @@
 #include "IETGamePluginDefine.h"
 
 class IETGamePlugin {
-protected:
-    virtual void init();
+private:
+    void init(){};
 public:
     SINGLETON(IETGamePlugin);
     

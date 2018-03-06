@@ -7,8 +7,8 @@
 //
 
 #include "IETSystemUtil.h"
-#include "network/HttpClient.h"
 #include "IETAndroidBridge.h"
+#include "network/HttpClient.h"
 
 using namespace cocos2d;
 using namespace cocos2d::extension;
@@ -19,11 +19,15 @@ using namespace network;
 int IETSystemUtil::getDebugMode() {
     return 3;
 }
+
 std::string IETSystemUtil::getPlatCfgValue(std::string key)
 {
-    assert(false);
-    return "";
+    ValueVector reqVec;
+    reqVec.push_back(Value(key));
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "getPlatCfgValue", reqVec);
+    return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getAppBundleId()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getBundleId",ValueVectorNull);
@@ -35,66 +39,79 @@ std::string IETSystemUtil::getAppName()
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppName",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getAppVersion()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppVersion",ValueVectorNull);
     return resVec[0].asString();
 }
+
 int IETSystemUtil::getAppBuild()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getAppBuild",ValueVectorNull);
     return resVec[0].asInt();
 }
+
 std::string IETSystemUtil::getDeviceName()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getDeviceName",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getDeviceModel()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getDeviceModel",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getDeviceType()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getDeviceType",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getSystemName()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getSystemName",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getSystemVersion()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getSystemVersion",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getIDFV()
 {
-    assert(false);
-    return "";
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getIDFV",ValueVectorNull);
+    return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getIDFA()
 {
-    assert(false);
-    return "";
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getIDFA",ValueVectorNull);
+    return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getUUID()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getUUID",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getCountryCode()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getCountryCode",ValueVectorNull);
     return resVec[0].asString();
 }
+
 std::string IETSystemUtil::getLanguageCode()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getLanguageCode",ValueVectorNull);
     return resVec[0].asString();
 }
+
 long IETSystemUtil::getCpuTime()
 {
     struct timeval tv;
@@ -105,11 +122,13 @@ long IETSystemUtil::getCpuTime()
     return (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
 
 }
+
 std::string IETSystemUtil::getNetworkState()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getNetworkState",ValueVectorNull);
     return resVec[0].asString();
 }
+
 void IETSystemUtil::showAlertDialog(std::string title, std::string message, std::string cancelBtnTitle, cocos2d::ValueVector otherBtnTitles, const std::function<void (int)> &func)
 {
     ValueVector reqVec;
@@ -121,36 +140,54 @@ void IETSystemUtil::showAlertDialog(std::string title, std::string message, std:
         func(resVec[0].asInt());
     });
 }
+
 void IETSystemUtil::showProgressDialog(std::string message, int percent)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(message));
+    reqVec.push_back(Value(percent));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "showProgressDialog", reqVec);
 }
+
 void IETSystemUtil::hideProgressDialog()
 {
-    assert(false);
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "hideProgressDialog", ValueVectorNull);
 }
+
 void IETSystemUtil::showLoading(std::string message)
 {
-    //TODO
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(message));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "showLoading", reqVec);
 }
+
 void IETSystemUtil::hideLoading()
 {
-    //TODO
-    assert(false);
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "hideLoading", ValueVectorNull);
 }
+
 void IETSystemUtil::showMessage(std::string message)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(message));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "showMessage", reqVec);
 }
+
 void IETSystemUtil::vibrate()
 {
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"vibrate",ValueVectorNull);
 }
+
 void IETSystemUtil::saveImage(std::string imgPath, std::string album, const std::function<void (bool, std::string)> &func)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(imgPath));
+    reqVec.push_back(Value(album));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "saveImage", reqVec,[=](ValueVector resVec){
+        func(resVec[0].asBool(), resVec[1].asString());
+    });
 }
+
 void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector toRecipients, std::string emailBody, const std::function<void (bool, std::string)> &func)
 {
     ValueVector reqVec;
@@ -158,31 +195,38 @@ void IETSystemUtil::sendEmail(std::string subject, cocos2d::ValueVector toRecipi
     reqVec.push_back(Value(toRecipients));
     reqVec.push_back(Value(emailBody));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"sendEmail",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asBool(),resVec[1].asString());
+        func(resVec[0].asBool(), resVec[1].asString());
     });
 }
+
 void IETSystemUtil::setNotificationState(bool enable)
 {
     ValueVector reqVec;
     reqVec.push_back(Value(enable));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"setNotificationState",reqVec);
 }
+
 void IETSystemUtil::postNotification(cocos2d::ValueMap map)
 {
     ValueVector reqVec;
     reqVec.push_back(Value(map));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"postNotification",reqVec);
 }
+
 void IETSystemUtil::setBadgeNum(int num)
 {
     ValueVector reqVec;
     reqVec.push_back(Value(num));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"setBadgeNum",reqVec);
 }
+
 void IETSystemUtil::share(cocos2d::ValueVector items)
 {
-    assert(false);
+    ValueVector reqVec;
+    reqVec.push_back(Value(items));
+    IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "share", reqVec);
 }
+
 void IETSystemUtil::keychainSet(std::string key, std::string value)
 {
     ValueVector reqVec;
@@ -190,6 +234,7 @@ void IETSystemUtil::keychainSet(std::string key, std::string value)
     reqVec.push_back(Value(value));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"keychainSet",reqVec);
 }
+
 std::string IETSystemUtil::keychainGet(std::string key)
 {
     ValueVector reqVec;
@@ -197,20 +242,22 @@ std::string IETSystemUtil::keychainGet(std::string key)
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"keychainGet",reqVec);
     return resVec[0].asString();
 }
+
 bool IETSystemUtil::isJailbroken()
 {
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"isJailbroken",ValueVectorNull);
     return resVec[0].asBool();
 }
+
 void IETSystemUtil::copyToPasteboard(std::string str)
 {
     ValueVector reqVec;
     reqVec.push_back(Value(str));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"copyToClipboard",reqVec);
 }
+
 void IETSystemUtil::requestUrl(std::string requestType, std::string url, cocos2d::ValueMap data, const std::function<void (bool, std::string)> func)
 {
-    
     HttpClient::getInstance()->setTimeoutForConnect(10);
     HttpClient::getInstance()->setTimeoutForRead(10);
     HttpRequest* request = new HttpRequest();

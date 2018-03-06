@@ -51,9 +51,11 @@ cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std
 
 void IETAndroidBridge::handleJavaRes(int responseId, std::string resJson)
 {
+    log("IETAndroidBridge::handleJavaRes: %d", responseId);
     if (handlerMap.find(responseId) == handlerMap.end()) {
         return;
     }
+    log("IETAndroidBridge::handleJavaRes Success");
     Handler handler = handlerMap[responseId];
     ValueVector resVec = parseJson(resJson);
     handler.func(resVec);
@@ -64,6 +66,7 @@ void IETAndroidBridge::handleJavaRes(int responseId, std::string resJson)
 
 cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId)
 {
+    log("IETAndroidBridge::callJavaMethod: %s-%s-%d", className.c_str(), methodName.c_str(), requestId);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     string reqJson = generateJson(reqVec);
     JNIEnv* env = JniHelper::getEnv();

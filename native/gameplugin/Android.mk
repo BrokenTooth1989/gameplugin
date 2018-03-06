@@ -9,7 +9,6 @@ LOCAL_SRC_FILES := \
 aes.c \
 android/IETAndroidBridge.cpp \
 android/IETAdvertiseHelper.cpp \
-android/IETAmazonAWSHelper.cpp \
 android/IETAnalyticHelper.cpp \
 android/IETFacebookHelper.cpp \
 android/IETGamePlugin.cpp \

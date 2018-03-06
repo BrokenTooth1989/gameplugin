@@ -21,8 +21,10 @@ bool _isLogin = false;
 
 void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url)
 {
-    log("installUrl=%s", installUrl.c_str());
-    log("url=%s", url.c_str());
+    ValueVector reqVec;
+    reqVec.push_back(Value(installUrl));
+    reqVec.push_back(Value(url));
+    IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME, "openFacebookPage", reqVec);
 }
 
 void IETFacebookHelper::setLoginFunc(const std::function<void (std::string, std::string)> &func)
@@ -137,12 +139,6 @@ void IETFacebookHelper::acceptRequest(std::string requestId, std::function<void 
 
 void IETFacebookHelper::share(std::string title, std::string description, std::string caption, std::string imageUrl, std::string contentUrl, std::function<void (bool)> &func)
 {
-    log("fbShare");
-    log("title = %s", title.c_str());
-    log("description = %s", description.c_str());
-    log("caption = %s", caption.c_str());
-    log("imageUrl = %s", imageUrl.c_str());
-    log("contentUrl = %s", contentUrl.c_str());
     ValueVector reqVec;
     reqVec.push_back(Value(title));
     reqVec.push_back(Value(description));

@@ -12,8 +12,7 @@
 
 using namespace std;
 using namespace cocos2d;
-void IETGamePlugin::init()
-{}
+
 void IETGamePlugin::crashReportLogs(std::string message)
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
