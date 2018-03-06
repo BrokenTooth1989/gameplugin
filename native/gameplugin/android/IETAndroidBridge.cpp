@@ -36,7 +36,7 @@ cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std
                 requestId = 0;
             }
             requestId++;
-            if (handlerMap.find(requestId) != handlerMap.end()) {
+            if (handlerMap.find(requestId) == handlerMap.end()) {
                 break;
             }
         }
@@ -46,27 +46,6 @@ cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std
         handler.keep = keep;
         handlerMap[reqId] = handler;
     }
-    return this->callJavaMethod(className, methodName, reqVec, reqId);
-}
-
-void IETAndroidBridge::handleJavaRes(int responseId, std::string resJson)
-{
-    log("IETAndroidBridge::handleJavaRes: %d", responseId);
-    if (handlerMap.find(responseId) == handlerMap.end()) {
-        return;
-    }
-    log("IETAndroidBridge::handleJavaRes Success");
-    Handler handler = handlerMap[responseId];
-    ValueVector resVec = parseJson(resJson);
-    handler.func(resVec);
-    if (!handler.keep) {
-        handlerMap.erase(responseId);
-    }
-}
-
-cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std::string methodName, cocos2d::ValueVector reqVec, int requestId)
-{
-    log("IETAndroidBridge::callJavaMethod: %s-%s-%d", className.c_str(), methodName.c_str(), requestId);
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     string reqJson = generateJson(reqVec);
     JNIEnv* env = JniHelper::getEnv();
@@ -75,7 +54,7 @@ cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std
     jstring jclassName = env->NewStringUTF(className.c_str());
     jstring jmethodName = env->NewStringUTF(methodName.c_str());
     jstring jreqJson = env->NewStringUTF(reqJson.c_str());
-    jstring jresJson = (jstring)(env->CallStaticObjectMethod(clazz, method, jclassName, jmethodName, jreqJson, requestId));
+    jstring jresJson = (jstring)(env->CallStaticObjectMethod(clazz, method, jclassName, jmethodName, jreqJson, reqId));
     const char* resJson = env->GetStringUTFChars((jstring)jresJson, 0);
     env->DeleteLocalRef(clazz);
     env->DeleteLocalRef(jclassName);
@@ -86,6 +65,19 @@ cocos2d::ValueVector IETAndroidBridge::callJavaMethod(std::string className, std
 #else
     return ValueVectorNull;
 #endif
+}
+
+void IETAndroidBridge::handleJavaRes(int resId, std::string resJson)
+{
+    if (handlerMap.find(resId) == handlerMap.end()) {
+        return;
+    }
+    Handler handler = handlerMap[resId];
+    ValueVector resVec = parseJson(resJson);
+    handler.func(resVec);
+    if (!handler.keep) {
+        handlerMap.erase(resId);
+    }
 }
 
 std::string IETAndroidBridge::generateJson(cocos2d::ValueVector vec)
@@ -306,10 +298,10 @@ void IETAndroidBridge::jsonObject2ValueMap(rapidjson::Value &valObj, cocos2d::Va
 }
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-JNIEXPORT void JNICALL Java_com_joycastle_gameplugin_NativeUtil_invokeCppMethod(JNIEnv *env, jclass type, jint responseId, jstring resData_)
+JNIEXPORT void JNICALL Java_com_joycastle_gameplugin_NativeUtil_invokeCppMethod(JNIEnv *env, jclass type, jint resId, jstring resData_)
 {
     const char *resData = env->GetStringUTFChars(resData_, 0);
-    IETAndroidBridge::getInstance()->handleJavaRes(responseId, resData);
+    IETAndroidBridge::getInstance()->handleJavaRes(resId, resData);
     env->ReleaseStringUTFChars(resData_, resData);
 }
 #endif
