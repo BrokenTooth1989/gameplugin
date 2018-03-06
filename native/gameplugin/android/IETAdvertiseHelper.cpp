@@ -59,7 +59,9 @@ bool IETAdvertiseHelper::isSpotAdReady()
 bool IETAdvertiseHelper::showSpotAd(const std::function<void (bool)> &func)
 {
     ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME, "showInterstitialAd", ValueVectorNull, [=](cocos2d::ValueVector resVec) {
-        func(resVec[0].asBool());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asBool());
+        });
     });
     return retVec[0].asBool();
 }
@@ -73,10 +75,12 @@ bool IETAdvertiseHelper::isVedioReady()
 bool IETAdvertiseHelper::showVedioAd(const std::function<void (bool)> &viewFunc, const std::function<void (bool)> &clickFunc)
 {
     ValueVector retVec = IETAndroidBridge::getInstance()->callJavaMethod(ADVERTISE_HELPER_CLASS_NAME, "showVideoAd", ValueVectorNull, [=](ValueVector resVec) {
-        bool viewed = resVec[0].asBool();
-        bool clicked = resVec[1].asBool();
-        viewFunc(viewed);
-        clickFunc(clicked);
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            bool viewed = resVec[0].asBool();
+            bool clicked = resVec[1].asBool();
+            viewFunc(viewed);
+            clickFunc(clicked);
+        });
     });
     return retVec[0].asBool();
 }

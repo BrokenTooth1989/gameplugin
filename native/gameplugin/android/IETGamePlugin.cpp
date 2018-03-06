@@ -66,7 +66,9 @@ void IETGamePlugin::doIap(std::string iapId, std::string userId, const std::func
     reqVec.push_back(Value(iapId));
     reqVec.push_back(Value(userId));
 	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"doIap",reqVec,[=](ValueVector resVec){
-		func(resVec[0].asBool(),resVec[1].asString());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asBool(),resVec[1].asString());
+        });
 	});
 }
 
