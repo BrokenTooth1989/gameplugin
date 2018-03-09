@@ -30,14 +30,18 @@ void IETFacebookHelper::openFacebookPage(std::string installUrl, std::string url
 void IETFacebookHelper::setLoginFunc(const std::function<void (std::string, std::string)> &func)
 {
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"setLoginFunc",ValueVectorNull,[=](cocos2d::ValueVector resVec){
-        func(resVec[0].asString(),resVec[1].asString());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+              func(resVec[0].asString(),resVec[1].asString());
+        });
     },true);
 }
 
 void IETFacebookHelper::setAppLinkFunc(const std::function<void (cocos2d::ValueMap)> &func)
 {
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"setAppLinkFunc",ValueVectorNull,[=](cocos2d::ValueVector resVec){
-        func(resVec[0].asValueMap());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asValueMap());
+        });
     },true);
 }
 
@@ -83,7 +87,13 @@ void IETFacebookHelper::getUserProfile(std::string fid, int picSize, std::functi
     reqVec.push_back(Value(fid));
     reqVec.push_back(Value(picSize));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getUserProfile",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asValueMap());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            if(resVec.size()>0){
+                func(resVec[0].asValueMap());
+            }else{
+                func(ValueMapNull);
+            }
+        });
     });
 }
 
@@ -93,7 +103,9 @@ void IETFacebookHelper::getInvitableFriends(cocos2d::ValueVector inviteTokens, i
     reqVec.push_back(Value(inviteTokens));
     reqVec.push_back(Value(picSize));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getInvitableFriends",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asValueMap());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asValueMap());
+        });
     });
 }
 
@@ -102,7 +114,9 @@ void IETFacebookHelper::getFriends(int picSize, std::function<void(cocos2d::Valu
     ValueVector reqVec;
     reqVec.push_back(Value(picSize));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getFriends",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asValueMap());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asValueMap());
+        });
     });
 }
 
@@ -113,18 +127,22 @@ void IETFacebookHelper::confirmRequest(cocos2d::ValueVector fidOrTokens, std::st
     reqVec.push_back(Value(title));
     reqVec.push_back(Value(msg));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"confirmRequest",reqVec,[=](ValueVector resVec){
-        if(resVec.size()>0){
-            func(resVec[0].asValueMap());
-        }else{
-            func(ValueMapNull);
-        }
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            if(resVec.size()>0){
+                func(resVec[0].asValueMap());
+            }else{
+                func(ValueMapNull);
+            }
+        });
     });
 }
 
 void IETFacebookHelper::queryRequest(std::function<void (cocos2d::ValueMap)> &func)
 {
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"queryRequest",ValueVectorNull,[=](ValueVector resVec){
-        func(resVec[0].asValueMap());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asValueMap());
+        });
     });
 }
 
@@ -133,7 +151,9 @@ void IETFacebookHelper::acceptRequest(std::string requestId, std::function<void 
     ValueVector reqVec;
     reqVec.push_back(Value(requestId));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"acceptRequest",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asBool());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asBool());
+        });
     });
 }
 
@@ -146,7 +166,9 @@ void IETFacebookHelper::share(std::string title, std::string description, std::s
     reqVec.push_back(Value(imageUrl));
     reqVec.push_back(Value(contentUrl));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"share",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asBool());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asBool());
+        });
     });
 }
 
@@ -162,7 +184,9 @@ void IETFacebookHelper::getLevel(std::string fid, std::function<void (int)> &fun
     ValueVector reqVec;
     reqVec.push_back(Value(fid));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"getLevel",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asInt());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asInt());
+        });
     });
 }
 
@@ -172,6 +196,8 @@ void IETFacebookHelper::inviteFriend(std::string appLinkURL,std::string prviewIm
     reqVec.push_back(Value(appLinkURL));
     reqVec.push_back(Value(prviewImageURL));
     IETAndroidBridge::getInstance()->callJavaMethod(FACEBOOK_HELPER_CLASS_NAME,"inviteFriend",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asBool());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asBool());
+        });
     });
 }

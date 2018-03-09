@@ -17,7 +17,8 @@ using namespace network;
 #define SYSTEM_UTIL_CLASS_NAME  "com.joycastle.gamepluginbase.SystemUtil"
 
 int IETSystemUtil::getDebugMode() {
-    return 3;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME, "getDebugMode", ValueVectorNull);
+    return resVec[0].asInt();
 }
 
 std::string IETSystemUtil::getPlatCfgValue(std::string key)
@@ -114,12 +115,12 @@ std::string IETSystemUtil::getLanguageCode()
 
 long IETSystemUtil::getCpuTime()
 {
-    struct timeval tv;
-    gettimeofday(&tv, nullptr);
-    
+    // struct timeval tv;
+    // gettimeofday(&tv, nullptr);
+    // (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
     // log("CurrentTime MillSecond %f", (double)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000);
-
-    return (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
+    ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getCpuTime",ValueVectorNull);
+    return resVec[0].asInt()/1000;
 
 }
 
