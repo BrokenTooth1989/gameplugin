@@ -27,7 +27,9 @@ void IETGamePlugin::crashReportException(std::string reason, cocos2d::ValueVecto
 void IETGamePlugin::setNotifyHandler(const std::function<void(cocos2d::ValueMap)>& func)
 {
 	IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"setNotifyHandler",ValueVectorNull,[=](ValueVector resVec){
-		func(resVec[0].asValueMap());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asValueMap());
+        });
 	});
 }
 

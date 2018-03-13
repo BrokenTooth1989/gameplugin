@@ -120,8 +120,7 @@ long IETSystemUtil::getCpuTime()
     // (long)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000;
     // log("CurrentTime MillSecond %f", (double)tv.tv_sec * 1000 + (double)tv.tv_usec / 1000);
     ValueVector resVec = IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"getCpuTime",ValueVectorNull);
-    return resVec[0].asInt()/1000;
-
+    return resVec[0].asInt();
 }
 
 std::string IETSystemUtil::getNetworkState()
@@ -138,7 +137,9 @@ void IETSystemUtil::showAlertDialog(std::string title, std::string message, std:
     reqVec.push_back(Value(cancelBtnTitle));
     reqVec.push_back(Value(otherBtnTitles));
     IETAndroidBridge::getInstance()->callJavaMethod(SYSTEM_UTIL_CLASS_NAME,"showAlertDialog",reqVec,[=](ValueVector resVec){
-        func(resVec[0].asInt());
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=](){
+            func(resVec[0].asInt());
+        });
     });
 }
 
