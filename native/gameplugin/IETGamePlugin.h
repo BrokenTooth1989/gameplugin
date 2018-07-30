@@ -41,7 +41,10 @@ public:
     void gcShowArchievement();
     void gcShowChallenge();
     void gcReset();
+    std::string uuidForDevice();
     void rateGame();
+    void setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func);
+
 };
 
 #endif /* defined(GamePlugin_GamePlugin_h) */

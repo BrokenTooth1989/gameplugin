@@ -119,3 +119,7 @@ void IETGamePlugin::gcReset()
 void IETGamePlugin::rateGame()
 {
 }
+
+void IETGamePlugin::setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func)
+{
+}

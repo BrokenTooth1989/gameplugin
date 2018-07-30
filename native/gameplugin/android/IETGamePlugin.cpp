@@ -143,5 +143,9 @@ void IETGamePlugin::rateGame()
     IETAndroidBridge::getInstance()->callJavaMethod(GAME_PLUGIN_CLASS_NAME,"rateGame",ValueVectorNull);
 }
 
+void IETGamePlugin::setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func)
+{
+}
+
 
 
