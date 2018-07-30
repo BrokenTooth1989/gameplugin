@@ -114,3 +114,7 @@ std::string IETGamePlugin::uuidForDevice()
 {
     return "123";
 }
+
+void IETGamePlugin::setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func)
+{
+}

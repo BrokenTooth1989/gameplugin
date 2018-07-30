@@ -180,3 +180,12 @@ std::string IETGamePlugin::uuidForDevice()
 {
     return [[[IOSGamePlugin getInstance] uuidForDevice] UTF8String];
 }
+
+void IETGamePlugin::setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func)
+{
+    void (^block)(NSArray*) = [func](NSArray *friends) -> void {
+        func([IETUtility nsArr2ValueVector:friends]);
+    };
+    [[IOSGamePlugin getInstance] setPromotionHandler:block];
+}
+
