@@ -43,7 +43,13 @@ public:
     void gcReset();
     std::string uuidForDevice();
     void rateGame();
+    
     void setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func);
+    
+    void fetchStorePromotionOrder(const std::function<void (cocos2d::ValueVector)> &func);
+    void updateStorePromotionOrder(cocos2d::ValueVector productArray, const std::function<void (cocos2d::ValueVector)> &func);
+    void fetchStorePromotionVisibility(std::string  iapId, const std::function<void (cocos2d::ValueVector)> &func);
+    void updateStorePromotionVisibility(std::string  iapId, int visibilty, const std::function<void (cocos2d::ValueVector)> &func);
 
 };
 

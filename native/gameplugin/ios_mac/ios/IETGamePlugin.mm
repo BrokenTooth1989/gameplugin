@@ -9,6 +9,7 @@
 #include "IETGamePlugin.h"
 #import "IOSGamePlugin.h"
 #import "IETUtility.h"
+#import "IETPromotionHelper.h"
 
 using namespace std;
 using namespace cocos2d;
@@ -176,8 +177,37 @@ void IETGamePlugin::rateGame()
 
 void IETGamePlugin::setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func)
 {
-    void (^block)(NSArray*) = [func](NSArray *friends) -> void {
-        func([IETUtility nsArr2ValueVector:friends]);
+    [IETPromotionHelper getInstance].promotionHandler = [func](NSArray *product) -> void {
+        func([IETUtility nsArr2ValueVector:product]);
     };
-    [[IOSGamePlugin getInstance] setPromotionHandler:block];
 }
+
+void IETGamePlugin::fetchStorePromotionOrder(const std::function<void (cocos2d::ValueVector)> &func)
+{
+    [[IETPromotionHelper getInstance] fetchStorePromotionOrder: [func](NSArray *product) -> void {
+        func([IETUtility nsArr2ValueVector:product]);
+    }];
+}
+
+void IETGamePlugin::updateStorePromotionOrder(cocos2d::ValueVector productArray, const std::function<void (cocos2d::ValueVector)> &func)
+{
+    NSArray* productArr = [IETUtility valueVector2NsArr:productArray];
+    [[IETPromotionHelper getInstance] updateStorePromotionOrder:productArr handler:[func](NSArray *result) -> void {
+        func([IETUtility nsArr2ValueVector:result]);
+    }];
+}
+
+void IETGamePlugin::fetchStorePromotionVisibility(std::string iapId, const std::function<void (cocos2d::ValueVector)> &func)
+{
+    [[IETPromotionHelper getInstance] fetchStorePromotionVisibility:NSStringFromString(iapId) handler:[func](NSArray *result)->void{
+        func([IETUtility nsArr2ValueVector:result]);
+    }];
+}
+
+void IETGamePlugin::updateStorePromotionVisibility(std::string iapId,  int visibilty, const std::function<void (cocos2d::ValueVector)> &func)
+{
+    [[IETPromotionHelper getInstance] updateStorePromotionVisibility:NSStringFromString(iapId) visibilty:visibilty handler: [func](NSArray *result) -> void {
+        func([IETUtility nsArr2ValueVector:result]);
+    }];
+}
+
