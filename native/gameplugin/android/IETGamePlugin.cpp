@@ -146,6 +146,21 @@ void IETGamePlugin::rateGame()
 void IETGamePlugin::setPromotionHandler(const std::function<void (cocos2d::ValueVector)> &func)
 {
 }
+void IETGamePlugin::fetchStorePromotionOrder(const std::function<void (cocos2d::ValueVector)> &func)
+{
+}
+
+void IETGamePlugin::updateStorePromotionOrder(cocos2d::ValueVector productArray, const std::function<void (cocos2d::ValueVector)> &func)
+{
+}
+
+void IETGamePlugin::fetchStorePromotionVisibility(std::string iapId, const std::function<void (cocos2d::ValueVector)> &func)
+{ 
+}
+
+void IETGamePlugin::updateStorePromotionVisibility(std::string iapId,  int visibilty, const std::function<void (cocos2d::ValueVector)> &func)
+{ 
+}
 
 
 
