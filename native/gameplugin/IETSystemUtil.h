@@ -63,6 +63,14 @@ public:
     void openUrl(std::string url);
     // 退出
     void exitGame();
+    
+    //v2.7.2
+    static bool getRandom(float probability);
+    //本地存储数据
+    static void setUserLocalData(std::string key, std::string value);
+    //获取本地数据
+    static std::string getUserLocalData(std::string key);
+    
 
 #pragma mark 平台单独实现
     // 获取当前是debug:1/release:2/submission:3模式

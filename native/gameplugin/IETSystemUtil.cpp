@@ -320,6 +320,33 @@ void IETSystemUtil::exitGame() {
 #endif
 }
 
+
+bool IETSystemUtil::getRandom(float probability) {
+    int _probability = probability * 100;
+    int odds = rand()%100;
+    if(probability >= 1) {
+        return true;
+    }
+    if(odds < _probability)
+    {
+        return  true;
+    }else{
+        return  false;
+    }
+}
+
+
+//本地存储数据
+void IETSystemUtil::setUserLocalData(std::string key, std::string value) {
+    UserDefault::getInstance()->setStringForKey(key.c_str(), value.c_str());
+    UserDefault::getInstance()->flush();
+}
+//获取本地数据
+std::string IETSystemUtil::getUserLocalData(std::string key) {
+    std::string data = UserDefault::getInstance()->getStringForKey(key.c_str(), "");
+    return data;
+}
+
 #pragma mark private
 
 IETSystemUtil::IETSystemUtil()
